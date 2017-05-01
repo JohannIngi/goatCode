@@ -15,7 +15,7 @@ namespace goatCode.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Máni er sætur gaur";
 
             return View();
         }

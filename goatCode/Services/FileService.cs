@@ -5,7 +5,7 @@ using System.Web;
 
 namespace goatCode.Services
 {
-    public class ProjectService
+    public class FileService
     {
 
     }

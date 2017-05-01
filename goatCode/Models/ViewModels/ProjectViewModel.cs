@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace goatCode.Services
+namespace goatCode.Models.ViewModels
 {
-    public class ProjectService
+    public class ProjectViewModel
     {
-
     }
 }
