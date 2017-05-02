@@ -5,11 +5,11 @@ using System.Web;
 
 namespace goatCode.Models.Entities
 {
-    public class Project
+    public class FileType
     {
         public int ID { get; set; }
         public string name { get; set; }
-
+        public string type { get; set; }
 
     }
 }
