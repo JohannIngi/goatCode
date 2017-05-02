@@ -7,6 +7,8 @@ namespace goatCode.Models.ViewModels
 {
     public class FileViewModel
     {
+        public string name { get; set; }
+        public string type { get; set; }
 
     }
 }
