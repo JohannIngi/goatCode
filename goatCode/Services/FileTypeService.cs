@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace goatCode.Models.ViewModels
+namespace goatCode.Services
 {
-    public class FileViewModel
+    public class FileTypeService
     {
-
     }
 }

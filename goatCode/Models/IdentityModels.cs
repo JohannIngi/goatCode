@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using goatCode.Models.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using goatCode.Models.Entities;
 
 namespace goatCode.Models
 {
@@ -26,6 +27,10 @@ namespace goatCode.Models
 #pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         public DbSet<User> Users { get; set; }
 #pragma warning restore CS0114 // Member hides inherited member; missing override keyword
+<<<<<<< HEAD
+=======
+        public DbSet<FileType> FileTypes { get; set; }
+>>>>>>> db8d56d57f5c35e5b73e5dff1ab7aedb2a9cead3
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
