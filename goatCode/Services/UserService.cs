@@ -30,7 +30,7 @@ namespace goatCode.Services
         }
         public bool AddNewUser(User newuser)
         {
-
+       
             _db.Users.Add(newuser);
             _db.SaveChanges();
             
