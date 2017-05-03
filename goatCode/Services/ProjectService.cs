@@ -25,7 +25,7 @@ namespace goatCode.Services
                 // TODO : Kasta Villu!
             }
 
-            var files = _db.Files
+            var filez = _db.Files
                 .Where(x => x.projectID == projectID)
                 .Select(x => new ProjectViewModel
                 {
@@ -37,7 +37,7 @@ namespace goatCode.Services
             var viewModel = new ProjectViewModel
             {
                 name = project.name,
-                ID = project.ID 
+                ID = project.ID
             };
 
             return viewModel;
