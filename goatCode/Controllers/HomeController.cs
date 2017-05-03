@@ -15,20 +15,20 @@ namespace goatCode.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Máni er sætur gaur";
+            ViewBag.Message = "Máni er ekki sætur gaur";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Feel free to contact us mjéeen.";
 
             return View();
         }
         public ActionResult Editor()
         {
-            ViewBag.Message = "I'm an editor.";
+            ViewBag.Message = "I'm an editor, hello.";
 
             return View();
         }
