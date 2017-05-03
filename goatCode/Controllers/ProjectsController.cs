@@ -33,7 +33,7 @@ namespace goatCode.Controllers
         [HttpPost]
         public ActionResult Create(ProjectViewModel model)
         {
-
+            ProjectService.AddProject(model);
 
             return RedirectToAction("Index");
         }

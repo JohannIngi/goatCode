@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using goatCode.Models.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using goatCode.Models.Entities;
@@ -26,8 +27,10 @@ namespace goatCode.Models
 #pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         public DbSet<User> Users { get; set; }
 #pragma warning restore CS0114 // Member hides inherited member; missing override keyword
+
         public DbSet<FileType> FileTypes { get; set; }
         public DbSet<UserProject> UserProjects { get; set; }
+
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
