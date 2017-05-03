@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using goatCode.Models.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using goatCode.Models.Entities;
 
 namespace goatCode.Models
 {
@@ -29,6 +28,8 @@ namespace goatCode.Models
 #pragma warning restore CS0114 // Member hides inherited member; missing override keyword
 
         public DbSet<FileType> FileTypes { get; set; }
+
+
         public DbSet<UserProject> UserProjects { get; set; }
 
 

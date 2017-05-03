@@ -205,6 +205,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Editor.cs" />
     <Compile Include="Models\Entities\File.cs" />
     <Compile Include="Models\Entities\FileType.cs" />
     <Compile Include="Models\Entities\Project.cs" />
@@ -283,6 +284,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Projects\Detailzz.cshtml" />
+    <Content Include="Views\Home\Editor.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
