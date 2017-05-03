@@ -47,7 +47,16 @@ namespace goatCode.Services
         {
             _db.Projects.Add(model);
         }
-
         
+
+        public bool AddNewProject(Project newProject)
+        {
+            _db.Projects.Add(newProject);
+            _db.SaveChanges();
+
+            //TODO : villutjekk
+
+            return true;
+        }
     }
 }
