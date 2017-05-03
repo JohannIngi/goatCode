@@ -26,5 +26,11 @@ namespace goatCode.Controllers
 
             return View();
         }
+        public ActionResult Editor()
+        {
+            ViewBag.Message = "I'm an editor.";
+
+            return View();
+        }
     }
 }
