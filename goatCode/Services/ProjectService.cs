@@ -1,4 +1,5 @@
 ﻿using goatCode.Models;
+using goatCode.Models.Entities;
 using goatCode.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,16 @@ namespace goatCode.Services
             };
 
             return viewModel;
+        }
+
+        public bool AddNewProject(Project newProject)
+        {
+            _db.Projects.Add(newProject);
+            _db.SaveChanges();
+
+            //TODO : villutjekk
+
+            return true;
         }
     }
 }
