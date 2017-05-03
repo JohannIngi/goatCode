@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using goatCode.Models;
+using goatCode.Services;
 
 namespace goatCode.Controllers
 {
@@ -153,6 +154,11 @@ namespace goatCode.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                string email = model.Email;
+                string password = model.Password;
+                string name = model.Email;
+               // UserService.AddNewUser(name, email, password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -165,7 +171,9 @@ namespace goatCode.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+                
                 AddErrors(result);
+                
             }
 
             // If we got this far, something failed, redisplay form

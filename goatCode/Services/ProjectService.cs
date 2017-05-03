@@ -1,4 +1,5 @@
 ﻿using goatCode.Models;
+using goatCode.Models.Entities;
 using goatCode.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -19,12 +20,13 @@ namespace goatCode.Services
         public ProjectViewModel GetProjectsByID(int projectID)
         {
             var project = _db.Projects.SingleOrDefault(x => x.ID == projectID);
+
             if(project == null)
             {
                 // TODO : Kasta Villu!
             }
 
-            var files = _db.Files
+            var filez = _db.Files
                 .Where(x => x.projectID == projectID)
                 .Select(x => new ProjectViewModel
                 {
@@ -36,10 +38,25 @@ namespace goatCode.Services
             var viewModel = new ProjectViewModel
             {
                 name = project.name,
-                ID = project.ID 
+                ID = project.ID
             };
 
             return viewModel;
+        }
+        public Project AddProject(ProjectViewModel model)
+        {
+            _db.Projects.Add(model);
+        }
+        
+
+        public bool AddNewProject(Project newProject)
+        {
+            _db.Projects.Add(newProject);
+            _db.SaveChanges();
+
+            //TODO : villutjekk
+
+            return true;
         }
     }
 }

@@ -30,6 +30,9 @@ namespace goatCode.Models
         public DbSet<FileType> FileTypes { get; set; }
 
 
+        public DbSet<UserProject> UserProjects { get; set; }
+
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

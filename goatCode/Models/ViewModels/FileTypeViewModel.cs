@@ -5,11 +5,10 @@ using System.Web;
 
 namespace goatCode.Models.ViewModels
 {
-    public class FileViewModel
+    public class FileTypeViewModel
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string name { get; set; }
         public string type { get; set; }
-
     }
 }
