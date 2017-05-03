@@ -43,9 +43,9 @@ namespace goatCode.Services
 
             return viewModel;
         }
-        public Project AddProject(ProjectViewModel model)
+        public void AddProject(ProjectViewModel model)
         {
-            _db.Projects.Add(model);
+            //_db.Projects.Add(model);
         }
         
 
