@@ -1,4 +1,5 @@
-﻿using goatCode.Services;
+﻿using goatCode.Models.ViewModels;
+using goatCode.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,21 @@ namespace goatCode.Controllers
         {
             var viewModel = _service.GetProjectsByID(id);
             return View(viewModel);
+        }
+        [HttpGet]
+        public ActionResult Create()
+        {
+            ProjectViewModel model = new ProjectViewModel();
+            model.name = "";
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Create(ProjectViewModel model)
+        {
+
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using goatCode.Models;
+using goatCode.Models.Entities;
 using goatCode.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -42,5 +43,11 @@ namespace goatCode.Services
 
             return viewModel;
         }
+        public Project AddProject(ProjectViewModel model)
+        {
+            _db.Projects.Add(model);
+        }
+
+        
     }
 }
