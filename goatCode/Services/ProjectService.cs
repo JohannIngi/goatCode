@@ -45,7 +45,7 @@ namespace goatCode.Services
         }
         public void AddProject(ProjectViewModel model)
         {
-            //_db.Projects.Add(model);
+            _db.Projects.Add(model);
         }
         
 
