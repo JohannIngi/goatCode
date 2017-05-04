@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace goatCode.Controllers
 {
@@ -27,7 +28,8 @@ namespace goatCode.Controllers
 
         public ActionResult UserProjects()
         {
-            var viewModel = _uservice.GetProjectByUser();
+            string userId = User.Identity.GetUserId();
+            var viewModel = _uservice.GetProjectByUser(userId);
 
             return View(viewModel);
         }
