@@ -30,12 +30,6 @@ namespace goatCode.Controllers
 
             return View(model);
         }
-        [HttpPost]
-        public ActionResult Create(ProjectViewModel model)
-        {
-            ProjectService.AddProject(model);
-
-            return RedirectToAction("Index");
-        }
+      
     }
 }
