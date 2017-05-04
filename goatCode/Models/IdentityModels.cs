@@ -24,7 +24,7 @@ namespace goatCode.Models
         public DbSet<File> Files { get; set; }
         public DbSet<Project> Projects { get; set; }
 #pragma warning disable CS0114 // Member hides inherited member; missing override keyword
-        public DbSet<User> Users { get; set; }
+        public DbSet<ProjectUser> ProjectUsers { get; set; }
 #pragma warning restore CS0114 // Member hides inherited member; missing override keyword
 
         public DbSet<FileType> FileTypes { get; set; }
@@ -42,5 +42,7 @@ namespace goatCode.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<goatCode.Models.ViewModels.ProjectViewModel> ProjectViewModels { get; set; }
     }
 }

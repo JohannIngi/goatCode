@@ -5,7 +5,7 @@ using System.Web;
 
 namespace goatCode.Models.Entities
 {
-    public class User
+    public class ProjectUser
     {
         public int ID { get; set; }
         public string name { get; set; }

@@ -209,7 +209,7 @@
     <Compile Include="Models\Entities\File.cs" />
     <Compile Include="Models\Entities\FileType.cs" />
     <Compile Include="Models\Entities\Project.cs" />
-    <Compile Include="Models\Entities\User.cs" />
+    <Compile Include="Models\Entities\ProjectUser.cs" />
     <Compile Include="Models\Entities\UserProject.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -286,6 +286,7 @@
     <Content Include="Views\Projects\Detailzz.cshtml" />
     <Content Include="Views\Home\Editor.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Projects\UserProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

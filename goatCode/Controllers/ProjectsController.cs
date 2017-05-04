@@ -11,6 +11,7 @@ namespace goatCode.Controllers
     public class ProjectsController : Controller
     {
         private ProjectService _service = new ProjectService();
+        private UserProjectService _uservice = new UserProjectService();
         // GET: Projects
         public ActionResult Index()
         {
@@ -22,13 +23,13 @@ namespace goatCode.Controllers
             var viewModel = _service.GetProjectsByID(id);
             return View(viewModel);
         }
-        [HttpGet]
-        public ActionResult Create()
-        {
-            ProjectViewModel model = new ProjectViewModel();
-            model.name = "";
+        
 
-            return View(model);
+        public ActionResult UserProjects()
+        {
+            var viewModel = _uservice.GetProjectByUser();
+
+            return View(viewModel);
         }
       
     }

@@ -43,8 +43,6 @@ namespace goatCode.Services
 
             return viewModel;
         }
-        
-
         public bool AddNewProject(Project newProject)
         {
             _db.Projects.Add(newProject);
@@ -53,6 +51,25 @@ namespace goatCode.Services
             //TODO : villutjekk
 
             return true;
+        }
+        public List<ProjectViewModel> GetListOfProjects(List<int> projectIdArray)
+        {
+            List<ProjectViewModel> viddiErLegend = new List<ProjectViewModel>();
+            var projectz = _db.Projects;
+            foreach (var number in projectIdArray)
+            {
+                var atli = (from p in projectz
+                            where p.ID == number
+                            select p).SingleOrDefault();
+                
+                ProjectViewModel anton = new ProjectViewModel
+                {
+                    ID = atli.ID,
+                    name = atli.name
+                };
+                viddiErLegend.Add(anton);                
+            }   
+            return viddiErLegend;
         }
     }
 }
