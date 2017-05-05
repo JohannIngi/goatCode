@@ -36,7 +36,6 @@ namespace goatCode.Services
                 {
                     id = singleFile.ID,
                     name = singleFile.name,
-                    type = "." + "máni"
                 };
                 fileList.Add(temp);
             }

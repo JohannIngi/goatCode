@@ -16,6 +16,7 @@ namespace goatCode.Controllers
         private ProjectService _service = new ProjectService();
         private UserProjectService _uservice = new UserProjectService();
         private FileService _fservice = new FileService();
+        private int currentProject;
         // GET: Projects
         public ActionResult Index()
         {
@@ -75,6 +76,7 @@ namespace goatCode.Controllers
             var viewModel = _fservice.GetFilesByProjectId(projectId.Value);
             if(viewModel != null)
             {
+                currentProject = projectId.Value;
                 return View(viewModel);
             }
             return HttpNotFound();
@@ -84,7 +86,6 @@ namespace goatCode.Controllers
         {
             FileViewModel newFile = new FileViewModel();
             newFile.name = "";
-            newFile.type = "";
 
             return View(newFile);
         }
@@ -92,13 +93,9 @@ namespace goatCode.Controllers
         public ActionResult AddNewFile(FileViewModel model)
         {
             File anton = new File();
-            anton.projectID = _service.GetSingleProjectById(1).ID;
             anton.name = model.name;
-
-            //Todo: Ná í Current Project ID
-
-            Convert.ToInt32(RouteData.Values["id"] + Request.Url.Query);
-
+            anton.projectID = 69;
+            anton.extensionId = 1;
             _fservice.AddNewFile(anton);
             
             return RedirectToAction("Details");

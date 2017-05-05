@@ -3,19 +3,16 @@
 @{
     ViewBag.Title = "Filez";
 }
-
-<h2>Project Filez</h2>
+@using goatCode.Models.ViewModels
+<h2>Project Filezz</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New File", "AddNewFile")
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.type)
         </th>
         <th></th>
     </tr>
@@ -24,9 +21,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.type)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
