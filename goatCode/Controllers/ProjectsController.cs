@@ -103,7 +103,19 @@ namespace goatCode.Controllers
             
             return RedirectToAction("Details", new { projectId = model.projectId });
         }
+        public ActionResult RemoveFile(int id)
+        {
+            // TODO: Are you sure you want to Delete, cockbreath?
+            File model = _fservice.GetSingleFileById(id);
+            if(model != null)
+            {
+                int lastProject = model.projectID;
+                _fservice.DeleteFile(model);
+                return RedirectToAction("Details", lastProject);
+            }
+            return HttpNotFound();
 
+        }
 
 
     }

@@ -3,6 +3,7 @@ using goatCode.Models.Entities;
 using goatCode.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -46,6 +47,20 @@ namespace goatCode.Services
             _db.Files.Add(newFile);
             _db.SaveChanges();
         }
+        public File GetSingleFileById(int id)
+        {
+            var filez = _db.Files;
 
+            File singleFile = (from f in filez
+                               where f.ID == id
+                               select f).SingleOrDefault();
+            
+            return singleFile;
+        }
+        public void DeleteFile(File file)
+        {
+            _db.Entry(file).State = EntityState.Deleted;
+            _db.SaveChanges();
+        }
     }
 }
