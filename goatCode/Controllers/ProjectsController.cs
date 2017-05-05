@@ -14,6 +14,7 @@ namespace goatCode.Controllers
     {
         private ProjectService _service = new ProjectService();
         private UserProjectService _uservice = new UserProjectService();
+        private FileService _fservice = new FileService();
         // GET: Projects
         public ActionResult Index()
         {
@@ -63,6 +64,8 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
+            // TODO: Are you sure you want to Delete, cockbreath?
+
             Project model = _service.GetSingleProjectById(id);
             if(model != null)
             {
@@ -71,6 +74,11 @@ namespace goatCode.Controllers
                 return RedirectToAction("UserProjects");
             }
             return HttpNotFound();
+        }
+        public ActionResult Details(int projectId)
+        {
+            var viewModel = _fservice.GetFilesByProjectId(projectId);
+            return View(viewModel);
         }
     }
 }

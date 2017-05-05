@@ -16,7 +16,7 @@ namespace goatCode.Services
             _db = new ApplicationDbContext();
         }
 
-        public List<FileViewModel> GetFilesByProject(int projectId)
+        public List<FileViewModel> GetFilesByProjectId(int projectId)
         {
             var fileProjects = _db.Files
                 .Where(x => x.projectID == projectId)
@@ -33,7 +33,6 @@ namespace goatCode.Services
                                   select f).SingleOrDefault();
                 FileViewModel temp = new FileViewModel
                 {
-                    id = singleFile.ID,
                     name = singleFile.name,
                     type = "." + "máni"
                 };
