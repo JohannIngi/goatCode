@@ -209,7 +209,7 @@
     <Compile Include="Models\Entities\File.cs" />
     <Compile Include="Models\Entities\FileType.cs" />
     <Compile Include="Models\Entities\Project.cs" />
-    <Compile Include="Models\Entities\ProjectUser.cs" />
+    <Compile Include="Models\Entities\AspNetUser.cs" />
     <Compile Include="Models\Entities\UserProject.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

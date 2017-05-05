@@ -28,10 +28,10 @@ namespace goatCode.Services
 
             return viewModel;
         }
-        public bool AddNewUser(ProjectUser newuser)
+        public bool AddNewUser(AspNetUser newuser)
         {
        
-            _db.ProjectUsers.Add(newuser);
+            _db.Users.Add(newuser);
             _db.SaveChanges();
             
             //TODO : Ef að email er nú þegar til staðar kasta villu
