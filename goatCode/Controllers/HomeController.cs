@@ -32,5 +32,9 @@ namespace goatCode.Controllers
 
             return View();
         }
+        public ActionResult viewProjects()
+        {
+            return RedirectToAction("UserProjects");
+        }
     }
 }
