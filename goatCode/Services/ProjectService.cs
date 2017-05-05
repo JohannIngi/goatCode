@@ -3,6 +3,7 @@ using goatCode.Models.Entities;
 using goatCode.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -43,33 +44,35 @@ namespace goatCode.Services
 
             return viewModel;
         }
-        public bool AddNewProject(Project newProject)
+        public void AddNewProject(Project newProject)
         {
             _db.Projects.Add(newProject);
             _db.SaveChanges();
-
-            //TODO : villutjekk
-
-            return true;
         }
-        public List<ProjectViewModel> GetListOfProjects(List<int> projectIdArray)
+        public int GetProjectIdByName(Project proj)
         {
-            List<ProjectViewModel> viddiErLegend = new List<ProjectViewModel>();
             var projectz = _db.Projects;
-            foreach (var number in projectIdArray)
-            {
-                var atli = (from p in projectz
-                            where p.ID == number
-                            select p).SingleOrDefault();
-                
-                ProjectViewModel anton = new ProjectViewModel
-                {
-                    ID = atli.ID,
-                    name = atli.name
-                };
-                viddiErLegend.Add(anton);                
-            }   
-            return viddiErLegend;
+            var projectId = (from p in projectz
+                                 where p.name == proj.name
+                                 select p.ID).SingleOrDefault();
+
+            return projectId;
+        }
+        public Project GetSingleProjectById(int id)
+        {
+            var projectz = _db.Projects;
+
+            Project singleProject = (from p in projectz
+                                              where p.ID == id
+                                              select p).SingleOrDefault();
+
+            return singleProject;
+        }
+        public void DeleteProject(Project project)
+        {
+            _db.Entry(project).State = EntityState.Deleted;
+            _db.SaveChanges();
+            
         }
     }
 }

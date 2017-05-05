@@ -3,7 +3,8 @@ using System.Linq;
 using goatCode.Models;
 using goatCode.Models.ViewModels;
 using Microsoft.AspNet.Identity;
-
+using goatCode.Models.Entities;
+using System.Data.Entity;
 
 namespace goatCode.Services
 {
@@ -45,8 +46,22 @@ namespace goatCode.Services
             }
             return projectList;
         }
-      
-
+        public void addUserProjectConnection(UserProject up)
+        {
+            _db.UserProjects.Add(up);
+            _db.SaveChanges();
+        }
+        public void deleteProjectConnections(Project project)
+        {
+            foreach(var userproject in _db.UserProjects)
+            {
+                if(userproject.projectId == project.ID)
+                {
+                    _db.Entry(userproject).State = EntityState.Deleted;
+                }
+            }
+            _db.SaveChanges();
+        }
     }
 
 

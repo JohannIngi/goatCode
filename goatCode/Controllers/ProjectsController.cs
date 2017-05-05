@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using goatCode.Models.Entities;
 
 namespace goatCode.Controllers
 {
@@ -33,6 +34,43 @@ namespace goatCode.Controllers
 
             return View(viewModel);
         }
-      
+        [HttpGet]
+        public ActionResult Create()
+        {
+            ProjectViewModel anton = new ProjectViewModel();
+            anton.name = "";
+
+            return View(anton);
+        }
+        [HttpPost]
+        public ActionResult Create(ProjectViewModel model)
+        {
+            Project anton = new Project();
+            anton.name = model.name;
+            _service.AddNewProject(anton);
+
+            UserProject newProject = new UserProject();
+            string userId = User.Identity.GetUserId();
+
+            int projectId = _service.GetProjectIdByName(anton);
+
+            newProject.projectId = projectId;
+            newProject.userId = userId;
+            _uservice.addUserProjectConnection(newProject);
+            
+            return RedirectToAction("UserProjects");
+        }
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            Project model = _service.GetSingleProjectById(id);
+            if(model != null)
+            {
+                _uservice.deleteProjectConnections(model);
+                _service.DeleteProject(model);
+                return RedirectToAction("UserProjects");
+            }
+            return HttpNotFound();
+        }
     }
 }
