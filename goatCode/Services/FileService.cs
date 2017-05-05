@@ -1,4 +1,5 @@
 ﻿using goatCode.Models;
+using goatCode.Models.Entities;
 using goatCode.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -33,12 +34,18 @@ namespace goatCode.Services
                                   select f).SingleOrDefault();
                 FileViewModel temp = new FileViewModel
                 {
+                    id = singleFile.ID,
                     name = singleFile.name,
                     type = "." + "máni"
                 };
                 fileList.Add(temp);
             }
             return fileList;
+        }
+        public void AddNewFile(File newFile)
+        {
+            _db.Files.Add(newFile);
+            _db.SaveChanges();
         }
 
     }

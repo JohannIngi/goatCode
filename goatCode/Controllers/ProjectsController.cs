@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using goatCode.Models.Entities;
+using System.Diagnostics;
 
 namespace goatCode.Controllers
 {
@@ -20,13 +21,6 @@ namespace goatCode.Controllers
         {
             return View();
         }
-
-        public ActionResult Detailzz(int id)
-        {
-            var viewModel = _service.GetProjectsByID(id);
-            return View(viewModel);
-        }
-        
 
         public ActionResult UserProjects()
         {
@@ -75,10 +69,42 @@ namespace goatCode.Controllers
             }
             return HttpNotFound();
         }
-        public ActionResult Details(int projectId)
+        [HttpGet]
+        public ActionResult Details(int? projectId)
         {
-            var viewModel = _fservice.GetFilesByProjectId(projectId);
-            return View(viewModel);
+            var viewModel = _fservice.GetFilesByProjectId(projectId.Value);
+            if(viewModel != null)
+            {
+                return View(viewModel);
+            }
+            return HttpNotFound();
         }
+        [HttpGet]
+        public ActionResult AddNewFile()
+        {
+            FileViewModel newFile = new FileViewModel();
+            newFile.name = "";
+            newFile.type = "";
+
+            return View(newFile);
+        }
+        [HttpPost]
+        public ActionResult AddNewFile(FileViewModel model)
+        {
+            File anton = new File();
+            anton.projectID = _service.GetSingleProjectById(1).ID;
+            anton.name = model.name;
+
+            //Todo: Ná í Current Project ID
+
+            Convert.ToInt32(RouteData.Values["id"] + Request.Url.Query);
+
+            _fservice.AddNewFile(anton);
+            
+            return RedirectToAction("Details");
+        }
+
+
+
     }
 }
