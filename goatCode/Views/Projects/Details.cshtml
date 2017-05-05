@@ -1,33 +1,35 @@
-﻿@model IEnumerable<goatCode.Models.ViewModels.FileViewModel>
+﻿@model goatCode.Models.ViewModels.hkhgjhgjyg
 
 @{
-    ViewBag.Title = "Filez";
+    ViewBag.Title = "Details";
 }
-@using goatCode.Models.ViewModels
-<h2>Project Filezz</h2>
+
+<h2>Details</h2>
+
 
 <p>
-    @Html.ActionLink("Add New File", "AddNewFile")
+    @Html.ActionLink("Add New File", "AddNewFile", new { projectId = Model.projectId })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            Name
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { projectId=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.lst)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { projectId = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
 
 </table>

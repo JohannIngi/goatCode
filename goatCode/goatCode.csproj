@@ -215,6 +215,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\FileTypeViewModel.cs" />
     <Compile Include="Models\ViewModels\FileViewModel.cs" />
+    <Compile Include="Models\ViewModels\hkhgjhgjyg.cs" />
     <Compile Include="Models\ViewModels\ProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -288,8 +289,8 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Projects\UserProjects.cshtml" />
     <Content Include="Views\Projects\Create.cshtml" />
-    <Content Include="Views\Projects\Details.cshtml" />
     <Content Include="Views\Projects\AddNewFile.cshtml" />
+    <Content Include="Views\Projects\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

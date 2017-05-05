@@ -16,7 +16,6 @@ namespace goatCode.Controllers
         private ProjectService _service = new ProjectService();
         private UserProjectService _uservice = new UserProjectService();
         private FileService _fservice = new FileService();
-        private int currentProject;
         // GET: Projects
         public ActionResult Index()
         {
@@ -73,19 +72,23 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult Details(int? projectId)
         {
-            var viewModel = _fservice.GetFilesByProjectId(projectId.Value);
-            if(viewModel != null)
+            if (projectId.HasValue)
             {
-                currentProject = projectId.Value;
-                return View(viewModel);
+                hkhgjhgjyg x = new hkhgjhgjyg(_fservice, projectId.Value);
+                if (x.isValid())
+                {
+                    return View(x);
+                }
             }
             return HttpNotFound();
         }
         [HttpGet]
-        public ActionResult AddNewFile()
+        public ActionResult AddNewFile(int? projectId)
         {
+            
             FileViewModel newFile = new FileViewModel();
             newFile.name = "";
+            newFile.projectId = projectId.Value;   
 
             return View(newFile);
         }
@@ -94,11 +97,11 @@ namespace goatCode.Controllers
         {
             File anton = new File();
             anton.name = model.name;
-            anton.projectID = 69;
+            anton.projectID = model.projectId;
             anton.extensionId = 1;
             _fservice.AddNewFile(anton);
             
-            return RedirectToAction("Details");
+            return RedirectToAction("Details", new { projectId = model.projectId });
         }
 
 
