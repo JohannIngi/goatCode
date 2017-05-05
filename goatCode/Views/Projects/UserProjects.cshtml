@@ -1,0 +1,33 @@
+﻿@model IEnumerable<goatCode.Models.ViewModels.ProjectViewModel>
+
+@{
+    ViewBag.Title = "UserProjects";
+}
+
+<h2>All Projects</h2>
+
+<p>
+    @Html.ActionLink("Create New Project", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { projectId=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

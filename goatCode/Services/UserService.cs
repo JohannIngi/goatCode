@@ -28,7 +28,7 @@ namespace goatCode.Services
 
             return viewModel;
         }
-        public bool AddNewUser(User newuser)
+        public bool AddNewUser(AspNetUser newuser)
         {
        
             _db.Users.Add(newuser);

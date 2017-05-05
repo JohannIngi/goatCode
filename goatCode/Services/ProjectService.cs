@@ -3,6 +3,7 @@ using goatCode.Models.Entities;
 using goatCode.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -43,20 +44,35 @@ namespace goatCode.Services
 
             return viewModel;
         }
-        public void AddProject(ProjectViewModel model)
-        {
-            //_db.Projects.Add(model);
-        }
-        
-
-        public bool AddNewProject(Project newProject)
+        public void AddNewProject(Project newProject)
         {
             _db.Projects.Add(newProject);
             _db.SaveChanges();
+        }
+        public int GetProjectIdByName(Project proj)
+        {
+            var projectz = _db.Projects;
+            var projectId = (from p in projectz
+                                 where p.name == proj.name
+                                 select p.ID).SingleOrDefault();
 
-            //TODO : villutjekk
+            return projectId;
+        }
+        public Project GetSingleProjectById(int id)
+        {
+            var projectz = _db.Projects;
 
-            return true;
+            Project singleProject = (from p in projectz
+                                              where p.ID == id
+                                              select p).SingleOrDefault();
+
+            return singleProject;
+        }
+        public void DeleteProject(Project project)
+        {
+            _db.Entry(project).State = EntityState.Deleted;
+            _db.SaveChanges();
+            
         }
     }
 }
