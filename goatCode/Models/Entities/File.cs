@@ -10,7 +10,8 @@ namespace goatCode.Models.Entities
         public int ID { get; set; }
         public int projectID { get; set; }
         public string name { get; set; }
-        public int extensionId { get; set; }
+        public string extension { get; set; }
+        public string content { get; set; }
 
     }
 }

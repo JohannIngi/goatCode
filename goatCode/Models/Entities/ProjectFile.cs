@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace goatCode.Models.ViewModels
+namespace goatCode.Models.Entities
 {
-    public class FileViewModel
+    public class ProjectFile
     {
         public int id { get; set; }
         public int projectId { get; set; }
-        public string name { get; set; }
-        public string extension { get; set; }
-
-
+        public int fileId { get; set; }
     }
 }

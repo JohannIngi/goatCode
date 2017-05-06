@@ -18,29 +18,14 @@ namespace goatCode.Services
             _db = new ApplicationDbContext();
         }
 
-        public List<FileViewModel> GetFilesByProjectId(int projectId)
+        public List<File> GetFilesByProjectId(int id)
         {
-            var fileProjects = _db.Files
-                .Where(x => x.projectID == projectId)
-                .Select(x => x.ID)
-                .ToList();
-
-            List<FileViewModel> fileList = new List<FileViewModel>();
-
-            var filez = _db.Files;
-            foreach(var number in fileProjects)
-            {
-                var singleFile = (from f in filez
-                                  where f.ID == number
-                                  select f).SingleOrDefault();
-                FileViewModel temp = new FileViewModel
-                {
-                    id = singleFile.ID,
-                    name = singleFile.name,
-                };
-                fileList.Add(temp);
-            }
-            return fileList;
+            return (from p in _db.Projects
+                    where p.ID == id
+                    join pf in _db.ProjectFiles on p.ID equals pf.projectId
+                    join f in _db.Files on pf.fileId equals f.ID
+                    orderby f.name
+                    select f).ToList();
         }
         public void AddNewFile(File newFile)
         {
