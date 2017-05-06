@@ -13,6 +13,7 @@ namespace goatCode.Controllers
     public class UserController : Controller
     {
         private ProjectService pservice = new ProjectService();
+        private UserService uservice = new UserService();
         private UserProjectService upservice = new UserProjectService();
         private ProjectOwnerService poservice = new ProjectOwnerService();
         // GET: User
@@ -65,9 +66,12 @@ namespace goatCode.Controllers
         [HttpPost]
         public ActionResult ShareProjects(ShareViewModel model)
         {
-            // TODO : villuchec og athuga hvort gaur se til og ef ekki, þa gefa skilaboð um það i view
-            pservice.AddUserToProject(model);
-            return RedirectToAction("Index", new { userName = User.Identity.Name });
+            if(uservice.DoesUserExist(model.email))
+            {
+                pservice.AddUserToProject(model);
+                return RedirectToAction("Index", new { userName = User.Identity.Name });
+            }
+            return View("Error");
         }
     }
 }

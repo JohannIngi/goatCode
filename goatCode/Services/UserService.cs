@@ -17,6 +17,16 @@ namespace goatCode.Services
         {
             _db = new ApplicationDbContext();
         }
-
+        public bool DoesUserExist(string email)
+        {
+            foreach(var user in _db.Users)
+            {
+                if(user.Email == email)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
