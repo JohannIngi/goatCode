@@ -9,6 +9,6 @@ namespace goatCode.Models.Entities
     {
         public int id { get; set; }
         public int projectId { get; set; }
-        public string userId { get; set; }
+        public int fileId { get; set; }
     }
 }
