@@ -282,11 +282,11 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Projects\Detailzz.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Projects\UserProjects.cshtml" />
     <Content Include="Views\Projects\Create.cshtml" />
     <Content Include="Views\Projects\AddNewFile.cshtml" />
     <Content Include="Views\Projects\Details.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
