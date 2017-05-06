@@ -22,6 +22,22 @@ namespace goatCode.Controllers
             return View(_fservice.GetFilesByProjectId(projectId.Value));
         }
 
+        public ActionResult Edit(int? FileId)
+        {
+            if (FileId.HasValue)
+            {
+                var file = _fservice.GetSingleFileById(FileId.Value);
+                if (file != null)
+                {
+                    return View(file);
+                }
+                // TODO: hvað ef ekki til?
+            }
+            // TODO: akveda hvert a að fara annars
+            return View("Error");
+        }
+
+
 
 
         // Gömul föll commenta þau út tímabundið

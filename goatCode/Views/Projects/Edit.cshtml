@@ -1,0 +1,39 @@
+﻿@model goatCode.Models.Entities.File
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Editor</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Editor</title>
+    <style type="text/css" media="screen">
+        body {
+            overflow: auto;
+        }
+
+        #editor {
+            height: 100vh;
+            padding-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+<pre id="editor">@Model.content</pre>
+    <div id="Editor">
+        <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/twilight");
+            editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
+            editor.setPrintMarginColumn(false);
+        </script>
+    </div>
+</body>
+</html>
+

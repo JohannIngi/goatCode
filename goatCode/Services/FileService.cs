@@ -34,13 +34,7 @@ namespace goatCode.Services
         }
         public File GetSingleFileById(int id)
         {
-            var filez = _db.Files;
-
-            File singleFile = (from f in filez
-                               where f.ID == id
-                               select f).SingleOrDefault();
-            
-            return singleFile;
+            return _db.Files.Where(x => x.ID == id).SingleOrDefault();
         }
         public void DeleteFile(File file)
         {
