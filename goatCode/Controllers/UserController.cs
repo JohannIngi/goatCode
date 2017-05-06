@@ -14,19 +14,13 @@ namespace goatCode.Controllers
     {
         private ProjectService pservice = new ProjectService();
         private UserService uservice = new UserService();
-        private UserProjectService upservice = new UserProjectService();
-        private ProjectOwnerService poservice = new ProjectOwnerService();
-        // GET: User
+
+        
         [Authorize(Roles = "User")]
-        public ActionResult Index(string userName) // TODO: þarf ekki þetta - höfum alltaf aðgang með Users.Identity.Namme
+        public ActionResult Index()
         {
-            if(userName != null || userName != "") // Prófum að skrifa inn í url username sem er ekki til. Ef vesen búa user validation
-            {
-                var ret = pservice.getInUseProjectsByUserName(userName);
-                return View(ret);
-            }
-            //TODO: specific error view
-            return View("Error");
+            var ret = pservice.getInUseProjectsByUserName(User.Identity.Name);
+            return View(ret);
         }
        
 
@@ -39,20 +33,8 @@ namespace goatCode.Controllers
         [HttpPost]
         public ActionResult Create(Project project)
         {
-            pservice.AddNewProject(project);
-
-            UserProject newProject = new UserProject();
-            newProject.userId = User.Identity.GetUserId();
-            newProject.projectId = pservice.GetProjectIdByName(project);
-            upservice.addUserProjectConnection(newProject);
-
-            ProjectOwner newOwner = new ProjectOwner();
-            newOwner.projectId = pservice.GetProjectIdByName(project);
-            newOwner.userId = User.Identity.GetUserId();
-
-            poservice.addNewProjectOwner(newOwner);
-
-            return RedirectToAction("Index", new { username = User.Identity.Name });
+            pservice.AddNewProject(project, User.Identity.GetUserId());
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult ShareProjects(int? ProjectId)
@@ -61,7 +43,7 @@ namespace goatCode.Controllers
             {
                 return View(new ShareViewModel { projectId = ProjectId.Value });
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public ActionResult ShareProjects(ShareViewModel model)
@@ -69,7 +51,7 @@ namespace goatCode.Controllers
             if(uservice.DoesUserExist(model.email))
             {
                 pservice.AddUserToProject(model);
-                return RedirectToAction("Index", new { userName = User.Identity.Name });
+                return RedirectToAction("Index");
             }
             return View("Error");
         }

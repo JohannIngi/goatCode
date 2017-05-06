@@ -27,19 +27,18 @@ namespace goatCode.Services
                     orderby f.name
                     select f).ToList();
         }
-        public void AddNewFile(File newFile)
+        public void AddNewFile(NewFileViewModel model)
         {
-            _db.Files.Add(newFile);
+            File file = new File { name = model.name, content = "", extension = model.extension };
+            _db.Files.Add(file);
+            _db.SaveChanges();
+
+            _db.ProjectFiles.Add(new ProjectFile { fileId = file.ID, projectId = model.projectId });
             _db.SaveChanges();
         }
         public File GetSingleFileById(int id)
         {
             return _db.Files.Where(x => x.ID == id).SingleOrDefault();
-        }
-        public void DeleteFile(File file)
-        {
-            _db.Entry(file).State = EntityState.Deleted;
-            _db.SaveChanges();
         }
     }
 }

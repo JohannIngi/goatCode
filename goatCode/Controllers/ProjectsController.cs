@@ -19,7 +19,17 @@ namespace goatCode.Controllers
         // GET: Projects
         public ActionResult Index(int? projectId)
         {
-            return View(_fservice.GetFilesByProjectId(projectId.Value));
+            if (projectId.HasValue)
+            {
+                var model = new ProjectIndexViewModel();
+                model.files = _fservice.GetFilesByProjectId(projectId.Value);
+                model.projectId = projectId.Value;
+                return View(model);
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         public ActionResult Edit(int? FileId)
@@ -36,7 +46,19 @@ namespace goatCode.Controllers
             // TODO: akveda hvert a að fara annars
             return View("Error");
         }
-
+        [HttpGet]
+        public ActionResult Create(int? ProjectId)
+        {
+            var model = new NewFileViewModel { projectId = ProjectId.Value };
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Create(NewFileViewModel model)
+        {
+           _fservice.AddNewFile(model);
+ 
+            return RedirectToAction("Index", new { ProjectId = model.projectId });
+        }
 
 
 
