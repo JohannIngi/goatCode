@@ -1,4 +1,5 @@
-﻿using System;
+﻿using goatCode.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,15 +9,18 @@ namespace goatCode.Controllers
 {
     public class UserController : Controller
     {
+        private ProjectService pservice = new ProjectService();
         // GET: User
         [Authorize(Roles = "User")]
         public ActionResult Index(string userName)
         {
             if(userName == null || userName == "") // Prófum að skrifa inn í url username sem er ekki til. Ef vesen búa user validation
             {
-                //TODO: Return View með ViewModeli
+                var ret = pservice.getInUseProjectsByUserName(userName);
+                return View(ret);
             }
-            return View();
+            //TODO: specific error view
+            return View("Error");
         }
     }
 }

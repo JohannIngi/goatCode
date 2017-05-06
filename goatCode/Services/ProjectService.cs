@@ -17,6 +17,15 @@ namespace goatCode.Services
         {
             _db = new ApplicationDbContext();
         }
+        public List<Project> getInUseProjectsByUserName(string userName)
+        {
+            return (from user in _db.Users
+                    where user.UserName == userName
+                    join pb in _db.UserProjects on user.Id equals pb.userId
+                    join p in _db.Projects on pb.projectId equals p.ID
+                    orderby p.name
+                    select p).ToList();
+        }
 
         public ProjectViewModel GetProjectsByID(int projectID)
         {
