@@ -14,7 +14,7 @@ namespace goatCode.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index(string userName)
         {
-            if(userName == null || userName == "") // Prófum að skrifa inn í url username sem er ekki til. Ef vesen búa user validation
+            if(userName != null || userName != "") // Prófum að skrifa inn í url username sem er ekki til. Ef vesen búa user validation
             {
                 var ret = pservice.getInUseProjectsByUserName(userName);
                 return View(ret);
