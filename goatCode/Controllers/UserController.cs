@@ -49,7 +49,7 @@ namespace goatCode.Controllers
 
             poservice.addNewProjectOwner(newOwner);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { username = User.Identity.Name });
         }
 
     }
