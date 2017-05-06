@@ -83,5 +83,17 @@ namespace goatCode.Services
             _db.SaveChanges();
             
         }
+
+        internal void AddUserToProject(ShareViewModel model)
+        {
+            // TODO: Hvað á að gerast ef notandi er þegar í verkefninu?
+            var user = _db.Users.Where(x => x.Email == model.email).SingleOrDefault();
+            if (user != null)
+            {
+                var entry = new UserProject { userId = user.Id, projectId = model.projectId };
+                _db.UserProjects.Add(entry);
+                _db.SaveChanges();
+            }
+        }
     }
 }
