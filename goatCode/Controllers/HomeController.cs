@@ -14,19 +14,9 @@ namespace goatCode.Controllers
             {
                 // ToDO: If is admin redirect to admin controller
 
-                return RedirectToAction("Index", "User", new { username = User.Identity.Name });
+                return RedirectToAction("Index", "User");
             }
             return View();
-        }
-
-        public ViewResult About()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ViewResult Contact()
-        {
-            throw new NotImplementedException();
         }
     }
 }

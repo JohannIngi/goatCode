@@ -19,14 +19,15 @@ namespace goatCode.Services
         }
         public bool DoesUserExist(string email)
         {
-            foreach(var user in _db.Users)
+            var user = _db.Users.Where(x => x.Email == email).SingleOrDefault();
+            if (user == null)
             {
-                if(user.Email == email)
-                {
-                    return true;
-                }
+                return false;
             }
-            return false;
+            else
+            {
+                return true;
+            }
         }
     }
 }
