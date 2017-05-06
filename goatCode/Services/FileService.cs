@@ -40,5 +40,12 @@ namespace goatCode.Services
         {
             return _db.Files.Where(x => x.ID == id).SingleOrDefault();
         }
+        public void UpdateContent(string content)
+        {
+            var update = (from a in _db.Files
+                          where a.content == content
+                          select new { a.content }).FirstOrDefault();
+        }
     }
+
 }

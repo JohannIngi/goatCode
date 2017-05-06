@@ -32,8 +32,18 @@
             editor.setTheme("ace/theme/twilight");
             editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
             editor.setPrintMarginColumn(false);
+
+            var textarea = $('textarea[name="content"]');
+            editor.getSession().on("change", function () {
+                textarea.val(editor.getSession().getValue());
+            });
         </script>
     </div>
+    <form>
+        @Html.ActionLink("Save", "Save")
+        <div id="content"></div>
+        <textarea name="content" style="display: none;" />
+    </form>
 </body>
 </html>
 
