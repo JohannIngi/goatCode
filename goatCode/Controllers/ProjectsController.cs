@@ -98,7 +98,6 @@ namespace goatCode.Controllers
             File anton = new File();
             anton.name = model.name;
             anton.projectID = model.projectId;
-            anton.extensionId = 1;
             _fservice.AddNewFile(anton);
             
             return RedirectToAction("Details", new { projectId = model.projectId });

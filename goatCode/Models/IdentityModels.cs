@@ -23,7 +23,8 @@ namespace goatCode.Models
     {
         public DbSet<File> Files { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<FileType> FileTypes { get; set; }
+        public DbSet<ProjectFile> ProjectFiles { get; set; }
+        public DbSet<ProjectOwner> ProjectOwners { get; set; }
         public DbSet<UserProject> UserProjects { get; set; }
 
 
