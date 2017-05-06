@@ -13,16 +13,19 @@ namespace goatCode.Controllers
 {
     public class ProjectsController : Controller
     {
-        private ProjectService _service = new ProjectService();
-        private UserProjectService _uservice = new UserProjectService();
+     //   private ProjectService _service = new ProjectService();
+       // private UserProjectService _uservice = new UserProjectService();
         private FileService _fservice = new FileService();
         // GET: Projects
-        public ActionResult Index()
+        public ActionResult Index(int? projectId)
         {
-            return View();
+            return View(_fservice.GetFilesByProjectId(projectId.Value));
         }
 
-        public ActionResult UserProjects()
+
+
+        // Gömul föll commenta þau út tímabundið
+        /*public ActionResult UserProjects()
         {
             string userId = User.Identity.GetUserId();
             var viewModel = _uservice.GetProjectByUser(userId);
@@ -69,19 +72,9 @@ namespace goatCode.Controllers
             }
             return HttpNotFound();
         }
-        [HttpGet]
-        public ActionResult Details(int? projectId)
-        {
-            if (projectId.HasValue)
-            {
-                hkhgjhgjyg x = new hkhgjhgjyg(_fservice, projectId.Value);
-                if (x.isValid())
-                {
-                    return View(x);
-                }
-            }
-            return HttpNotFound();
-        }
+ 
+
+        
         [HttpGet]
         public ActionResult AddNewFile(int? projectId)
         {
@@ -115,7 +108,7 @@ namespace goatCode.Controllers
             return HttpNotFound();
 
         }
-
+        */
 
     }
 }
