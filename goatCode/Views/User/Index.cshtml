@@ -25,7 +25,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("See Files", "Index", "Projects", new { projectId=item.ID }, null) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID }) |
+            @Html.ActionLink("Share", "ShareProjects", new { ProjectId = item.ID})
         </td>
     </tr>
 }

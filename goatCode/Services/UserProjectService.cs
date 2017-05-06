@@ -62,5 +62,30 @@ namespace goatCode.Services
             }
             _db.SaveChanges();
         }
+        /*public void addUserToProject(string email)
+        {
+            var user = _db.Users
+            .Where(x => x.Email == email)
+            .Select(x => x.Id)
+            .ToList(); 
+
+
+            List<ProjectViewModel> projectList = new List<ProjectViewModel>();
+            var projectz = _db.Projects;
+            foreach (var number in userProjects)
+            {
+                var singleProject = (from p in projectz
+                                     where p.ID == number
+                                     select p).SingleOrDefault();
+
+                ProjectViewModel temp = new ProjectViewModel
+                {
+                    ID = singleProject.ID,
+                    name = singleProject.name
+                };
+                projectList.Add(temp);
+            }*/
+           // return null;
+        
     }
 }
