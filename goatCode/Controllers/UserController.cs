@@ -9,8 +9,13 @@ namespace goatCode.Controllers
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Index()
+        [Authorize(Roles = "User")]
+        public ActionResult Index(string userName)
         {
+            if(userName == null || userName == "") // Prófum að skrifa inn í url username sem er ekki til. Ef vesen búa user validation
+            {
+                //TODO: Return View með ViewModeli
+            }
             return View();
         }
     }

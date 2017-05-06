@@ -12,7 +12,9 @@ namespace goatCode.Controllers
         {
             if(User.Identity.IsAuthenticated)
             {
-                // Specific UserView
+                // ToDO: If is admin redirect to admin controller
+
+                return RedirectToAction("Index", "User", new { username = User.Identity.Name });
             }
             return View();
         }
