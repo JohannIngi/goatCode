@@ -1,4 +1,5 @@
 ﻿using goatCode.Models.Entities;
+using goatCode.Models.ViewModels;
 using goatCode.Services;
 using Microsoft.AspNet.Identity;
 using System;
@@ -16,7 +17,7 @@ namespace goatCode.Controllers
         private ProjectOwnerService poservice = new ProjectOwnerService();
         // GET: User
         [Authorize(Roles = "User")]
-        public ActionResult Index(string userName)
+        public ActionResult Index(string userName) // TODO: þarf ekki þetta - höfum alltaf aðgang með Users.Identity.Namme
         {
             if(userName != null || userName != "") // Prófum að skrifa inn í url username sem er ekki til. Ef vesen búa user validation
             {
@@ -26,6 +27,7 @@ namespace goatCode.Controllers
             //TODO: specific error view
             return View("Error");
         }
+       
 
         [HttpGet]
         public ActionResult Create()
@@ -51,6 +53,21 @@ namespace goatCode.Controllers
 
             return RedirectToAction("Index", new { username = User.Identity.Name });
         }
-
+        [HttpGet]
+        public ActionResult ShareProjects(int? ProjectId)
+        {
+            if (ProjectId.HasValue)
+            {
+                return View(new ShareViewModel { projectId = ProjectId.Value });
+            }
+            return View("Index");
+        }
+        [HttpPost]
+        public ActionResult ShareProjects(ShareViewModel model)
+        {
+            // TODO : villuchec og athuga hvort gaur se til og ef ekki, þa gefa skilaboð um það i view
+            pservice.AddUserToProject(model);
+            return RedirectToAction("Index", new { userName = User.Identity.Name });
+        }
     }
 }
