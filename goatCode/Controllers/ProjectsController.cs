@@ -22,9 +22,11 @@ namespace goatCode.Controllers
         {
             if (projectId.HasValue)
             {
-                var model = new ProjectIndexViewModel();
-                model.files = _fservice.GetFilesByProjectId(projectId.Value);
-                model.projectId = projectId.Value;
+                var model = new ProjectIndexViewModel()
+                {
+                    files = _fservice.GetFilesByProjectId(projectId.Value),
+                    projectId = projectId.Value
+                };
                 return View(model);
             }
             else

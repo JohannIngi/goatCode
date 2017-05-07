@@ -46,6 +46,12 @@ namespace goatCode.Services
                     orderby f.name
                     select f).ToList();
         }
+
+        public List<File> GetAllFiles()
+        {
+            return _db.Files.ToList();
+        }
+
         public void AddNewFile(NewFileViewModel model)
         {
             File file = new File { name = model.name, content = "", extension = model.extension };
