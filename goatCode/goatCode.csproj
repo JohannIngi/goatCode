@@ -290,6 +290,9 @@
     <Content Include="Views\User\ShareProjects.cshtml" />
     <Content Include="Views\Projects\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\ProjectPermissionError.cshtml" />
+    <Content Include="Views\Projects\FilePermissionError.cshtml" />
+    <Content Include="Views\User\UserDoesNotExistError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
