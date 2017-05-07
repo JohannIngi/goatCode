@@ -56,6 +56,10 @@ namespace goatCode.Services
         public void EditProjectName(Project project)
         {
             _db.Entry(project).State = EntityState.Modified;
+        public void DeleteProject(int projectId)
+        {
+            var project = _db.Projects.Where(x => x.ID == projectId).SingleOrDefault();
+            _db.Projects.Remove(project);
             _db.SaveChanges();
         }
     }
