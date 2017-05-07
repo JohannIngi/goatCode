@@ -29,6 +29,16 @@ namespace goatCode.Services
                 return true;
             }
         }
+
+        public List<AdminUsersViewModel> GetAllUsers()
+        {
+            var role = _db.Roles.SingleOrDefault(x => x.Name == "Admin");
+            var model = _db.Users.Where(x => x.Roles.All(r => r.RoleId != role.Id));
+            var retValue = model.Select(s => new AdminUsersViewModel { email = s.Email }).ToList();
+
+            return retValue;
+        }
+   
         public bool IsUserOwner(string userId)
         {
             var owner = _db.ProjectOwners.Where(x => x.userId == userId).SingleOrDefault();
@@ -61,7 +71,9 @@ namespace goatCode.Services
             var userProject = _db.UserProjects.Where(x => x.projectId == projectId && x.userId == userId).SingleOrDefault();
             _db.UserProjects.Remove(userProject);
             _db.SaveChanges();
-
+            
         }
+
+        
     }
 }

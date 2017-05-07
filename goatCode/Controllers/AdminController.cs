@@ -1,4 +1,5 @@
-﻿using System;
+﻿using goatCode.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,13 +7,34 @@ using System.Web.Mvc;
 
 namespace goatCode.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        // GET: Admin
-        [Authorize(Roles = "Admin")]
+        private FileService fservice = new FileService();
+        private ProjectService pservice = new ProjectService();
+        private UserService uservice = new UserService();
         public ActionResult Index()
         {
+            ViewBag.Files = fservice.GetAllFiles().Count;
+            ViewBag.Projects = pservice.GetAllProjects().Count();
+            ViewBag.Users = uservice.GetAllUsers().Count;
+            
             return View();
+        }
+        public ActionResult Files()
+        {
+            var model = fservice.GetAllFiles();
+            return View(model);
+        }
+        public ActionResult Projects()
+        {
+            var model = pservice.GetAllProjects();
+            return View(model);
+        }
+        public ActionResult Users()
+        {
+            var model = uservice.GetAllUsers();
+            return View(model);
         }
     }
 }
