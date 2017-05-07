@@ -5,8 +5,9 @@
 }
 @using (Html.BeginForm("Save", "Projects", FormMethod.Post))
 {
-    @Html.HiddenFor(m => m.content, new { @id = "hidden_editor" })
+    @Html.HiddenFor(m => m.content, new { Model.content})
     <input type="submit" value="Save" />
+    //TODO : Þetta virkar ekki, þarf að skoða þetta betur....
 }
 <h2>Editor</h2>
 

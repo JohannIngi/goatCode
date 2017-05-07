@@ -42,6 +42,7 @@ namespace goatCode.Services
         }
         public void UpdateContent(string content)
         {
+            //TODO : Þetta virkar ekki þarf að skoða betur seinna.
             var update = (from a in _db.Files
                           where a.content == content
                           select new { a.content }).FirstOrDefault();
