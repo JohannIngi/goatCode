@@ -46,6 +46,16 @@ namespace goatCode.Services
                           where a.content == content
                           select new { a.content }).FirstOrDefault();
         }
+
+        
+
+        public void DeleteFile(int id)
+        {
+            File file = new File { ID = id };
+            _db.Files.Attach(file);
+            _db.Files.Remove(file);
+            _db.SaveChanges();
+        }
     }
 
 }

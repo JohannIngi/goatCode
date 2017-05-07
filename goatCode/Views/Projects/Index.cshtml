@@ -22,7 +22,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { FileId = item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Delete", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId })
         </td>
     </tr>
 }

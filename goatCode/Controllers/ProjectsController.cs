@@ -154,5 +154,20 @@ namespace goatCode.Controllers
         }
         */
 
+        public ActionResult DeleteFile(int? fileId, int? projectId)
+        {
+            if (fileId.HasValue)
+            {
+                _fservice.DeleteFile(fileId.Value);
+            }
+
+            if (projectId.HasValue)
+            {
+                return RedirectToAction("Index", new { projectId = projectId.Value });
+            }
+
+            return View("Error");
+        }
+
     }
 }
