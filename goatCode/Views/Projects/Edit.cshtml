@@ -3,47 +3,31 @@
 @{
     ViewBag.Title = "Edit";
 }
-@using (Html.BeginForm("Save", "Projects", FormMethod.Post))
+@using (Html.BeginForm("SaveCode", "Projects", FormMethod.Post))
 {
-    @Html.HiddenFor(m => m.content, new { Model.content})
-    <input type="submit" value="Save" />
+    @Html.HiddenFor(m => m.content, new { @id = "hidden_editor", FileID = Model.ID})
+    <input type="submit" value="Save code" />
     //TODO : Þetta virkar ekki, þarf að skoða þetta betur....
 }
-<h2>Editor</h2>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Editor</title>
-    <style type="text/css" media="screen">
-        body {
-            overflow: auto;
-        }
-
-        #editor {
-            height: 100vh;
-            padding-top: 60px;
-        }
-    </style>
-</head>
-<body>
 
 <pre id="editor">@Model.content</pre>
     <div id="Editor">
-        <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script>
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/twilight");
-            editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
-            editor.setPrintMarginColumn(false);
+        @section scripts
+        {
+            <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+            <script>
+                    var editor = ace.edit("editor");
+                    editor.setTheme("ace/theme/twilight");
+                    editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
+                    editor.setPrintMarginColumn(false);
 
-            $("form").submit(function () {
-               $("#hidden_editor").val(editor.getSession().getValue());
-            });
-     
-        </script>
+                    $("form").submit(function () {
+                    $("#hidden_editor").val(editor.getSession().getValue());
+                    });
+             </script>
+        }
+
+        
     </div>
-</body>
-</html>
 

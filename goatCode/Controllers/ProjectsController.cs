@@ -31,14 +31,15 @@ namespace goatCode.Controllers
                 return View("Error");
             }
         }
-        
+
         [HttpPost]
-        public ActionResult Save(string content, int id)
+        public ActionResult SaveCode(File file)
         {
             // TODO: Þetta virkar ekki þarf að skoða þetta betur seinna.
-            var data = content;
-            _fservice.UpdateContent(data);
-            return RedirectToAction("Index");
+            var dataContent = file.content;
+            var dataID = file.ID;
+            _fservice.UpdateContent(dataContent, dataID);
+            return View("Index");
         }
 
         public ActionResult Edit(int? FileId)
