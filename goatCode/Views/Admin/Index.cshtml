@@ -1,0 +1,26 @@
+﻿@using goatCode.Services
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Admin Stuff</h2>
+
+
+<p>
+    @Html.ActionLink("List of Files", "Files")
+    <br />
+    Numer of Files: @ViewBag.Files
+
+</p>
+<p>
+    @Html.ActionLink("List of Projects", "Projects")
+    <br />
+    Number of Projects: @ViewBag.Projects
+</p>
+<p>
+    @Html.ActionLink("List of Users", "Users")
+    <br />
+    Number of Users: @ViewBag.Users
+    
+</p>
+<br />
+<img src="@Url.Action("ChartPie")" alt="Chart" /> 
