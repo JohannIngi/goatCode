@@ -28,6 +28,10 @@ namespace goatCode.Controllers
             Project project = new Project();
             return View(project);
         }
+        public ActionResult ReturnHome()
+        {
+            return View("index", "home");
+        }
         [HttpPost]
         public ActionResult Create(Project project)
         {
