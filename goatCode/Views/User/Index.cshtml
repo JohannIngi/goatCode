@@ -20,7 +20,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.name)
+            @Html.Raw(item.name)        
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { projectId=item.ID }) | <!--N-->

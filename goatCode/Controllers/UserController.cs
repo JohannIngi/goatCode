@@ -70,7 +70,7 @@ namespace goatCode.Controllers
         {
             if(projectId.HasValue)
             {
-                if (uservice.IsUserOwner(User.Identity.GetUserId()))
+                if (uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
                 {
                     // Delete All Files
                     fservice.DeleteAllFilesinProject(projectId.Value);

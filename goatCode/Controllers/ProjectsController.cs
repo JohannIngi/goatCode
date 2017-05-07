@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using goatCode.Models.Entities;
 using System.Diagnostics;
+using Microsoft.Security.Application;
 
 namespace goatCode.Controllers
 {
@@ -59,8 +60,10 @@ namespace goatCode.Controllers
             return View(model);
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(NewFileViewModel model)
         {
+            model.name = Sanitizer.GetSafeHtmlFragment(model.name);
            _fservice.AddNewFile(model);
  
             return RedirectToAction("Index", new { ProjectId = model.projectId });

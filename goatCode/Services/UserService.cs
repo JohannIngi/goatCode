@@ -29,9 +29,9 @@ namespace goatCode.Services
                 return true;
             }
         }
-        public bool IsUserOwner(string userId)
+        public bool IsUserOwner(string userId, int projectId)
         {
-            var owner = _db.ProjectOwners.Where(x => x.userId == userId).SingleOrDefault();
+            var owner = _db.ProjectOwners.Where(x => x.userId == userId && x.projectId == projectId).SingleOrDefault();
             if(owner == null)
             {
                 return false;
