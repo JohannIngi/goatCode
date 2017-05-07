@@ -34,8 +34,9 @@ namespace goatCode.Controllers
         [HttpPost]
         public ActionResult Save(File file)
         {
-            _fservice.UpdateContent(file.content);
-            return View("Edit");
+            var data = file.content;
+            _fservice.UpdateContent(data);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int? FileId)

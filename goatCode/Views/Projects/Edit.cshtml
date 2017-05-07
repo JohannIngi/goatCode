@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Edit";
 }
-@using (Html.BeginForm("Save", "Edit", FormMethod.Post))
+@using (Html.BeginForm("Save", "Projects", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.content, new { @id = "hidden_editor" })
     <input type="submit" value="Save" />
