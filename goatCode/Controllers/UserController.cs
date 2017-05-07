@@ -19,7 +19,7 @@ namespace goatCode.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
-            var ret = pservice.getInUseProjectsByUserName(User.Identity.Name);
+            var ret = pservice.GetInUseProjectsByUserName(User.Identity.Name);
             return View(ret);
         }
         [HttpGet]
@@ -53,6 +53,19 @@ namespace goatCode.Controllers
             }
             return View("Error");
         }
+        [HttpGet]
+        public ActionResult Edit(int? projectId)
+        { 
+            return View(pservice.GetProjectByProjectId(projectId.Value));
+        }
+        [HttpPost]
+        public ActionResult Edit(Project project)
+        {
+            pservice.EditProjectName(project);
+
+            return RedirectToAction("Index");
+        }
+        
         public ActionResult Delete(int? projectId)
         {
             if(projectId.HasValue)

@@ -17,7 +17,7 @@ namespace goatCode.Services
         {
             _db = new ApplicationDbContext();
         }
-        public List<Project> getInUseProjectsByUserName(string userName)
+        public List<Project> GetInUseProjectsByUserName(string userName)
         {
             return (from user in _db.Users
                     where user.UserName == userName
@@ -48,6 +48,14 @@ namespace goatCode.Services
                 _db.SaveChanges();
             }
         }
+        public Project GetProjectByProjectId(int projectId)
+        {
+            var project = _db.Projects.Where(x => x.ID == projectId).SingleOrDefault();
+            return project;
+        }
+        public void EditProjectName(Project project)
+        {
+            _db.Entry(project).State = EntityState.Modified;
         public void DeleteProject(int projectId)
         {
             var project = _db.Projects.Where(x => x.ID == projectId).SingleOrDefault();
