@@ -5,29 +5,31 @@
 }
 @using (Html.BeginForm("SaveCode", "Projects", FormMethod.Post))
 {
-    @Html.HiddenFor(m => m.content, new { @id = "hidden_editor", FileID = Model.ID})
+    @Html.HiddenFor(m => m.content, new { @id = "hidden_editor" })
+    @Html.HiddenFor(x => x.ID, new { @id = "hidden_editor" })
+    @Html.HiddenFor(t => t.extension, new { @id = "hidden_editor" })
+    @Html.HiddenFor(c => c.name, new { @id = "hidden_editor" })
     <input type="submit" value="Save code" />
-    //TODO : Þetta virkar ekki, þarf að skoða þetta betur....
 }
 
 
-<pre id="editor">@Model.content</pre>
-    <div id="Editor">
-        @section scripts
-        {
-            <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-            <script>
-                    var editor = ace.edit("editor");
-                    editor.setTheme("ace/theme/twilight");
-                    editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
-                    editor.setPrintMarginColumn(false);
+<pre id="editor">
+    @Model.content
+</pre>
+<div id="Editor">
+@section scripts
+{
+    <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/twilight");
+        editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
+        editor.setPrintMarginColumn(false);
 
-                    $("form").submit(function () {
-                    $("#hidden_editor").val(editor.getSession().getValue());
-                    });
-             </script>
-        }
-
-        
-    </div>
+        $("form").submit(function () {
+        $("#hidden_editor").val(editor.getSession().getValue());
+        });
+    </script>
+ }
+</div>
 

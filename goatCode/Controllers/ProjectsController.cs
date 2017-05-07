@@ -31,15 +31,19 @@ namespace goatCode.Controllers
                 return View("Error");
             }
         }
-
+        [HttpGet]
+        public ActionResult SaveCode(int? fileID)
+        {
+            var file = _fservice.GetSingleFileById(fileID.Value);
+            return View(file);
+        }
         [HttpPost]
         public ActionResult SaveCode(File file)
         {
             // TODO: Þetta virkar ekki þarf að skoða þetta betur seinna.
-            var dataContent = file.content;
-            var dataID = file.ID;
-            _fservice.UpdateContent(dataContent, dataID);
-            return View("Index");
+            
+            _fservice.UpdateFile(file);
+            return RedirectToAction("Edit", new { FileId = file.ID });
         }
 
         public ActionResult Edit(int? FileId)

@@ -40,15 +40,11 @@ namespace goatCode.Services
         {
             return _db.Files.Where(x => x.ID == id).SingleOrDefault();
         }
-        public void UpdateContent(string content, int ID)
+        public void UpdateFile(File file)
         {
             //TODO : Þetta virkar ekki þarf að skoða betur seinna.
-            var file = GetSingleFileById(ID);
-            file.content = content;
-
             _db.Entry(file).State = EntityState.Modified;
             _db.SaveChanges();
-            
         }
     }
 
