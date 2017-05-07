@@ -46,6 +46,7 @@ namespace goatCode.Services
         {
             return _db.Files.Where(x => x.ID == id).SingleOrDefault();
         }
+
         public void DeleteAllFilesinProject(int projectId)
         {
             var files = _db.ProjectFiles.Where(x => x.projectId == projectId).ToList();
@@ -55,11 +56,21 @@ namespace goatCode.Services
             }
             _db.SaveChanges();
         }
-        public void UpdateContent(string content)
+        public void UpdateFile(File file)
         {
-            var update = (from a in _db.Files
-                          where a.content == content
-                          select new { a.content }).FirstOrDefault();
+            //TODO : Þetta virkar ekki þarf að skoða betur seinna.
+            _db.Entry(file).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
+
+        
+
+        public void DeleteFile(int id)
+        {
+            File file = new File { ID = id };
+            _db.Files.Attach(file);
+            _db.Files.Remove(file);
+            _db.SaveChanges();
         }
     }
 

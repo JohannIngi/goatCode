@@ -3,47 +3,33 @@
 @{
     ViewBag.Title = "Edit";
 }
+@using (Html.BeginForm("SaveCode", "Projects", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.content, new { @id = "hidden_editor" })
+    @Html.HiddenFor(x => x.ID, new { @id = "hidden_editor" })
+    @Html.HiddenFor(t => t.extension, new { @id = "hidden_editor" })
+    @Html.HiddenFor(c => c.name, new { @id = "hidden_editor" })
+    <input type="submit" value="Save code" />
+}
 
-<h2>Editor</h2>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Editor</title>
-    <style type="text/css" media="screen">
-        body {
-            overflow: auto;
-        }
+<pre id="editor">
+    @Model.content
+</pre>
+<div id="Editor">
+@section scripts
+{
+    <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/twilight");
+        editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
+        editor.setPrintMarginColumn(false);
 
-        #editor {
-            height: 100vh;
-            padding-top: 60px;
-        }
-    </style>
-</head>
-<body>
-
-<pre id="editor">@Model.content</pre>
-    <div id="Editor">
-        <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script>
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/twilight");
-            editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
-            editor.setPrintMarginColumn(false);
-
-            var textarea = $('textarea[name="content"]');
-            editor.getSession().on("change", function () {
-                textarea.val(editor.getSession().getValue());
-            });
-        </script>
-    </div>
-    <form>
-        @Html.ActionLink("Save", "Save")
-        <div id="content"></div>
-        <textarea name="content" style="display: none;" />
-    </form>
-</body>
-</html>
+        $("form").submit(function () {
+        $("#hidden_editor").val(editor.getSession().getValue());
+        });
+    </script>
+ }
+</div>
 

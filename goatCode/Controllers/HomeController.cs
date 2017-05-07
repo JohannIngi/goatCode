@@ -20,5 +20,9 @@ namespace goatCode.Controllers
             }
             return View();
         }
+        public ActionResult Register()
+        {
+            return RedirectToAction("Register", "Account");
+        }
     }
 }
