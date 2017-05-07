@@ -64,5 +64,9 @@ namespace goatCode.Services
             _db.Projects.Remove(project);
             _db.SaveChanges();
         }
+        public int GetProjectIdByFileId(int fileId)
+        {
+            return _db.ProjectFiles.Where(x => x.fileId == fileId).Select(x => x.projectId).SingleOrDefault();
+        }
     }
 }

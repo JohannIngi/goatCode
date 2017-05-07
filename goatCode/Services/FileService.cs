@@ -11,11 +11,30 @@ namespace goatCode.Services
 {
     public class FileService
     {
+
+        static Dictionary<string, string> aceMap = new Dictionary<string, string>
+        {
+            ["c"] = "c_cpp",
+            ["cpp"] = "c_cpp",
+            ["java"] = "java",
+            ["py"] = "python"
+        };
+
+
         private ApplicationDbContext _db;
 
         public FileService()
         {
             _db = new ApplicationDbContext();
+        }
+
+        public string getAceSettingsValueForExtension(string extension)
+        {
+            if (aceMap.ContainsKey(extension))
+            {
+                return aceMap[extension];
+            }
+            return "txt";
         }
 
         public List<File> GetFilesByProjectId(int id)

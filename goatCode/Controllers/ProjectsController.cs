@@ -13,7 +13,8 @@ namespace goatCode.Controllers
 {
     public class ProjectsController : Controller
     {
-     //   private ProjectService _service = new ProjectService();
+    
+        private ProjectService _pservice = new ProjectService();
        // private UserProjectService _uservice = new UserProjectService();
         private FileService _fservice = new FileService();
         // GET: Projects
@@ -56,7 +57,16 @@ namespace goatCode.Controllers
                 var file = _fservice.GetSingleFileById(FileId.Value);
                 if (file != null)
                 {
-                    return View(file);
+                    var model = new FileEditViewModel();
+                    
+                    model.content = file.content;
+                    model.extension = file.extension;
+                    model.ID = file.ID;
+                    model.name = file.name;
+                    model.projectId = _pservice.GetProjectIdByFileId(FileId.Value);
+                    
+                  
+                    return View(model);
                 }
                 // TODO: hvað ef ekki til?
             }

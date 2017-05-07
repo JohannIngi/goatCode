@@ -1,5 +1,5 @@
-﻿@model goatCode.Models.Entities.File
-
+﻿@model goatCode.Models.ViewModels.FileEditViewModel
+@using goatCode.Services
 @{
     ViewBag.Title = "Edit";
 }
@@ -23,7 +23,7 @@
     <script>
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/twilight");
-        editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
+        editor.session.setMode("@("ace/mode/" + Model.extensionSetting())"); // TODO: setja inn gildi eftir modeli
         editor.setPrintMarginColumn(false);
 
         $("form").submit(function () {
