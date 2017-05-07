@@ -37,26 +37,33 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult ShareProjects(int? ProjectId)
         {
-            if (ProjectId.HasValue)
+            if(uservice.IsUserRelatedToProject(User.Identity.GetUserId(), ProjectId.Value))
             {
-                return View(new ShareViewModel { projectId = ProjectId.Value });
-            }
-            return RedirectToAction("Index");
+               return View(new ShareViewModel { projectId = ProjectId.Value }); 
+            }            
+            // ef að notandi er ekki tengdur við project eða projectid == null
+            return View("Error");
         }
         [HttpPost]
         public ActionResult ShareProjects(ShareViewModel model)
         {
-            if(uservice.DoesUserExist(model.email))
+            if (uservice.DoesUserExist(model.email))
             {
                 pservice.AddUserToProject(model);
                 return RedirectToAction("Index");
             }
+            // Notandi sem reynt var að deila með er ekki til
             return View("Error");
         }
         [HttpGet]
         public ActionResult Edit(int? projectId)
-        { 
-            return View(pservice.GetProjectByProjectId(projectId.Value));
+        {
+            if (uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
+            {
+                return View(pservice.GetProjectByProjectId(projectId.Value));
+            }
+            // EF að Notandi er ekki eigandi að project eða project == null
+            return View("Error");
         }
         [HttpPost]
         public ActionResult Edit(Project project)
@@ -68,9 +75,10 @@ namespace goatCode.Controllers
         
         public ActionResult Delete(int? projectId)
         {
-            if(projectId.HasValue)
+            
+            if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
             {
-                if (uservice.IsUserOwner(User.Identity.GetUserId()))
+                if (uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
                 {
                     // Delete All Files
                     fservice.DeleteAllFilesinProject(projectId.Value);
@@ -79,17 +87,21 @@ namespace goatCode.Controllers
                     uservice.DeleteUserOwnerRelations(User.Identity.GetUserId(), projectId.Value);
                     // Delete Project
                     pservice.DeleteProject(projectId.Value);
+
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    uservice.DeleteSingleUserProjectRelations(User.Identity.GetUserId(), projectId.Value);                   
+                    uservice.DeleteSingleUserProjectRelations(User.Identity.GetUserId(), projectId.Value);
                 }
                 return RedirectToAction("Index");
             }
             else
             {
+                // Er ekki tengdur við project eða projectID == NULL
                 return View("Error");
             }
+            
         }
     }
 }
