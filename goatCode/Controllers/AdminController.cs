@@ -13,6 +13,10 @@ namespace goatCode.Controllers
         private FileService fservice = new FileService();
         private ProjectService pservice = new ProjectService();
         private UserService uservice = new UserService();
+        /// <summary>
+        /// Index 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             ViewBag.Files = fservice.GetAllFiles().Count;
