@@ -46,7 +46,7 @@ namespace goatCode.Controllers
                return View(new ShareViewModel { projectId = ProjectId.Value }); 
             }            
             // ef að notandi er ekki tengdur við project eða projectid == null
-            return View("Error");
+            return View("ProjectPermissionError");
         }
         [HttpPost]
         public ActionResult ShareProjects(ShareViewModel model)
@@ -57,7 +57,7 @@ namespace goatCode.Controllers
                 return RedirectToAction("Index");
             }
             // Notandi sem reynt var að deila með er ekki til
-            return View("Error");
+            return View("UserDoesNotExistError");
         }
         [HttpGet]
         public ActionResult Edit(int? projectId)
@@ -67,7 +67,7 @@ namespace goatCode.Controllers
                 return View(pservice.GetProjectByProjectId(projectId.Value));
             }
             // EF að Notandi er ekki eigandi að project eða project == null
-            return View("Error");
+            return View("ProjectPermissionError");
         }
         [HttpPost]
         public ActionResult Edit(Project project)
@@ -103,7 +103,7 @@ namespace goatCode.Controllers
             else
             {
                 // Er ekki tengdur við project eða projectID == NULL
-                return View("Error");
+                return View("ProjectPermissionError");
             }
             
         }
