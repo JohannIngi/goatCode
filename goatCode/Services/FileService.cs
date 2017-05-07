@@ -43,11 +43,12 @@ namespace goatCode.Services
         public void DeleteAllFilesinProject(int projectId)
         {
             var files = _db.ProjectFiles.Where(x => x.projectId == projectId).ToList();
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 _db.ProjectFiles.Remove(file);
             }
             _db.SaveChanges();
+        }
         public void UpdateContent(string content)
         {
             var update = (from a in _db.Files
