@@ -14,6 +14,16 @@ namespace goatCode.Services
         /// <summary>
         /// Instance of database.
         /// </summary>
+
+        static Dictionary<string, string> aceMap = new Dictionary<string, string>
+        {
+            ["c"] = "c_cpp",
+            ["cpp"] = "c_cpp",
+            ["java"] = "java",
+            ["py"] = "python"
+        };
+
+
         private ApplicationDbContext _db;
 
         public FileService()
@@ -27,6 +37,15 @@ namespace goatCode.Services
         /// </summary>
         /// <param name="id">To match Projects.ID with the value of this id</param>
         /// <returns>Returns a list of all files in this projectID.</returns>
+        public string getAceSettingsValueForExtension(string extension)
+        {
+            if (aceMap.ContainsKey(extension))
+            {
+                return aceMap[extension];
+            }
+            return "txt";
+        }
+
         public List<File> GetFilesByProjectId(int id)
         {
             return (from p in _db.Projects
@@ -42,6 +61,11 @@ namespace goatCode.Services
         /// both the selected projectID and fileID is added to the ProjectFiles table.
         /// </summary>
         /// <param name="model">Instance of NewFileViewModel to get parameters from the ViewModel</param>
+        public List<File> GetAllFiles()
+        {
+            return _db.Files.ToList();
+        }
+
         public void AddNewFile(NewFileViewModel model)
         {
             File file = new File { name = model.name, content = "", extension = model.extension };
@@ -66,6 +90,7 @@ namespace goatCode.Services
         /// Searches by projectID to find a project, then removes all the files in specific project.
         /// </summary>
         /// <param name="projectId">So projectId in ProjectFiles table gets the same value as parameter projectId</param>
+
         public void DeleteAllFilesinProject(int projectId)
         {
             var files = _db.ProjectFiles.Where(x => x.projectId == projectId).ToList();
@@ -81,11 +106,12 @@ namespace goatCode.Services
         /// writes in editor.
         /// </summary>
         /// <param name="content">Lets the content be same as the content in the parameter (from the editor)</param>
-        public void UpdateContent(string content)
+
+        public void UpdateFile(File file)
         {
-            var update = (from a in _db.Files
-                          where a.content == content
-                          select new { a.content }).FirstOrDefault();
+            //TODO : Þetta virkar ekki þarf að skoða betur seinna.
+            _db.Entry(file).State = EntityState.Modified;
+            _db.SaveChanges();
         }
 
         /// <summary>

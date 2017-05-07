@@ -40,6 +40,10 @@ namespace goatCode.Controllers
             Project project = new Project();
             return View(project);
         }
+        public ActionResult ReturnHome()
+        {
+            return View("index", "home");
+        }
         [HttpPost]
         public ActionResult Create(Project project)
         {
@@ -56,21 +60,23 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult ShareProjects(int? ProjectId)
         {
-            if (ProjectId.HasValue)
+            if(uservice.IsUserRelatedToProject(User.Identity.GetUserId(), ProjectId.Value))
             {
-                return View(new ShareViewModel { projectId = ProjectId.Value });
-            }
-            return RedirectToAction("Index");
+               return View(new ShareViewModel { projectId = ProjectId.Value }); 
+            }            
+            // ef að notandi er ekki tengdur við project eða projectid == null
+            return View("ProjectPermissionError");
         }
         [HttpPost]
         public ActionResult ShareProjects(ShareViewModel model)
         {
-            if(uservice.DoesUserExist(model.email))
+            if (uservice.DoesUserExist(model.email))
             {
                 pservice.AddUserToProject(model);
                 return RedirectToAction("Index");
             }
-            return View("Error");
+            // Notandi sem reynt var að deila með er ekki til
+            return View("UserDoesNotExistError");
         }
 
         /// <summary>
@@ -80,8 +86,13 @@ namespace goatCode.Controllers
         /// <returns>First view to rename the project - then it returns view of all projects.</returns>
         [HttpGet]
         public ActionResult Edit(int? projectId)
-        { 
-            return View(pservice.GetProjectByProjectId(projectId.Value));
+        {
+            if (uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
+            {
+                return View(pservice.GetProjectByProjectId(projectId.Value));
+            }
+            // EF að Notandi er ekki eigandi að project eða project == null
+            return View("ProjectPermissionError");
         }
         [HttpPost]
         public ActionResult Edit(Project project)
@@ -99,9 +110,10 @@ namespace goatCode.Controllers
         /// <returns>View of all projects (except project the user deleted).</returns>
         public ActionResult Delete(int? projectId)
         {
-            if(projectId.HasValue)
+            
+            if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
             {
-                if (uservice.IsUserOwner(User.Identity.GetUserId()))
+                if (uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
                 {
                     // Delete All Files
                     fservice.DeleteAllFilesinProject(projectId.Value);
@@ -110,17 +122,21 @@ namespace goatCode.Controllers
                     uservice.DeleteUserOwnerRelations(User.Identity.GetUserId(), projectId.Value);
                     // Delete Project
                     pservice.DeleteProject(projectId.Value);
+
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    uservice.DeleteSingleUserProjectRelations(User.Identity.GetUserId(), projectId.Value);                   
+                    uservice.DeleteSingleUserProjectRelations(User.Identity.GetUserId(), projectId.Value);
                 }
                 return RedirectToAction("Index");
             }
             else
             {
-                return View("Error");
+                // Er ekki tengdur við project eða projectID == NULL
+                return View("ProjectPermissionError");
             }
+            
         }
     }
 }

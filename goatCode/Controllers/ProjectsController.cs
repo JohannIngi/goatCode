@@ -14,6 +14,9 @@ namespace goatCode.Controllers
     public class ProjectsController : Controller
     {
        // private ProjectService _service = new ProjectService();
+
+    
+        private ProjectService _pservice = new ProjectService();
        // private UserProjectService _uservice = new UserProjectService();
         private FileService _fservice = new FileService();
         // GET: Projects
@@ -29,9 +32,11 @@ namespace goatCode.Controllers
         {
             if (projectId.HasValue)
             {
-                var model = new ProjectIndexViewModel();
-                model.files = _fservice.GetFilesByProjectId(projectId.Value);
-                model.projectId = projectId.Value;
+                var model = new ProjectIndexViewModel()
+                {
+                    files = _fservice.GetFilesByProjectId(projectId.Value),
+                    projectId = projectId.Value
+                };
                 return View(model);
             }
             else
@@ -44,11 +49,23 @@ namespace goatCode.Controllers
         /// This saves the content the user writes in the editor. There is a "Save" button in editor view.
         /// </summary>
         /// <returns>When the user saves, he will be moved automatically to another view</returns>
-        public ActionResult Save()
+        [HttpGet]
+        public ActionResult SaveCode(int? fileID)
         {
-            string content = Request.Form["Content"];
-            _fservice.UpdateContent(content);
-            return RedirectToAction("edit");
+            var file = _fservice.GetSingleFileById(fileID.Value);
+            return View(file);
+        }
+        [HttpPost]
+        public ActionResult SaveCode(File file)
+        {
+            // TODO: Þetta virkar ekki þarf að skoða þetta betur seinna.
+            
+            _fservice.UpdateFile(file);
+            return RedirectToAction("Edit", new { FileId = file.ID });
+        }
+        public ActionResult ReturnHome()
+        {
+            return View("index", "home");
         }
 
         /// <summary>
@@ -57,6 +74,7 @@ namespace goatCode.Controllers
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns>List of files if the file has ID that is not null. Otherwise it will return error</returns>
+
         public ActionResult Edit(int? FileId)
         {
             if (FileId.HasValue)
@@ -64,7 +82,16 @@ namespace goatCode.Controllers
                 var file = _fservice.GetSingleFileById(FileId.Value);
                 if (file != null)
                 {
-                    return View(file);
+                    var model = new FileEditViewModel();
+                    
+                    model.content = file.content;
+                    model.extension = file.extension;
+                    model.ID = file.ID;
+                    model.name = file.name;
+                    model.projectId = _pservice.GetProjectIdByFileId(FileId.Value);
+                    
+                  
+                    return View(model);
                 }
                 // TODO: hvað ef ekki til?
             }

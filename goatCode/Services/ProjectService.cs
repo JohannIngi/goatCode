@@ -43,6 +43,11 @@ namespace goatCode.Services
         /// </summary>
         /// <param name="newProject">To let ProjectOwners.projectId have the same value as parameter newProject.ID</param>
         /// <param name="uId">To let UserProjects.userId have the same value as parameter uId</param>
+        public List<Project> GetAllProjects()
+        {
+            return _db.Projects.ToList();
+        }
+
         public void AddNewProject(Project newProject, String uId)
         {
             _db.Projects.Add(newProject);
@@ -101,6 +106,10 @@ namespace goatCode.Services
             var project = _db.Projects.Where(x => x.ID == projectId).SingleOrDefault();
             _db.Projects.Remove(project);
             _db.SaveChanges();
+        }
+        public int GetProjectIdByFileId(int fileId)
+        {
+            return _db.ProjectFiles.Where(x => x.fileId == fileId).Select(x => x.projectId).SingleOrDefault();
         }
     }
 }

@@ -19,11 +19,17 @@ namespace goatCode.Controllers
         {
             if(User.Identity.IsAuthenticated)
             {
-                // ToDO: If is admin redirect to admin controller
-
+                if(User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
                 return RedirectToAction("Index", "User");
             }
             return View();
+        }
+        public ActionResult Register()
+        {
+            return RedirectToAction("Register", "Account");
         }
     }
 }

@@ -44,9 +44,19 @@ namespace goatCode.Services
         /// </summary>
         /// <param name="userId">To let ProjectOwners.userId have the same value as parameter userId</param>
         /// <returns>If the userID is in ProjectOwners table it will return true, otherwise false.</returns>
-        public bool IsUserOwner(string userId)
+
+        public List<AdminUsersViewModel> GetAllUsers()
         {
-            var owner = _db.ProjectOwners.Where(x => x.userId == userId).SingleOrDefault();
+            var role = _db.Roles.SingleOrDefault(x => x.Name == "Admin");
+            var model = _db.Users.Where(x => x.Roles.All(r => r.RoleId != role.Id));
+            var retValue = model.Select(s => new AdminUsersViewModel { email = s.Email }).ToList();
+
+            return retValue;
+        }
+   
+        public bool IsUserOwner(string userId, int projectId)
+        {
+            var owner = _db.ProjectOwners.Where(x => x.userId == userId && x.projectId == projectId).SingleOrDefault();
             if(owner == null)
             {
                 return false;
@@ -62,6 +72,18 @@ namespace goatCode.Services
         /// The function will remove the ID from the table UserProjects.
         /// </summary>
         /// <param name="projectId">To let UserProjects.projectId have the same value as parameter projectId</param>
+        public bool IsUserRelatedToProject(string userId, int projectId)
+        {
+            var relation = _db.UserProjects.Where(x => x.userId == userId && x.projectId == projectId).SingleOrDefault();
+            if (relation == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public void DeleteUserProjectRelations(int projectId)
         {
             var userProject = _db.UserProjects.Where(x => x.projectId == projectId).ToList();
@@ -98,6 +120,9 @@ namespace goatCode.Services
             var userProject = _db.UserProjects.Where(x => x.projectId == projectId && x.userId == userId).SingleOrDefault();
             _db.UserProjects.Remove(userProject);
             _db.SaveChanges();
+
         }
+
+        
     }
 }
