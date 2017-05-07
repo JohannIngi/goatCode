@@ -48,6 +48,12 @@ namespace goatCode.Services
                 _db.ProjectFiles.Remove(file);
             }
             _db.SaveChanges();
+        public void UpdateContent(string content)
+        {
+            var update = (from a in _db.Files
+                          where a.content == content
+                          select new { a.content }).FirstOrDefault();
         }
     }
+
 }

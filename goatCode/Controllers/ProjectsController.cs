@@ -31,6 +31,12 @@ namespace goatCode.Controllers
                 return View("Error");
             }
         }
+        public ActionResult Save()
+        {
+            string content = Request.Form["Content"];
+            _fservice.UpdateContent(content);
+            return RedirectToAction("edit");
+        }
 
         public ActionResult Edit(int? FileId)
         {
