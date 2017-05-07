@@ -14,16 +14,14 @@ namespace goatCode.Controllers
     {
         private ProjectService pservice = new ProjectService();
         private UserService uservice = new UserService();
-
-        
+        private FileService fservice = new FileService();
+   
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
-            var ret = pservice.getInUseProjectsByUserName(User.Identity.Name);
+            var ret = pservice.GetInUseProjectsByUserName(User.Identity.Name);
             return View(ret);
         }
-       
-
         [HttpGet]
         public ActionResult Create()
         {
@@ -54,6 +52,44 @@ namespace goatCode.Controllers
                 return RedirectToAction("Index");
             }
             return View("Error");
+        }
+        [HttpGet]
+        public ActionResult Edit(int? projectId)
+        { 
+            return View(pservice.GetProjectByProjectId(projectId.Value));
+        }
+        [HttpPost]
+        public ActionResult Edit(Project project)
+        {
+            pservice.EditProjectName(project);
+
+            return RedirectToAction("Index");
+        }
+        
+        public ActionResult Delete(int? projectId)
+        {
+            if(projectId.HasValue)
+            {
+                if (uservice.IsUserOwner(User.Identity.GetUserId()))
+                {
+                    // Delete All Files
+                    fservice.DeleteAllFilesinProject(projectId.Value);
+                    // Delete All Relations
+                    uservice.DeleteUserProjectRelations(projectId.Value);
+                    uservice.DeleteUserOwnerRelations(User.Identity.GetUserId(), projectId.Value);
+                    // Delete Project
+                    pservice.DeleteProject(projectId.Value);
+                }
+                else
+                {
+                    uservice.DeleteSingleUserProjectRelations(User.Identity.GetUserId(), projectId.Value);                   
+                }
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("Error");
+            }
         }
     }
 }
