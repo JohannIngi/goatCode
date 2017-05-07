@@ -40,5 +40,14 @@ namespace goatCode.Services
         {
             return _db.Files.Where(x => x.ID == id).SingleOrDefault();
         }
+        public void DeleteAllFilesinProject(int projectId)
+        {
+            var files = _db.ProjectFiles.Where(x => x.projectId == projectId).ToList();
+            foreach(var file in files)
+            {
+                _db.ProjectFiles.Remove(file);
+            }
+            _db.SaveChanges();
+        }
     }
 }
