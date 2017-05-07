@@ -13,10 +13,18 @@ namespace goatCode.Controllers
 {
     public class ProjectsController : Controller
     {
-     //   private ProjectService _service = new ProjectService();
+       // private ProjectService _service = new ProjectService();
        // private UserProjectService _uservice = new UserProjectService();
         private FileService _fservice = new FileService();
         // GET: Projects
+
+        /// <summary>
+        /// Displays the homepage, which has a list of all projects from specific user. If the user has no 
+        /// project, no list will be displayed.
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>A view with a list of all projects. 
+        /// The view is from index in ProjectIndexViewModel</returns>
         public ActionResult Index(int? projectId)
         {
             if (projectId.HasValue)
@@ -31,6 +39,11 @@ namespace goatCode.Controllers
                 return View("Error");
             }
         }
+
+        /// <summary>
+        /// This saves the content the user writes in the editor. There is a "Save" button in editor view.
+        /// </summary>
+        /// <returns>When the user saves, he will be moved automatically to another view</returns>
         public ActionResult Save()
         {
             string content = Request.Form["Content"];
@@ -38,6 +51,12 @@ namespace goatCode.Controllers
             return RedirectToAction("edit");
         }
 
+        /// <summary>
+        /// When user clicks the edit button, he is moved to the editor view 
+        /// where he can start programming and write his own content.
+        /// </summary>
+        /// <param name="FileId"></param>
+        /// <returns>List of files if the file has ID that is not null. Otherwise it will return error</returns>
         public ActionResult Edit(int? FileId)
         {
             if (FileId.HasValue)
@@ -52,12 +71,24 @@ namespace goatCode.Controllers
             // TODO: akveda hvert a að fara annars
             return View("Error");
         }
+
+        /// <summary>
+        /// Gets projectId from NewFileViewModel. HttpPost will then create a new file in this specific project.
+        /// </summary>
+        /// <param name="ProjectId"></param>
+        /// <returns>Views a list of all files in specific project.</returns>
         [HttpGet]
         public ActionResult Create(int? ProjectId)
         {
             var model = new NewFileViewModel { projectId = ProjectId.Value };
             return View(model);
         }
+
+        /// <summary>
+        /// Calls AddNewFile function in FileService and gives it projectId.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Views a list of all files in this specific project. </returns>
         [HttpPost]
         public ActionResult Create(NewFileViewModel model)
         {
@@ -153,7 +184,19 @@ namespace goatCode.Controllers
 
         }
         */
-
+        // a medan file (sem notandi ytir a) hefur akvedid ID, er kallad i fall ur fileservice. 
+        // Svo ef projectId er til,
+        // fer notandi aftur a view thar sem hann ser listann af files thar sem buid er ad eyda einu.
+        /// <summary>
+        /// While the file (which user clicks) has ID, this calls the DeleteFile from FileService and it will
+        /// delete the fileID from the database. 
+        /// While the project user is in, has an ID, the user will be redirected to view with a list
+        /// of all files (with the previously selected file deleted).
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <param name="projectId"></param>
+        /// <returns>View with all files and the selected file deleted. If the file has no ID, 
+        /// this will return error.</returns>
         public ActionResult DeleteFile(int? fileId, int? projectId)
         {
             if (fileId.HasValue)
