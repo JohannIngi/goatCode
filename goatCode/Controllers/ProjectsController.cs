@@ -31,11 +31,19 @@ namespace goatCode.Controllers
                 return View("Error");
             }
         }
-        public ActionResult Save()
+        [HttpGet]
+        public ActionResult SaveCode(int? fileID)
         {
-            string content = Request.Form["Content"];
-            _fservice.UpdateContent(content);
-            return RedirectToAction("edit");
+            var file = _fservice.GetSingleFileById(fileID.Value);
+            return View(file);
+        }
+        [HttpPost]
+        public ActionResult SaveCode(File file)
+        {
+            // TODO: Þetta virkar ekki þarf að skoða þetta betur seinna.
+            
+            _fservice.UpdateFile(file);
+            return RedirectToAction("Edit", new { FileId = file.ID });
         }
 
         public ActionResult Edit(int? FileId)
