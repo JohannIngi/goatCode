@@ -27,6 +27,11 @@ namespace goatCode.Services
                     select p).ToList();
         }
 
+        public List<Project> GetAllProjects()
+        {
+            return _db.Projects.ToList();
+        }
+
         public void AddNewProject(Project newProject, String uId)
         {
             _db.Projects.Add(newProject);
@@ -64,5 +69,6 @@ namespace goatCode.Services
             _db.Projects.Remove(project);
             _db.SaveChanges();
         }
+        
     }
 }
