@@ -29,5 +29,39 @@ namespace goatCode.Services
                 return true;
             }
         }
+        public bool IsUserOwner(string userId)
+        {
+            var owner = _db.ProjectOwners.Where(x => x.userId == userId).SingleOrDefault();
+            if(owner == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public void DeleteUserProjectRelations(int projectId)
+        {
+            var userProject = _db.UserProjects.Where(x => x.projectId == projectId).ToList();
+            foreach(var item in userProject)
+            {
+                _db.UserProjects.Remove(item);
+            }
+            _db.SaveChanges();
+        }
+        public void DeleteUserOwnerRelations(string userId, int projectId)
+        {
+            var projectOwner = _db.ProjectOwners.Where(x => x.userId == userId && x.projectId == projectId).SingleOrDefault();
+            _db.ProjectOwners.Remove(projectOwner);
+            _db.SaveChanges();
+        }
+        public void DeleteSingleUserProjectRelations(string userId, int projectId)
+        {
+            var userProject = _db.UserProjects.Where(x => x.projectId == projectId && x.userId == userId).SingleOrDefault();
+            _db.UserProjects.Remove(userProject);
+            _db.SaveChanges();
+
+        }
     }
 }
