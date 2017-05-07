@@ -3,7 +3,11 @@
 @{
     ViewBag.Title = "Edit";
 }
-
+@using (Html.BeginForm("Save", "Edit", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.content, new { @id = "hidden_editor" })
+    <input type="submit" value="Save" />
+}
 <h2>Editor</h2>
 
 <!DOCTYPE html>
@@ -33,17 +37,12 @@
             editor.session.setMode("ace/mode/c_cpp"); // TODO: setja inn gildi eftir modeli
             editor.setPrintMarginColumn(false);
 
-            var textarea = $('textarea[name="content"]');
-            editor.getSession().on("change", function () {
-                textarea.val(editor.getSession().getValue());
+            $("form").submit(function () {
+               $("#hidden_editor").val(editor.getSession().getValue());
             });
+     
         </script>
     </div>
-    <form>
-        @Html.ActionLink("Save", "Save")
-        <div id="content"></div>
-        <textarea name="content" style="display: none;" />
-    </form>
 </body>
 </html>
 

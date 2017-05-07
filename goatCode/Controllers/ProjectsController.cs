@@ -31,11 +31,11 @@ namespace goatCode.Controllers
                 return View("Error");
             }
         }
-        public ActionResult Save()
+        [HttpPost]
+        public ActionResult Save(File file)
         {
-            string content = Request.Form["Content"];
-            _fservice.UpdateContent(content);
-            return RedirectToAction("edit");
+            _fservice.UpdateContent(file.content);
+            return View("Edit");
         }
 
         public ActionResult Edit(int? FileId)
