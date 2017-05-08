@@ -8,7 +8,6 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using goatCode.Models.Entities;
 using System.Diagnostics;
-using Microsoft.Security.Application;
 using System.Text;
 
 namespace goatCode.Controllers
