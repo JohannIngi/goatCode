@@ -5,7 +5,6 @@
 }
 
 
-
 <pre id="editor">@Model.content</pre>
 <div id="Editor">
 @section scripts
@@ -13,14 +12,20 @@
     <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
     <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/ace/ext-language_tools.js"></script>
     <script>
         var DocumentID = @ViewBag.DocumentID;
 
+        ace.require("ace/ext/language_tools");
         var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/twilight");
+        editor.setTheme("ace/theme/chaos");
         editor.session.setMode("@("ace/mode/" + Model.extensionSetting())");
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            //enableSnippets: true,
+            //enableLiveAutocompletion: false
+        });
         editor.setPrintMarginColumn(false);
-
         $("form").submit(function () {
         $("#hidden_editor").val(editor.getSession().getValue());
         });
@@ -32,18 +37,14 @@
             silent = true;
             editor.getSession().getDocument().applyDelta(changeData);
             silent = false;
-
         };
 
         $.connection.hub.start().done(function () {
-
             codeHub.server.joinDocument(DocumentID);
-
             editor.on("change", function (obj) {
                 if (silent) {
                     return;
                 }
-                
                 console.log(obj);
                 codeHub.server.onChange(obj, DocumentID);
             });
