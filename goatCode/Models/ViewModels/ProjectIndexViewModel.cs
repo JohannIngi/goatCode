@@ -8,7 +8,13 @@ namespace goatCode.Models.ViewModels
 {
     public class ProjectIndexViewModel
     {
+        /// <summary>
+        /// Parameter ID is a list of ProjectIndexViewModel to store data.
+        /// </summary>
         public List<File> files { get; set; }
+        /// <summary>
+        /// Parameter projectId is a part of ProjectIndexViewModel to store data.
+        /// </summary>
         public int projectId { get; set; }
     }
 }
