@@ -8,9 +8,9 @@ namespace goatCode.Hubs
 {
     public class CodeHub : Hub
     {
-        public void Hello()
+        public void OnChange(object changeData)
         {
-            Clients.All.hello();
+            Clients.All.OnChange(changeData);
         }
     }
 }

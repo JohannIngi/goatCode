@@ -20,6 +20,8 @@
 @section scripts
 {
     <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signal/hubs"></script>
     <script>
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/twilight");
@@ -30,6 +32,18 @@
         $("#hidden_editor").val(editor.getSession().getValue());
         });
 
+        var codeHub = $.connection.codeHub;
+
+        codeHub.client.onChange = function (changeData) {
+            console.log(changeData);
+        };
+
+        $.conneection.hub.start().done(function () {
+            editor.on("change", function (obj) {
+                console.log(obj);
+                codeHub.server.onChange(obj);
+            });
+        });
          /*jQuery(function savee() {
                 setTimeout(function () {
                 jQuery('#saveCode').click();

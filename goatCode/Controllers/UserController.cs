@@ -101,11 +101,7 @@ namespace goatCode.Controllers
 
             return RedirectToAction("Index");
         }
-        public ActionResult pungur()
-        {
-            return Redirect("www.lemonparty.org");
-
-        }
+        
         /// <summary>
         /// User can delete a project. 
         /// It deletes all files in project, all relations to the project and then the project.
