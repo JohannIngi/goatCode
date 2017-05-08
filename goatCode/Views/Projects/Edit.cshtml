@@ -23,6 +23,9 @@
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
     <script src="~/signal/hubs"></script>
     <script>
+
+        var DocumentID = @ViewBag.DocumentID;
+
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/twilight");
         editor.session.setMode("@("ace/mode/" + Model.extensionSetting())"); // TODO: setja inn gildi eftir modeli
@@ -33,15 +36,26 @@
         });
 
         var codeHub = $.connection.codeHub;
-
+        var silent = false;
         codeHub.client.onChange = function (changeData) {
             console.log(changeData);
+            silent = true;
+            editor.getSession().getDocument().applyDelta(changeData);
+            silent = false;
+
         };
 
         $.conneection.hub.start().done(function () {
+
+            codeHub.server.joinDocument(DocumentID);
+
             editor.on("change", function (obj) {
+                if (silent) {
+                    return;
+                }
+                
                 console.log(obj);
-                codeHub.server.onChange(obj);
+                codeHub.server.onChange(obj, DocumentID);
             });
         });
          /*jQuery(function savee() {

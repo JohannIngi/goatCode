@@ -90,7 +90,7 @@ namespace goatCode.Controllers
                     model.ID = file.ID;
                     model.name = file.name;
                     model.projectId = _pservice.GetProjectIdByFileId(FileId.Value);
-                    
+                    ViewBag.DocumentID = FileId.Value;
                   
                     return View(model);
                 }
