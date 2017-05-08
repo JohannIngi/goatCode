@@ -120,5 +120,27 @@ namespace goatCode.Services
                     orderby p.name
                     select p).ToList();
         }
+
+        public List<Project> GetProjectsNotOwnedByUser(string userName)
+        {
+            var allProjects = GetInUseProjectsByUserName(userName);
+
+            var ownedProjects = GetProjectsOwnedByUser(userName);
+
+            var newList = new List<Project>();
+
+            foreach (var project in allProjects)
+            {
+                foreach (var ownProject in ownedProjects)
+                {
+                    if (project != ownProject)
+                    {
+                        newList.Add(project);
+                        break;
+                    }
+                }
+            }
+            return newList;
+        }
     }
 }

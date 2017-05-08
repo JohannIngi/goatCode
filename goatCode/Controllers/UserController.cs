@@ -23,7 +23,8 @@ namespace goatCode.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
-            var ret = pservice.GetInUseProjectsByUserName(User.Identity.Name);
+            var ret = pservice.GetProjectsOwnedByUser(User.Identity.Name);
+            ViewBag.NotOwned = pservice.GetProjectsNotOwnedByUser(User.Identity.Name);
             return View(ret);
         }
 
@@ -107,6 +108,12 @@ namespace goatCode.Controllers
             pservice.EditProjectName(project);
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult SepList(SeperateProjectsViewModel model)
+        {
+            var view = model.OwnerList(User.Identity.Name);
+            return View(view);
         }
         
         /// <summary>
