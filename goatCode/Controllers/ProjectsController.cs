@@ -63,8 +63,7 @@ namespace goatCode.Controllers
             _fservice.UpdateFile(file);
             return RedirectToAction("Edit", new { FileId = file.ID });
         }
-<<<<<<< HEAD
-=======
+
         public ActionResult ReturnHome()
         {
             return View("index", "home");
@@ -76,7 +75,6 @@ namespace goatCode.Controllers
         /// </summary>
         /// <param name="FileId"></param>
         /// <returns>List of files if the file has ID that is not null. Otherwise it will return error</returns>
->>>>>>> 6de6d47ba2df3d529764c7e1fb648a17e7dba615
 
         public ActionResult Edit(int? FileId)
         {
