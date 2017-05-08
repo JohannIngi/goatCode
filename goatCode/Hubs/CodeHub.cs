@@ -14,7 +14,7 @@ namespace goatCode.Hubs
         }
         public void OnChange(object changeData, int documentID)
         {
-            Clients.Group(Convert.ToString(documentID)).OnChange(changeData);
+            Clients.Group(Convert.ToString(documentID), Context.ConnectionId).OnChange(changeData);
             //Clients.All.OnChange(changeData);
         }
     }
