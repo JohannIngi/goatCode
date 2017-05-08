@@ -11,7 +11,8 @@ namespace goatCode.Models.Entities
     {
         public int ID { get; set; }
         [Display(Name = "Project Name")]
-        [AllowHtml]
+        [RegularExpression(@"([a-z A-Z \d]+[\w \d]*|)[a-z A-Z]+[\w \d.]*",
+            ErrorMessage = "Invalid name")]
         public string name { get; set; }
 
 
