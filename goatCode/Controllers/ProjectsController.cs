@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using goatCode.Models.Entities;
 using System.Diagnostics;
+using Microsoft.Security.Application;
+using System.Text;
 
 namespace goatCode.Controllers
 {
@@ -118,8 +120,15 @@ namespace goatCode.Controllers
         /// <param name="model"></param>
         /// <returns>Views a list of all files in this specific project. </returns>
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(NewFileViewModel model)
         {
+            //StringBuilder projName = new StringBuilder();
+            //projName.Append(HttpUtility.HtmlEncode(model.name));
+            //model.name = projName.ToString();
+            string fileName = HttpUtility.HtmlEncode(model.name);
+            model.name = fileName;
+            //model.name = Encoder.HtmlEncode(model.name, true);
            _fservice.AddNewFile(model);
  
             return RedirectToAction("Index", new { ProjectId = model.projectId });

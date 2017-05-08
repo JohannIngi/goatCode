@@ -45,8 +45,10 @@ namespace goatCode.Controllers
             return RedirectToAction("");
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(Project project)
         {
+            project.name = HttpUtility.HtmlEncode(project.name);
             pservice.AddNewProject(project, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
@@ -68,8 +70,11 @@ namespace goatCode.Controllers
             return View("ProjectPermissionError");
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult ShareProjects(ShareViewModel model)
         {
+            model.email = HttpUtility.HtmlEncode(model.email);
+
             if (uservice.DoesUserExist(model.email))
             {
                 pservice.AddUserToProject(model);
@@ -95,8 +100,10 @@ namespace goatCode.Controllers
             return View("ProjectPermissionError");
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(Project project)
         {
+            project.name = HttpUtility.HtmlEncode(project.name);
             pservice.EditProjectName(project);
 
             return RedirectToAction("Index");
