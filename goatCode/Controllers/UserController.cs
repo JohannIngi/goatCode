@@ -28,9 +28,9 @@ namespace goatCode.Controllers
             Project project = new Project();
             return View(project);
         }
-        public ActionResult ReturnHome()
+        public ActionResult user()
         {
-            return View("index", "home");
+            return RedirectToAction("");
         }
         [HttpPost]
         public ActionResult Create(Project project)

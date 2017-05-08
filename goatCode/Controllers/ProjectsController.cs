@@ -47,10 +47,7 @@ namespace goatCode.Controllers
             _fservice.UpdateFile(file);
             return RedirectToAction("Edit", new { FileId = file.ID });
         }
-        public ActionResult ReturnHome()
-        {
-            return View("index", "home");
-        }
+
         public ActionResult Edit(int? FileId)
         {
             if (FileId.HasValue)
