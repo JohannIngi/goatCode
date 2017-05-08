@@ -16,28 +16,49 @@ namespace goatCode.Controllers
         private UserService uservice = new UserService();
         private FileService fservice = new FileService();
    
+        /// <summary>
+        /// Gets list of all projects connected to specific user name.
+        /// </summary>
+        /// <returns>Shows a list of all projects</returns>
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
             var ret = pservice.GetInUseProjectsByUserName(User.Identity.Name);
             return View(ret);
         }
+
+        /// <summary>
+        /// This function first shows view of a display where user can fill in information
+        /// to create a new project.
+        /// After that the function calls AddNewProject from ProjectService and creates a
+        /// new project. Then redirects the user to Index view.
+        /// </summary>
+        /// <returns>Index view (list of all projects)</returns>
         [HttpGet]
         public ActionResult Create()
         {
             Project project = new Project();
             return View(project);
         }
-        public ActionResult ReturnHome()
+        public ActionResult user()
         {
-            return View("index", "home");
+            return RedirectToAction("");
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(Project project)
         {
+            project.name = HttpUtility.HtmlEncode(project.name);
             pservice.AddNewProject(project, User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
+
+        /// <summary>
+        /// User can share project with another user. He has to fill in email, and the
+        /// email has to be in the database already.
+        /// </summary>
+        /// <param name="ProjectId">Lets projectID from ShareViewModel have same value as parameter ProjectId</param>
+        /// <returns>First view to fill in email - then after email is valid. View of project list.</returns>
         [HttpGet]
         public ActionResult ShareProjects(int? ProjectId)
         {
@@ -49,8 +70,11 @@ namespace goatCode.Controllers
             return View("ProjectPermissionError");
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult ShareProjects(ShareViewModel model)
         {
+            model.email = HttpUtility.HtmlEncode(model.email);
+
             if (uservice.DoesUserExist(model.email))
             {
                 pservice.AddUserToProject(model);
@@ -59,6 +83,12 @@ namespace goatCode.Controllers
             // Notandi sem reynt var að deila með er ekki til
             return View("UserDoesNotExistError");
         }
+
+        /// <summary>
+        /// User can rename the projects name.
+        /// </summary>
+        /// <param name="projectId">Is used to get value of the parameter projectId.</param>
+        /// <returns>First view to rename the project - then it returns view of all projects.</returns>
         [HttpGet]
         public ActionResult Edit(int? projectId)
         {
@@ -70,13 +100,21 @@ namespace goatCode.Controllers
             return View("ProjectPermissionError");
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(Project project)
         {
+            project.name = HttpUtility.HtmlEncode(project.name);
             pservice.EditProjectName(project);
 
             return RedirectToAction("Index");
         }
         
+        /// <summary>
+        /// User can delete a project. 
+        /// It deletes all files in project, all relations to the project and then the project.
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>View of all projects (except project the user deleted).</returns>
         public ActionResult Delete(int? projectId)
         {
             

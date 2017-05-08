@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<goatCode.Models.Entities.Project>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Projects";
 }
 
-<h2>Index</h2>
+<h2><br />Projects</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create a new project", "Create")
 </p>
 <table class="table">
     <tr>
@@ -20,12 +20,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.name)
+            @Html.Raw(item.name)        
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { projectId=item.ID }) | <!--N-->
             @Html.ActionLink("See Files", "Index", "Projects", new { projectId=item.ID }, null) | <!--Y-->
-            @Html.ActionLink("Delete", "Delete", new { projectId = item.ID }) | <!--Y-->
+            @Html.ActionLink("Delete", "Delete", new { projectId = item.ID },
+                new { onclick = "return confirm('Are you sure you wish to delete this file?');" }) | <!--Y-->
             @Html.ActionLink("Share", "ShareProjects", new { ProjectId = item.ID}) <!--Y-->
         </td>
     </tr>
