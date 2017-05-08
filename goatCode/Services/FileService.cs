@@ -16,10 +16,30 @@ namespace goatCode.Services
         {
             ["c"] = "c_cpp",
             ["cpp"] = "c_cpp",
+            ["c#"] = "csharp",
+            ["css"] = "css",
+            ["html"] = "html",
             ["java"] = "java",
-            ["py"] = "python"
+            ["py"] = "python",
+            ["sql"] = "sql",
+            ["txt"] = "text"
         };
+        public List<string> PopulateDropDownList ()
+        {
+            List<string> extensions = new List<string>();
 
+            extensions.Add("c");
+            extensions.Add("cpp");
+            extensions.Add("c#");
+            extensions.Add("html");
+            extensions.Add("java");
+            extensions.Add("py");
+            extensions.Add("sql");
+            extensions.Add("txt");
+            extensions.Add("css");
+
+            return extensions.OrderBy(x => x).ToList();
+        }
 
         private ApplicationDbContext _db;
 

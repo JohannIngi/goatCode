@@ -79,6 +79,8 @@ namespace goatCode.Controllers
         public ActionResult Create(int? ProjectId)
         {
             var model = new NewFileViewModel { projectId = ProjectId.Value };
+            
+            ViewBag.Extensions = new SelectList(_fservice.PopulateDropDownList());
             return View(model);
         }
         [HttpPost]
