@@ -11,7 +11,11 @@
 @section scripts
 {
     <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signalr/hubs"></script>
     <script>
+        var DocumentID = @ViewBag.DocumentID;
+
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/twilight");
         editor.session.setMode("@("ace/mode/" + Model.extensionSetting())");
@@ -21,12 +25,36 @@
         $("#hidden_editor").val(editor.getSession().getValue());
         });
 
-        /* jQuery(function savee() {
+        var codeHub = $.connection.codeHub;
+        var silent = false;
+        codeHub.client.onChange = function (changeData) {
+            console.log(changeData);
+            silent = true;
+            editor.getSession().getDocument().applyDelta(changeData);
+            silent = false;
+
+        };
+
+        $.connection.hub.start().done(function () {
+
+            codeHub.server.joinDocument(DocumentID);
+
+            editor.on("change", function (obj) {
+                if (silent) {
+                    return;
+                }
+                
+                console.log(obj);
+                codeHub.server.onChange(obj, DocumentID);
+            });
+        });
+         /*jQuery(function savee() {
                 setTimeout(function () {
                 jQuery('#saveCode').click();
-          }, 10000)
+                }, 10000)
           });*/
         //TODO: gera ajax drasl svo þetta sé ekki alltaf að refresha bitch.
+
     </script>
  }
 </div>

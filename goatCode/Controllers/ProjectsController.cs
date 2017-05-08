@@ -83,14 +83,15 @@ namespace goatCode.Controllers
                 var file = _fservice.GetSingleFileById(FileId.Value);
                 if (file != null)
                 {
-                    var model = new FileEditViewModel()
-                    {
-                        content = file.content,
-                        extension = file.extension,
-                        ID = file.ID,
-                        name = file.name,
-                        projectId = _pservice.GetProjectIdByFileId(FileId.Value)
-                    };
+                    var model = new FileEditViewModel();
+                    
+                    model.content = file.content;
+                    model.extension = file.extension;
+                    model.ID = file.ID;
+                    model.name = file.name;
+                    model.projectId = _pservice.GetProjectIdByFileId(FileId.Value);
+                    ViewBag.DocumentID = FileId.Value;
+                  
                     return View(model);
                 }
                 // TODO: hvað ef ekki til?
