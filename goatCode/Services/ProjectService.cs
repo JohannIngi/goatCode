@@ -73,5 +73,14 @@ namespace goatCode.Services
         {
             return _db.ProjectFiles.Where(x => x.fileId == fileId).Select(x => x.projectId).SingleOrDefault();
         }
+        public List<Project> GetProjectsOwnedByUser(string userName)
+        {
+            UserService uservice = new UserService();
+
+            return (from own in _db.ProjectOwners
+                    where own.userId == uservice.GetUserIdByName(userName)
+                    join p in _db.Projects on own.projectId equals p.ID
+                    select p).ToList();
+        }
     }
 }

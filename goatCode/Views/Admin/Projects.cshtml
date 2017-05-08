@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Projects";
 }
+
 <style>
     //colors $grey: #cacaca; // main #page_container {
         margin-top: 15px;
@@ -67,8 +68,7 @@
                id="accordion_search_bar"
                placeholder="Search" />
     </div>
-    @{int headID = 0; }
-    @{int collapseId}
+    @{int i = 0; }
     @foreach (var item in Model)
     {
         <div class="panel-group"
@@ -76,30 +76,34 @@
              role="tablist"
              aria-multiselectable="true">
             <div class="panel panel-success"
-                 id="collapseOne_container">
+                 id="collapseOne_container@(i)">
                 <div class="panel-heading"
                      role="tab"
-                     id="headingOne">
+                     id="headingOne@(i)">
                     <h4 class="panel-title">
                         <a role="button"
                            data-toggle="collapse"
                            data-parent="#accordion"
-                           href="#collapseOne"
+                           href="#collapseOne@(i)"
                            aria-expanded="true"
-                           aria-controls="collapseOne">
+                           aria-controls="collapseOne@(i)">
                             @Html.DisplayFor(modelItem => item.name)
                         </a>
                     </h4>
                 </div>
-                <div id="collapseOne"
+                <div id="collapseOne@(i)"
                      class="panel-collapse collapse in"
                      role="tabpanel"
-                     aria-labelledby="headingOne">
+                     aria-labelledby="headingOne@(i)">
                     <div class="panel-body">
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </div>
+                    <div class="panel-body">
+                        
                     </div>
                 </div>
             </div>
         </div>
+        i++;
     }
 </div>
