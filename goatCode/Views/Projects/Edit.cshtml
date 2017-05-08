@@ -22,8 +22,9 @@
     <script src="~/Scripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
     <script src="~/signalr/hubs"></script>
+    <script src="http://localhost:8080/signalr/hubs"></script>
     <script>
-
+        $.connection.hub.url = "http://localhost:8080/signalr";
         var DocumentID = @ViewBag.DocumentID;
 
         var editor = ace.edit("editor");
