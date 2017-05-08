@@ -3,19 +3,10 @@
 @{
     ViewBag.Title = "Edit";
 }
-@using (Html.BeginForm("SaveCode", "Projects", FormMethod.Post))
-{
-    @Html.HiddenFor(m => m.content, new { @id = "hidden_editor" })
-    @Html.HiddenFor(x => x.ID, new { @id = "hidden_editor" })
-    @Html.HiddenFor(t => t.extension, new { @id = "hidden_editor" })
-    @Html.HiddenFor(c => c.name, new { @id = "hidden_editor" })
-    <input type="submit" value="Save code" />
-}
 
 
-<pre id="editor">
-    @Model.content
-</pre>
+
+<pre id="editor">@Model.content</pre>
 <div id="Editor">
 @section scripts
 {
@@ -27,7 +18,7 @@
 
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/twilight");
-        editor.session.setMode("@("ace/mode/" + Model.extensionSetting())"); // TODO: setja inn gildi eftir modeli
+        editor.session.setMode("@("ace/mode/" + Model.extensionSetting())");
         editor.setPrintMarginColumn(false);
 
         $("form").submit(function () {
@@ -68,3 +59,20 @@
  }
 </div>
 
+<p>
+    <br />
+    @using (Html.BeginForm("SaveCode", "Projects", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.content, new { @id = "hidden_editor" })
+        @Html.HiddenFor(x => x.ID, new { @id = "hidden_editor" })
+        @Html.HiddenFor(t => t.extension, new { @id = "hidden_editor" })
+        @Html.HiddenFor(c => c.name, new { @id = "hidden_editor" })
+        <input type="submit" value="Save code" />
+    }
+</p>
+
+
+<p>
+    <br />
+    @Html.ActionLink("Back to list of files", "Index", new { projectId = Model.projectId })
+</p>

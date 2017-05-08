@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace goatCode.Models.Entities
 {
@@ -25,6 +26,7 @@ namespace goatCode.Models.Entities
         /// <summary>
         /// Parameter content is a part of File to store data.
         /// </summary>
+        [AllowHtml]
         public string content { get; set; }
 
     }

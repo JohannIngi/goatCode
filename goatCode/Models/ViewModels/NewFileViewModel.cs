@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace goatCode.Models.ViewModels
 {
@@ -21,5 +22,6 @@ namespace goatCode.Models.ViewModels
         /// Parameter extension is a part of NewFileViewModel to store data.
         /// </summary>
         public string extension { get; set; }
+        public IEnumerable<SelectListItem> extensionTypes { get; set; }
     }
 }

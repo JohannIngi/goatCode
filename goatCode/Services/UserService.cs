@@ -122,7 +122,13 @@ namespace goatCode.Services
             _db.SaveChanges();
 
         }
-
-        
+        public string GetUserIdByName(string userName)
+        {
+            return _db.Users.Where(x => x.UserName == userName).Select(x => x.Id).SingleOrDefault();
+        }
+        public void DeleteUser(string userName)
+        {
+            _db.Users.Remove(_db.Users.Where(x => x.UserName == userName).SingleOrDefault());
+        }
     }
 }

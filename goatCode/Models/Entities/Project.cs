@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace goatCode.Models.Entities
 {
@@ -20,6 +21,8 @@ namespace goatCode.Models.Entities
         /// Parameter name is a part of Project to store data.
         /// </summary>
         [Display(Name = "Project Name")]
+        [RegularExpression(@"([a-z A-Z \d]+[\w \d]*|)[a-z A-Z]+[\w \d.]*",
+            ErrorMessage = "Invalid name")]
         [Required(ErrorMessage = "Project must have a name")]
         public string name { get; set; }
 

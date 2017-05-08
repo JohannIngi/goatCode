@@ -8,16 +8,16 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using goatCode.Models.Entities;
 using System.Diagnostics;
+using Microsoft.Security.Application;
+using System.Text;
 
 namespace goatCode.Controllers
 {
     public class ProjectsController : Controller
     {
        // private ProjectService _service = new ProjectService();
-
-    
         private ProjectService _pservice = new ProjectService();
-       // private UserProjectService _uservice = new UserProjectService();
+        private UserService _uservice = new UserService();
         private FileService _fservice = new FileService();
         // GET: Projects
 
@@ -78,7 +78,7 @@ namespace goatCode.Controllers
 
         public ActionResult Edit(int? FileId)
         {
-            if (FileId.HasValue)
+            if (_uservice.IsUserRelatedToProject(User.Identity.GetUserId(), _pservice.GetProjectIdByFileId(FileId.Value)))
             {
                 var file = _fservice.GetSingleFileById(FileId.Value);
                 if (file != null)
@@ -109,6 +109,8 @@ namespace goatCode.Controllers
         public ActionResult Create(int? ProjectId)
         {
             var model = new NewFileViewModel { projectId = ProjectId.Value };
+            
+            ViewBag.Extensions = new SelectList(_fservice.PopulateDropDownList());
             return View(model);
         }
 
@@ -118,8 +120,15 @@ namespace goatCode.Controllers
         /// <param name="model"></param>
         /// <returns>Views a list of all files in this specific project. </returns>
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(NewFileViewModel model)
         {
+            //StringBuilder projName = new StringBuilder();
+            //projName.Append(HttpUtility.HtmlEncode(model.name));
+            //model.name = projName.ToString();
+            string fileName = HttpUtility.HtmlEncode(model.name);
+            model.name = fileName;
+            //model.name = Encoder.HtmlEncode(model.name, true);
            _fservice.AddNewFile(model);
  
             return RedirectToAction("Index", new { ProjectId = model.projectId });

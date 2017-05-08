@@ -20,8 +20,9 @@
             @Html.DisplayFor(modelItem => item.email)
         </td>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Delete User", "DeleteUser", new { userName = item.email }, new { onclick = "return confirm('Are you sure you wish to delete this user?');" })
         </td>
+
     </tr>
 }
 
