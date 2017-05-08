@@ -4,25 +4,106 @@
     ViewBag.Title = "Projects";
 }
 
-<h2>All Projects in Database</h2>
+<style>
+    //colors $grey: #cacaca; // main #page_container {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th></th>
-    </tr>
+    // search input #accordion_search_bar_container {
+        position: relative;
+        &:after
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    {
+        content: '\e003';
+        font-family: Glyphicons Halflings;
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
 
-</table>
+    #accordion_search_bar {
+        display: block;
+        margin: 10px auto;
+        width: 100%;
+        padding: 7px 10px;
+        border: 1px solid $grey;
+        border-radius: 25px;
+        outline: 0;
+    }
+
+    }
+
+    // make all the line clickable .panel-title {
+        a
+
+    {
+        display: block;
+    }
+
+    }
+</style>
+<script>
+    (function () {
+        var searchTerm, panelContainerId;
+        $('#accordion_search_bar').on('change keyup paste click', function () {
+            searchTerm = $(this).val();
+            $('#accordion > .panel').each(function () {
+                panelContainerId = '#' + $(this).attr('id');
+                $(panelContainerId + ':not(:contains(' + searchTerm + '))').hide();
+                $(panelContainerId + ':contains(' + searchTerm + ')').show();
+            });
+        });
+    }());
+</script>
+
+<h2>Projects in DataBase</h2>
+
+<div class="container"
+     id="page_container">
+    <div id="accordion_search_bar_container">
+        <input type="search"
+               id="accordion_search_bar"
+               placeholder="Search" />
+    </div>
+    @{int i = 0; }
+    @foreach (var item in Model)
+    {
+        <div class="panel-group"
+             id="accordion"
+             role="tablist"
+             aria-multiselectable="true">
+            <div class="panel panel-success"
+                 id="collapseOne_container@(i)">
+                <div class="panel-heading"
+                     role="tab"
+                     id="headingOne@(i)">
+                    <h4 class="panel-title">
+                        <a role="button"
+                           data-toggle="collapse"
+                           data-parent="#accordion"
+                           href="#collapseOne@(i)"
+                           aria-expanded="true"
+                           aria-controls="collapseOne@(i)">
+                            @Html.DisplayFor(modelItem => item.name)
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne@(i)"
+                     class="panel-collapse collapse in"
+                     role="tabpanel"
+                     aria-labelledby="headingOne@(i)">
+                    <div class="panel-body">
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </div>
+                    <div class="panel-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        i++;
+    }
+</div>

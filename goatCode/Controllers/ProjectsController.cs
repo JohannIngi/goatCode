@@ -16,10 +16,8 @@ namespace goatCode.Controllers
     public class ProjectsController : Controller
     {
        // private ProjectService _service = new ProjectService();
-
-    
         private ProjectService _pservice = new ProjectService();
-       // private UserProjectService _uservice = new UserProjectService();
+        private UserService _uservice = new UserService();
         private FileService _fservice = new FileService();
         // GET: Projects
 
@@ -80,20 +78,19 @@ namespace goatCode.Controllers
 
         public ActionResult Edit(int? FileId)
         {
-            if (FileId.HasValue)
+            if (_uservice.IsUserRelatedToProject(User.Identity.GetUserId(), _pservice.GetProjectIdByFileId(FileId.Value)))
             {
                 var file = _fservice.GetSingleFileById(FileId.Value);
                 if (file != null)
                 {
-                    var model = new FileEditViewModel();
-                    
-                    model.content = file.content;
-                    model.extension = file.extension;
-                    model.ID = file.ID;
-                    model.name = file.name;
-                    model.projectId = _pservice.GetProjectIdByFileId(FileId.Value);
-                    
-                  
+                    var model = new FileEditViewModel()
+                    {
+                        content = file.content,
+                        extension = file.extension,
+                        ID = file.ID,
+                        name = file.name,
+                        projectId = _pservice.GetProjectIdByFileId(FileId.Value)
+                    };
                     return View(model);
                 }
                 // TODO: hvað ef ekki til?
@@ -111,6 +108,8 @@ namespace goatCode.Controllers
         public ActionResult Create(int? ProjectId)
         {
             var model = new NewFileViewModel { projectId = ProjectId.Value };
+            
+            ViewBag.Extensions = new SelectList(_fservice.PopulateDropDownList());
             return View(model);
         }
 

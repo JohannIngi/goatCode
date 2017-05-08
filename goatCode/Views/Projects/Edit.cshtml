@@ -13,9 +13,7 @@
 }
 
 
-<pre id="editor">
-    @Model.content
-</pre>
+<pre id="editor">@Model.content</pre>
 <div id="Editor">
 @section scripts
 {
@@ -23,7 +21,7 @@
     <script>
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/twilight");
-        editor.session.setMode("@("ace/mode/" + Model.extensionSetting())"); // TODO: setja inn gildi eftir modeli
+        editor.session.setMode("@("ace/mode/" + Model.extensionSetting())");
         editor.setPrintMarginColumn(false);
 
         $("form").submit(function () {
