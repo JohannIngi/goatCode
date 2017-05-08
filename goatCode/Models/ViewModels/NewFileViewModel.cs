@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -14,6 +15,7 @@ namespace goatCode.Models.ViewModels
         /// <summary>
         /// Parameter name is a part of NewFileViewModel to store data.
         /// </summary>
+        [Required (ErrorMessage = "Must have a name")]
         public string name { get; set; }
         /// <summary>
         /// Parameter extension is a part of NewFileViewModel to store data.

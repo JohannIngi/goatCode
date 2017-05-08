@@ -20,6 +20,7 @@ namespace goatCode.Models.Entities
         /// Parameter name is a part of Project to store data.
         /// </summary>
         [Display(Name = "Project Name")]
+        [Required(ErrorMessage = "Project must have a name")]
         public string name { get; set; }
 
 
