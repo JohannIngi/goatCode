@@ -139,5 +139,9 @@ namespace goatCode.Services
             _db.Users.Remove(_db.Users.Where(x => x.UserName == userName).SingleOrDefault());
             _db.SaveChanges();
         }
+        public string GetProjectOwnerIdByProjectId(int projectId)
+        {
+            return _db.ProjectOwners.Where(x => x.projectId == projectId).SingleOrDefault().userId;
+        }
     }
 }

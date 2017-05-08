@@ -214,6 +214,17 @@ namespace goatCode.Services
             _db.Files.Remove(file);
             _db.SaveChanges();
         }
+        public void RemoveFileProjectConnection(int fileId)
+        {
+            var projectfile = (from pf in _db.ProjectFiles
+                               where pf.fileId == fileId
+                               select pf).ToList();
+            foreach(var pfile in projectfile)
+            {
+                _db.ProjectFiles.Remove(pfile);
+            }
+            _db.SaveChanges();
+        }
     }
 
 }

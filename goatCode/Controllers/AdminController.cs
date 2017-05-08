@@ -52,31 +52,36 @@ namespace goatCode.Controllers
                 return View(model);
             }
       
-        public ActionResult DeleteProject(int projectId)
-        {
-            pservice.DeleteProject(projectId);
-            return RedirectToAction("Projects");
-        }
-        public ActionResult DeleteFile(int fileId)
-        {
-            fservice.DeleteFile(fileId);
-            return RedirectToAction("Files");
-        }
-
-        [HttpGet]
-        public ActionResult DeleteUser(string userName)
-        {
-            foreach (var project in pservice.GetProjectsOwnedByUser(userName))
+            public ActionResult DeleteProject(int projectId)
             {
-                fservice.DeleteAllFilesinProject(project.ID);
-                // Delete All Relations
-                uservice.DeleteUserProjectRelations(project.ID);
-                uservice.DeleteUserOwnerRelations(uservice.GetUserIdByName(userName), project.ID);
-                // Delete Project
-                pservice.DeleteProject(project.ID);
+                fservice.DeleteAllFilesinProject(projectId);           
+                uservice.DeleteUserProjectRelations(projectId);
+                uservice.DeleteUserOwnerRelations(uservice.GetProjectOwnerIdByProjectId(projectId), projectId);        
+                pservice.DeleteProject(projectId);
+
+                return RedirectToAction("Projects");
             }
-            uservice.DeleteUser(userName);
-            return RedirectToAction("Users");
-        }
+            public ActionResult DeleteFile(int fileId)
+            {
+                fservice.RemoveFileProjectConnection(fileId);
+                fservice.DeleteFile(fileId);
+                return RedirectToAction("Files");
+            }
+
+            [HttpGet]
+            public ActionResult DeleteUser(string userName)
+            {
+                foreach (var project in pservice.GetProjectsOwnedByUser(userName))
+                {
+                    fservice.DeleteAllFilesinProject(project.ID);
+                    // Delete All Relations
+                    uservice.DeleteUserProjectRelations(project.ID);
+                    uservice.DeleteUserOwnerRelations(uservice.GetUserIdByName(userName), project.ID);
+                    // Delete Project
+                    pservice.DeleteProject(project.ID);
+                }
+                uservice.DeleteUser(userName);
+                return RedirectToAction("Users");
+            }
     }
 }
