@@ -13,9 +13,8 @@ namespace goatCode.Controllers
 {
     public class ProjectsController : Controller
     {
-    
         private ProjectService _pservice = new ProjectService();
-       // private UserProjectService _uservice = new UserProjectService();
+        private UserService _uservice = new UserService();
         private FileService _fservice = new FileService();
         // GET: Projects
         public ActionResult Index(int? projectId)
@@ -54,7 +53,7 @@ namespace goatCode.Controllers
         }
         public ActionResult Edit(int? FileId)
         {
-            if (FileId.HasValue)
+            if (_uservice.IsUserRelatedToProject(User.Identity.GetUserId(), _pservice.GetProjectIdByFileId(FileId.Value)))
             {
                 var file = _fservice.GetSingleFileById(FileId.Value);
                 if (file != null)
@@ -66,8 +65,7 @@ namespace goatCode.Controllers
                     model.ID = file.ID;
                     model.name = file.name;
                     model.projectId = _pservice.GetProjectIdByFileId(FileId.Value);
-                    
-                  
+                                 
                     return View(model);
                 }
                 // TODO: hvað ef ekki til?
