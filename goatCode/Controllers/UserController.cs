@@ -23,7 +23,8 @@ namespace goatCode.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
-            var ret = pservice.GetInUseProjectsByUserName(User.Identity.Name);
+            var ret = pservice.GetProjectsOwnedByUser(User.Identity.Name);
+            ViewBag.NotOwned = pservice.GetProjectsNotOwnedByUser(User.Identity.Name);
             return View(ret);
         }
 
@@ -108,7 +109,7 @@ namespace goatCode.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
         /// <summary>
         /// User can delete a project. 
         /// It deletes all files in project, all relations to the project and then the project.
