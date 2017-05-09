@@ -51,10 +51,21 @@ namespace goatCode.Services
         public void AddNewProject(Project newProject, String uId)
         {
             _db.Projects.Add(newProject);
+            
+            var newfile = new File();
+            newfile.extension = "md";
+            newfile.content = "# " + newProject.name + "\n";
+            newfile.name = "readme";
+            _db.Files.Add(newfile);
             _db.SaveChanges();
+
 
             _db.ProjectOwners.Add(new ProjectOwner { userId = uId, projectId = newProject.ID });
             _db.UserProjects.Add(new UserProject { userId = uId, projectId = newProject.ID });
+            _db.SaveChanges();
+
+
+            _db.ProjectFiles.Add(new ProjectFile { fileId = newfile.ID, projectId = newProject.ID });
             _db.SaveChanges();
         }
 

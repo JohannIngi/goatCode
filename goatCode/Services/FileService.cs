@@ -198,7 +198,7 @@ namespace goatCode.Services
 
         public void UpdateFile(File file)
         {
-            //TODO : Þetta virkar ekki þarf að skoða betur seinna.
+            
             _db.Entry(file).State = EntityState.Modified;
             _db.SaveChanges();
         }

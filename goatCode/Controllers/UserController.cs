@@ -49,7 +49,7 @@ namespace goatCode.Controllers
         public ActionResult Create(Project project)
         {
             project.name = HttpUtility.HtmlEncode(project.name);
-            pservice.AddNewProject(project, User.Identity.GetUserId());
+            pservice.AddNewProject(project, User.Identity.GetUserId());           
             return RedirectToAction("Index");
         }
 
