@@ -8,10 +8,5 @@ namespace goatCode.Tests.Services
     [TestClass]
     public class ProjectServiceTest
     {
-        [TestMethod]
-        public void TestAddNewProject()
-        {
-
-        }
     }
 }
