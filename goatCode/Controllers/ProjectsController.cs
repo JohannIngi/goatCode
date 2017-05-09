@@ -126,21 +126,24 @@ namespace goatCode.Controllers
         {
 
             if (ModelState.IsValid)
-
-            //StringBuilder projName = new StringBuilder();
-            //projName.Append(HttpUtility.HtmlEncode(model.name));
-            //model.name = projName.ToString();
-            string fileName = HttpUtility.HtmlEncode(model.name);
-            model.name = fileName;
-
-            if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
             {
-                ModelState.AddModelError("name", "File name already exists");
-                return RedirectToAction("Index", new { projectId = model.ProjectId });
+                //StringBuilder projName = new StringBuilder();
+                //projName.Append(HttpUtility.HtmlEncode(model.name));
+                //model.name = projName.ToString();
+                string fileName = HttpUtility.HtmlEncode(model.name);
+                model.name = fileName;
+
+                if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
+                {
+                    ModelState.AddModelError("name", "File name already exists");
+                    return RedirectToAction("Index", new { projectId = model.ProjectId });
+                }
+
+                //model.name = Encoder.HtmlEncode(model.name, true);
+                _fservice.AddNewFile(model);
             }
 
-            //model.name = Encoder.HtmlEncode(model.name, true);
-            _fservice.AddNewFile(model);
+            
  
             return RedirectToAction("Index", new { ProjectId = model.ProjectId });
         }
