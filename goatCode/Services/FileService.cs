@@ -1,11 +1,13 @@
 ﻿using goatCode.Models;
 using goatCode.Models.Entities;
 using goatCode.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+
 
 namespace goatCode.Services
 {
@@ -161,7 +163,7 @@ namespace goatCode.Services
             _db.Files.Add(file);
             _db.SaveChanges();
 
-            _db.ProjectFiles.Add(new ProjectFile { fileId = file.ID, projectId = model.projectId });
+            _db.ProjectFiles.Add(new ProjectFile { fileId = file.ID, projectId = model.ProjectId });
             _db.SaveChanges();
         }
 
@@ -224,6 +226,22 @@ namespace goatCode.Services
                 _db.ProjectFiles.Remove(pfile);
             }
             _db.SaveChanges();
+        }
+        public bool DoesFileNameExistInProject(int projectId, string fileName)
+        {
+            var file = (from p in _db.Projects
+            where p.ID == projectId
+            join pf in _db.ProjectFiles on p.ID equals pf.projectId
+            join f in _db.Files on pf.fileId equals f.ID
+            where f.name == fileName
+            select f.name).SingleOrDefault();
+
+            if(file == fileName)
+            {
+                return true;
+            }
+            
+            return false;
         }
     }
 

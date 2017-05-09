@@ -23,7 +23,7 @@ namespace goatCode.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
-            var ret = pservice.GetInUseProjectsByUserName(User.Identity.Name);
+            var ret = pservice.GetInUseProjectsByUserName(base.User.Identity.Name);
             return View(ret);
         }
 
@@ -40,7 +40,7 @@ namespace goatCode.Controllers
             Project project = new Project();
             return View(project);
         }
-        public ActionResult user()
+        public ActionResult User()
         {
             return RedirectToAction("");
         }
@@ -49,7 +49,7 @@ namespace goatCode.Controllers
         public ActionResult Create(Project project)
         {
             project.name = HttpUtility.HtmlEncode(project.name);
-            pservice.AddNewProject(project, User.Identity.GetUserId());
+            pservice.AddNewProject(project, base.User.Identity.GetUserId());
             return RedirectToAction("Index");
         }
 
@@ -62,7 +62,7 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult ShareProjects(int? ProjectId)
         {
-            if(uservice.IsUserRelatedToProject(User.Identity.GetUserId(), ProjectId.Value))
+            if(uservice.IsUserRelatedToProject(base.User.Identity.GetUserId(), ProjectId.Value))
             {
                return View(new ShareViewModel { projectId = ProjectId.Value }); 
             }            
@@ -92,7 +92,7 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult Edit(int? projectId)
         {
-            if (uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
+            if (uservice.IsUserOwner(base.User.Identity.GetUserId(), projectId.Value))
             {
                 return View(pservice.GetProjectByProjectId(projectId.Value));
             }
@@ -118,15 +118,15 @@ namespace goatCode.Controllers
         public ActionResult Delete(int? projectId)
         {
             
-            if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
+            if (uservice.IsUserRelatedToProject(base.User.Identity.GetUserId(), projectId.Value))
             {
-                if (uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
+                if (uservice.IsUserOwner(base.User.Identity.GetUserId(), projectId.Value))
                 {
                     // Delete All Files
                     fservice.DeleteAllFilesinProject(projectId.Value);
                     // Delete All Relations
                     uservice.DeleteUserProjectRelations(projectId.Value);
-                    uservice.DeleteUserOwnerRelations(User.Identity.GetUserId(), projectId.Value);
+                    uservice.DeleteUserOwnerRelations(base.User.Identity.GetUserId(), projectId.Value);
                     // Delete Project
                     pservice.DeleteProject(projectId.Value);
 
@@ -134,7 +134,7 @@ namespace goatCode.Controllers
                 }
                 else
                 {
-                    uservice.DeleteSingleUserProjectRelations(User.Identity.GetUserId(), projectId.Value);
+                    uservice.DeleteSingleUserProjectRelations(base.User.Identity.GetUserId(), projectId.Value);
                 }
                 return RedirectToAction("Index");
             }
