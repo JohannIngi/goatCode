@@ -246,6 +246,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\favicon.ico" />
+    <Content Include="Content\Images\goatlogo.jpg" />
     <Content Include="Content\Images\Slider\goat.jpg" />
     <Content Include="Content\Images\Slider\goat2.jpg" />
     <Content Include="Content\Images\Slider\goat3.jpg" />

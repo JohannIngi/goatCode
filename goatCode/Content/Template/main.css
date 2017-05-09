@@ -8,7 +8,7 @@ body {
   font-size: 14px;
   line-height: 24px;
   color: #666;
-  background-color: #fff;
+  background-color: #FFFBFF;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -56,6 +56,7 @@ h3 {
 }
 
 .btn {
+    background-color: darkseagreen;
   border: 0;
   border-radius: 0;
 }
@@ -731,10 +732,6 @@ section {
 }
 
 
-/*************************
-**********Blog CSS********
-**************************/
-
 .post-thumb {
   position: relative;
 }
@@ -769,27 +766,6 @@ section {
 #post-carousel .carousel-indicators {
   bottom: 3px;
   left: 90%;
-}
-
-.blog-left-control, .blog-right-control {
-  position: absolute;
-  top: 45%;
-  width: 30px;
-  text-align: center;
-  color: rgba(255,255,255,.7);
-  font-size: 36px;
-}
-
-.blog-left-control {
-  left: 0;
-}
-
-.blog-right-control {
-  right: 0;
-}
-
-.blog-left-control:hover, .blog-right-control:hover {
-  color: #fff;  
 }
 
 .entry-header h3 a {
@@ -838,33 +814,11 @@ section {
   color:#fff;
 }
 
-/*************************
-**********Contact CSS*****
-**************************/
-
-#contact {
-  padding-top: 45px;
-  padding-bottom: 0;
-}
-
-#google-map {
-  height: 350px;
-}
-
-#contact-us {
-  background-image:url(../images/contact-bg.jpg);
-  padding-bottom: 90px; 
-}
-
-#contact-us .heading {
-  padding-top: 95px;
-}
 
 .form-control {
   background-color: transparent;
-  border-color: rgba(255,255,255,.1);
+  border: solid 1px black;
   height: 50px;
-  border-radius: 0;
   box-shadow: none;
 }
 
@@ -901,7 +855,7 @@ ul.address {
   display: block;
   padding: 12px;
   width: 100%;
-  color: #fff;
+  color: dimgrey;
   border:0;
   margin-top: 40px;
 }
