@@ -136,18 +136,16 @@ namespace goatCode.Services
                     orderby p.name
                     select p).ToList();
         }
-
         public List<Project> GetProjectsNotOwnedByUser(string userName)
         {
             var allProjects = GetInUseProjectsByUserName(userName);
 
             var ownedProjects = GetProjectsOwnedByUser(userName);
-            
+
             foreach(var project in ownedProjects)
             {
                 allProjects.Remove(project);
             }
-
 
             return allProjects;
         }
