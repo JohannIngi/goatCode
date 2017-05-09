@@ -42,17 +42,15 @@ namespace goatCode.Controllers
             Project project = new Project();
             return View(project);
         }
-        public ActionResult User()
-        {
-            return RedirectToAction("");
-        }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(Project project)
         {
             project.name = HttpUtility.HtmlEncode(project.name);
 
-            pservice.AddNewProject(project, User.Identity.GetUserId());           
+            pservice.AddNewProject(project, User.Identity.GetUserId());
+
 
             return RedirectToAction("Index");
         }

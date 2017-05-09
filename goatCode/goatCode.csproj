@@ -229,8 +229,9 @@
     <Compile Include="Models\Entities\UserProject.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ViewModels\FileEditViewModel.cs" />
     <Compile Include="Models\ViewModels\AdminUsersViewModel.cs" />
+    <Compile Include="Models\ViewModels\FileEditViewModel.cs" />
+    <Compile Include="Models\ViewModels\FileUpdateViewModel.cs" />
     <Compile Include="Models\ViewModels\FileViewModel.cs" />
     <Compile Include="Models\ViewModels\NewFileViewModel.cs" />
     <Compile Include="Models\ViewModels\ProjectIndexViewModel.cs" />
@@ -317,6 +318,7 @@
     <Content Include="Views\Projects\FilePermissionError.cshtml" />
     <Content Include="Views\User\UserDoesNotExistError.cshtml" />
     <Content Include="Views\Admin\Projects.cshtml" />
+    <Content Include="Views\Projects\UpdateFileName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

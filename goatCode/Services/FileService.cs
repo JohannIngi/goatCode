@@ -222,6 +222,7 @@ namespace goatCode.Services
             _db.Files.Remove(file);
             _db.SaveChanges();
         }
+
         public void RemoveFileProjectConnection(int fileId)
         {
             var projectfile = (from pf in _db.ProjectFiles
@@ -248,6 +249,17 @@ namespace goatCode.Services
             }
             
             return false;
+        }
+        public bool IsUserRelatedToFileInProject(string userId, int projectId)
+        {
+            return true;
+        }
+        public void EditFileName(FileUpdateViewModel model)
+        {
+            var file = GetSingleFileById(model.ID);
+            file.name = model.name;
+            _db.setModified(file);
+            _db.SaveChanges();
         }
     }
 

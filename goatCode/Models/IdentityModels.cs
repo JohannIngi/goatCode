@@ -59,5 +59,9 @@ namespace goatCode.Models
         public System.Data.Entity.DbSet<goatCode.Models.ViewModels.ProjectViewModel> ProjectViewModels { get; set; }
 
         public System.Data.Entity.DbSet<goatCode.Models.ViewModels.FileViewModel> FileViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<goatCode.Models.ViewModels.FileEditViewModel> FileEditViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<goatCode.Models.ViewModels.FileUpdateViewModel> FileUpdateViewModels { get; set; }
     }
 }

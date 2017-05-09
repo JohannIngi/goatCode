@@ -254,6 +254,31 @@ namespace goatCode.Controllers
 
             return View("Error");
         }
+        [HttpGet]
+        public ActionResult UpdateFileName(int? fileId, int? projectId)
+        {
 
+            if (fileId.HasValue && projectId.HasValue && _uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
+            {
+                var file = _fservice.GetSingleFileById(fileId.Value);
+                var model = new FileUpdateViewModel()
+                {
+                    ID = file.ID,
+                    name = file.name,
+                    projectId = projectId.Value
+                };
+
+                
+                return View(model);
+            }  
+            return RedirectToAction("Error"); // Vantar custom error fyrir þetta shit Er ekki tengdur project/file
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult UpdateFileName(FileUpdateViewModel model)
+        {
+            _fservice.EditFileName(model);
+            return RedirectToAction("Index", new { projectId = model.projectId });
+        }
     }
 }
