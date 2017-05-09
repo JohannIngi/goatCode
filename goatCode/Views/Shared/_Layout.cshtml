@@ -1,12 +1,23 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>HALLO</title>
+    @RenderBody()
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <link href="~/Content/Template/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/Template/animate.min.css" rel="stylesheet">
+    <link href="~/Content/Template/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/Template/lightbox.css" rel="stylesheet">
+    <link href="~/Content/Template/main.css" rel="stylesheet">
+    <link id="css-preset" href="~/Content/Template/presets/preset1.css" rel="stylesheet">
+    <link href="~/Content/Template/responsive.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
     <style type="text/css" media="screen">
         body {
             overflow: auto;
@@ -16,34 +27,178 @@
             height: 500px;
         }
     </style>
-
 </head>
+
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("GoatCode", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <!--.preloader-->
+    <div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
+    <!--/.preloader-->
+
+    <header id="home">
+        <div id="home-slider" class="carousel slide carousel-fade" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="item active" style="background-image: url(../../Content/Images/Slider/goat.jpg)">
+                    <div class="caption">
+                        <h1 class="animated fadeInLeftBig">Welcome to the <span>GoatCode</span></h1>
+                        <p class="animated fadeInRightBig">Online Editor - Multiple programming language options - More - More</p>
+                        <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Start now</a>
+                    </div>
+                </div>
+                <div class="item" style="background-image: url(../../Content/Images/Slider/programming-languages.jpg)">
+                    <div class="caption">
+                        <h1 class="animated fadeInLeftBig">Say Hello to <span>the GoatCode</span></h1>
+                        <p class="animated fadeInRightBig">Online Editor - Multiple programming language options - More - More</p>
+                        <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Start now</a>
+                    </div>
+                </div>
+                <div class="item" style="background-image: url(../../Content/Images/Slider/1.jpg)">
+                    <div class="caption">
+                        <h1 class="animated fadeInLeftBig">We are super<span>Creative</span></h1>
+                        <p class="animated fadeInRightBig">Online Editor - Multiple programming language options - More - More</p>
+                        <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Start now</a>
+                    </div>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+            <a class="left-control" href="~/Content/Images/prev.png" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+            <a class="right-control" href="~/Content/Images/next.png" data-slide="next"><i class="fa fa-angle-right"></i></a>
+
+            <a id="tohash" href="#services"><i class="fa fa-angle-down"></i></a>
+        </div><!--/#home-slider-->
+            <div class="main-nav">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("GoatCode", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </div>
+    </header>
+    <section id="services">
+        <div class="container">
+            <div class="heading wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="row">
+                    <div class="text-center col-sm-8 col-sm-offset-2">
+                        <h2>Our Services</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center our-services">
+                <div class="row">
+                    <div class="col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                        <div class="service-icon">
+                            <i class="fa fa-flask"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Brand Identity</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="450ms">
+                        <div class="service-icon">
+                            <i class="fa fa-umbrella"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Creative Idea</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="550ms">
+                        <div class="service-icon">
+                            <i class="fa fa-cloud"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Awesome Support</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="650ms">
+                        <div class="service-icon">
+                            <i class="fa fa-coffee"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Professional Design</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="750ms">
+                        <div class="service-icon">
+                            <i class="fa fa-bitbucket"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>App Development</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="850ms">
+                        <div class="service-icon">
+                            <i class="fa fa-gift"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Clean Code</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-    </div>
+    </section><!--/#services-->
 
+    <footer id="footer">
+        <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+            <div class="container text-center">
+                <div class="footer-logo">
+                    <a href="index.html"><img class="img-responsive" src="images/logo.png" alt=""></a>
+                </div>
+                <div class="social-icons">
+                    <ul>
+                        <li><a class="envelope" href="#"><i class="fa fa-envelope"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a class="tumblr" href="#"><i class="fa fa-tumblr-square"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>&copy; 2016 Oxygen Theme.</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/NewTemplate/jquery.js"></script>
+    <script src="~/Scripts/NewTemplate/bootstrap.min.js"></script>
+    <script src="~/Scripts/NewTemplate/jquery.inview.min.js"></script>
+    <script src="~/Scripts/NewTemplate/wow.min.js"></script>
+    <script src="~/Scripts/NewTemplate/mousescroll.js"></script>
+    <script src="~/Scripts/NewTemplate/smoothscroll.js"></script>
+    <script src="~/Scripts/NewTemplate/jquery.countTo.js"></script>
+    <script src="~/Scripts/NewTemplate/lightbox.min.js"></script>
+    <script src="~/Scripts/NewTemplate/main.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
