@@ -110,12 +110,6 @@ namespace goatCode.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult SepList(SeperateProjectsViewModel model)
-        {
-            var view = model.OwnerList(User.Identity.Name);
-            return View(view);
-        }
-        
         /// <summary>
         /// User can delete a project. 
         /// It deletes all files in project, all relations to the project and then the project.

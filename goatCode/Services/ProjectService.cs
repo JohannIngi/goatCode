@@ -126,21 +126,14 @@ namespace goatCode.Services
             var allProjects = GetInUseProjectsByUserName(userName);
 
             var ownedProjects = GetProjectsOwnedByUser(userName);
-
-            var newList = new List<Project>();
-
-            foreach (var project in allProjects)
+            
+            foreach(var project in ownedProjects)
             {
-                foreach (var ownProject in ownedProjects)
-                {
-                    if (project != ownProject)
-                    {
-                        newList.Add(project);
-                        break;
-                    }
-                }
+                allProjects.Remove(project);
             }
-            return newList;
+
+
+            return allProjects;
         }
     }
 }
