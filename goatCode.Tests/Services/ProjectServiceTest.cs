@@ -29,11 +29,15 @@ namespace goatCode.Tests.Services
             mock.Users.Add(new ApplicationUser { Id = "1233", Email = "a3@a.com", UserName = "a3@a.com", PasswordHash = "a3", SecurityStamp = "b3" });
             mock.Users.Add(new ApplicationUser { Id = "1234", Email = "a4@a.com", UserName = "a4@a.com", PasswordHash = "a4", SecurityStamp = "b4" });
 
-
             mock.ProjectOwners.Add(new ProjectOwner { id = 1, userId = "1231", projectId = 1 });
             mock.ProjectOwners.Add(new ProjectOwner { id = 2, userId = "1231", projectId = 2 });
             mock.ProjectOwners.Add(new ProjectOwner { id = 3, userId = "1231", projectId = 3 });
             mock.ProjectOwners.Add(new ProjectOwner { id = 4, userId = "1234", projectId = 4 });
+
+            mock.UserProjects.Add(new UserProject { id = 1, projectId = 1, userId = "1231" });
+            mock.UserProjects.Add(new UserProject { id = 2, projectId = 1, userId = "1232" });
+            mock.UserProjects.Add(new UserProject { id = 3, projectId = 2, userId = "1231" });
+            mock.UserProjects.Add(new UserProject { id = 4, projectId = 2, userId = "1232" });
 
             mock.Files.Add(new File { ID = 1, name = "file1", extension = "c", content = "abc1" });
             mock.Files.Add(new File { ID = 2, name = "file2", extension = "cpp", content = "abc2" });
@@ -127,7 +131,6 @@ namespace goatCode.Tests.Services
             Assert.AreNotEqual(5, query1);
 
             projectService.AddNewProject(proj, "1231");
-
             var query2 = projectService.GetAllProjects();
 
             HashSet<int> idSet = new HashSet<int>();
@@ -150,11 +153,9 @@ namespace goatCode.Tests.Services
             {
                 nameList.Add(file.name);
             }
-
             Assert.IsTrue(nameList.Contains("project6"));
 
             proj.name = "asdf";
-
             projectService.EditProjectName(proj);
             List<String> nameList2 = new List<String>();
             foreach (var file in query)
@@ -162,6 +163,12 @@ namespace goatCode.Tests.Services
                 nameList2.Add(file.name);
             }
             Assert.IsTrue(nameList2.Contains("asdf"));
+        }
+
+        [TestMethod]
+        public void AddUserToProjectTest()
+        {
+            //Þetta er ekki hægt
         }
     }
 }

@@ -39,11 +39,34 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void DeleteFileTest()
         {
+            var query1 = fileService.GetSingleFileById(1);
+            Assert.AreEqual(1, query1.ID);
 
+            fileService.DeleteFile(1);
+
+            var query2 = fileService.GetSingleFileById(1);
+            Assert.AreEqual(1, query2.ID);
+        }
+
+        [TestMethod] 
+        public void DeleteAllFilesinProjectTest()
+        {
+            fileService.DeleteAllFilesinProject(1);
+            var query = fileService.GetFilesByProjectId(1);
+
+            HashSet<int> idSet = new HashSet<int>();
+            foreach (var file in query)
+            {
+                idSet.Add(file.ID);
+            }
+            Assert.IsFalse(idSet.Contains(1));
+            Assert.IsFalse(idSet.Contains(2));
+            Assert.IsFalse(idSet.Contains(3));
+            Assert.IsFalse(idSet.Contains(4));
         }
 
         [TestMethod]
-        public void getFGetFilesByProjectIdTest1()
+        public void GetFilesByProjectIdTest1()
         {
             var query = fileService.GetFilesByProjectId(1);
 
@@ -63,10 +86,57 @@ namespace goatCode.Tests.Services
 
 
         [TestMethod]
-        public void getFGetFilesByProjectIdTest2()
+        public void GetFilesByProjectIdTest2()
         {
             var query = fileService.GetFilesByProjectId(3);
             Assert.AreEqual(0, query.Count);
+        }
+
+        [TestMethod]
+        public void RemoveFileProjectConnectionTest()
+        {
+           fileService.RemoveFileProjectConnection(1);
+
+            var query = fileService.GetFilesByProjectId(1);
+
+            HashSet<int> idSet = new HashSet<int>();
+            foreach (var file in query)
+            {
+                idSet.Add(file.ID);
+            }
+
+            Assert.IsFalse(idSet.Contains(1));
+            Assert.IsFalse(idSet.Contains(2));
+            Assert.IsTrue(idSet.Contains(3));
+            Assert.IsTrue(idSet.Contains(4));
+            Assert.AreEqual(2, idSet.Count);
+        }
+
+        [TestMethod]
+        public void GetSingleFileByIdTest()
+        {
+            var query = fileService.GetSingleFileById(0);
+            var query2 = fileService.GetSingleFileById(1);
+            Assert.AreNotEqual(0, query);
+            Assert.AreEqual(1, query2.ID);
+
+
+        }
+
+        [TestMethod]
+        public void GetAllFilesTest()
+        {
+            var query = fileService.GetAllFiles();
+
+            HashSet<int> idSet = new HashSet<int>();
+            foreach (var file in query)
+            {
+                idSet.Add(file.ID);
+            }
+            Assert.IsTrue(idSet.Contains(1));
+            Assert.IsTrue(idSet.Contains(2));
+            Assert.IsTrue(idSet.Contains(3));
+            Assert.IsTrue(idSet.Contains(4));
         }
     }
 }
