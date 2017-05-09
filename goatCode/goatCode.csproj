@@ -245,9 +245,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\Slider\1.jpg" />
+    <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Images\Slider\goat.jpg" />
-    <Content Include="Content\Images\Slider\programming-languages.jpg" />
+    <Content Include="Content\Images\Slider\goat2.jpg" />
+    <Content Include="Content\Images\Slider\goat3.jpg" />
     <Content Include="Content\Template\animate.min.css" />
     <Content Include="Content\Template\bootstrap.min.css" />
     <Content Include="Content\Template\font-awesome.min.css" />
