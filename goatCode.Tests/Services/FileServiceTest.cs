@@ -12,6 +12,7 @@ namespace goatCode.Tests.Services
     { 
     
         private FileService fileService;
+       
 
         [TestInitialize]
         public void Initialize()
