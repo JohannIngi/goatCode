@@ -104,11 +104,16 @@ namespace goatCode.Services
             return extensions.OrderBy(x => x).ToList();
         }
 
-        private ApplicationDbContext _db;
+        private readonly IAppDataContext _db;
 
         public FileService()
         {
             _db = new ApplicationDbContext();
+        }
+
+        public FileService(IAppDataContext context)
+        {
+            _db = context;
         }
 
         /// <summary>
@@ -198,8 +203,9 @@ namespace goatCode.Services
 
         public void UpdateFile(File file)
         {
-            
-            _db.Entry(file).State = EntityState.Modified;
+            //TODO : Þetta virkar ekki þarf að skoða betur seinna.
+            _db.setModified(file);
+
             _db.SaveChanges();
         }
 
@@ -212,6 +218,17 @@ namespace goatCode.Services
             File file = new File { ID = id };
             _db.Files.Attach(file);
             _db.Files.Remove(file);
+            _db.SaveChanges();
+        }
+        public void RemoveFileProjectConnection(int fileId)
+        {
+            var projectfile = (from pf in _db.ProjectFiles
+                               where pf.fileId == fileId
+                               select pf).ToList();
+            foreach(var pfile in projectfile)
+            {
+                _db.ProjectFiles.Remove(pfile);
+            }
             _db.SaveChanges();
         }
     }

@@ -14,11 +14,16 @@ namespace goatCode.Services
         /// <summary>
         /// Instance of database.
         /// </summary>
-        private ApplicationDbContext _db;
+        private readonly IAppDataContext _db;
 
         public UserService()
         {
             _db = new ApplicationDbContext();
+        }
+
+        public UserService(IAppDataContext context)
+        {
+            _db = context;
         }
 
         /// <summary>
@@ -128,7 +133,20 @@ namespace goatCode.Services
         }
         public void DeleteUser(string userName)
         {
+            ProjectService pservice = new ProjectService();
+            var userId = GetUserIdByName(userName);
+            var userprojects = pservice.GetProjectsOwnedByUser(userName);
+
+            foreach(var item in userprojects)
+            {
+                _db.UserProjects.Remove(_db.UserProjects.Where(x => x.projectId == item.ID).SingleOrDefault());
+            }
             _db.Users.Remove(_db.Users.Where(x => x.UserName == userName).SingleOrDefault());
+            _db.SaveChanges();
+        }
+        public string GetProjectOwnerIdByProjectId(int projectId)
+        {
+            return _db.ProjectOwners.Where(x => x.projectId == projectId).SingleOrDefault().userId;
         }
     }
 }

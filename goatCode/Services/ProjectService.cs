@@ -14,11 +14,16 @@ namespace goatCode.Services
         /// <summary>
         /// Instance of database.
         /// </summary>
-        private ApplicationDbContext _db;
+        private readonly IAppDataContext _db;
 
         public ProjectService()
         {
             _db = new ApplicationDbContext();
+        }
+
+        public ProjectService(IAppDataContext context)
+        {
+            _db = context;
         }
 
         /// <summary>
@@ -103,7 +108,7 @@ namespace goatCode.Services
         /// <param name="project">Instance of Project class</param>
         public void EditProjectName(Project project)
         {
-            _db.Entry(project).State = EntityState.Modified;
+            _db.setModified(project);
             _db.SaveChanges();
         }
 
@@ -124,11 +129,11 @@ namespace goatCode.Services
         }
         public List<Project> GetProjectsOwnedByUser(string userName)
         {
-            UserService uservice = new UserService();
-
-            return (from own in _db.ProjectOwners
-                    where own.userId == uservice.GetUserIdByName(userName)
-                    join p in _db.Projects on own.projectId equals p.ID
+            return (from user in _db.Users
+                    where user.UserName == userName
+                    join pb in _db.ProjectOwners on user.Id equals pb.userId
+                    join p in _db.Projects on pb.projectId equals p.ID
+                    orderby p.name
                     select p).ToList();
         }
     }
