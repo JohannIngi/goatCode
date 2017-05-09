@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using goatCode.Models.Entities;
 using System.Diagnostics;
 using System.Text;
+using System.Web.Security;
 
 namespace goatCode.Controllers
 {
@@ -82,13 +83,14 @@ namespace goatCode.Controllers
                 var file = _fservice.GetSingleFileById(FileId.Value);
                 if (file != null)
                 {
-                    var model = new FileEditViewModel();
-                    
-                    model.content = file.content;
-                    model.extension = file.extension;
-                    model.ID = file.ID;
-                    model.name = file.name;
-                    model.projectId = _pservice.GetProjectIdByFileId(FileId.Value);
+                    var model = new FileEditViewModel()
+                    {
+                        content = file.content,
+                        extension = file.extension,
+                        ID = file.ID,
+                        name = file.name,
+                        projectId = _pservice.GetProjectIdByFileId(FileId.Value)
+                    };
                     ViewBag.DocumentID = FileId.Value;
                   
                     return View(model);
@@ -107,7 +109,7 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult Create(int? ProjectId)
         {
-            var model = new NewFileViewModel { projectId = ProjectId.Value };
+            var model = new NewFileViewModel { ProjectId = ProjectId.Value };
             
             ViewBag.Extensions = new SelectList(_fservice.PopulateDropDownList());
             return View(model);
@@ -127,14 +129,19 @@ namespace goatCode.Controllers
             //model.name = projName.ToString();
             string fileName = HttpUtility.HtmlEncode(model.name);
             model.name = fileName;
+
+            if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
+            {
+                ModelState.AddModelError("name", "File name already exists");
+                return RedirectToAction("Index", new { projectId = model.ProjectId });
+            }
+
             //model.name = Encoder.HtmlEncode(model.name, true);
-           _fservice.AddNewFile(model);
+            _fservice.AddNewFile(model);
  
-            return RedirectToAction("Index", new { ProjectId = model.projectId });
+            return RedirectToAction("Index", new { ProjectId = model.ProjectId });
         }
-
-
-
+       
         // Gömul föll commenta þau út tímabundið
         /*public ActionResult UserProjects()
         {

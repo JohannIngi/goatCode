@@ -25,7 +25,5 @@ namespace goatCode.Models.Entities
             ErrorMessage = "Invalid name")]
         [Required(ErrorMessage = "Project must have a name")]
         public string name { get; set; }
-
-
     }
 }
