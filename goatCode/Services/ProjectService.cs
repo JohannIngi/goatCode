@@ -14,11 +14,16 @@ namespace goatCode.Services
         /// <summary>
         /// Instance of database.
         /// </summary>
-        private ApplicationDbContext _db;
+        private readonly IAppDataContext _db;
 
         public ProjectService()
         {
             _db = new ApplicationDbContext();
+        }
+
+        public ProjectService(IAppDataContext context)
+        {
+            _db = context;
         }
 
         /// <summary>
@@ -92,7 +97,7 @@ namespace goatCode.Services
         /// <param name="project">Instance of Project class</param>
         public void EditProjectName(Project project)
         {
-            _db.Entry(project).State = EntityState.Modified;
+            _db.setModified(project);
             _db.SaveChanges();
         }
 

@@ -14,11 +14,16 @@ namespace goatCode.Services
         /// <summary>
         /// Instance of database.
         /// </summary>
-        private ApplicationDbContext _db;
+        private readonly IAppDataContext _db;
 
         public UserService()
         {
             _db = new ApplicationDbContext();
+        }
+
+        public UserService(IAppDataContext context)
+        {
+            _db = context;
         }
 
         /// <summary>
