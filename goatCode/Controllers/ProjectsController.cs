@@ -30,7 +30,7 @@ namespace goatCode.Controllers
         /// The view is from index in ProjectIndexViewModel</returns>
         public ActionResult Index(int? projectId)
         {
-            if (projectId.HasValue)
+            if(projectId.HasValue && _uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
             {
                 var model = new ProjectIndexViewModel()
                 {
@@ -41,7 +41,7 @@ namespace goatCode.Controllers
             }
             else
             {
-                return View("Error");
+                return View("ProjectPermissionError"); // Anton reddar þessu error viewi
             }
         }
 
