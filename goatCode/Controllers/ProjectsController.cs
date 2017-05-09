@@ -132,14 +132,7 @@ namespace goatCode.Controllers
  
             return RedirectToAction("Index", new { ProjectId = model.projectId });
         }
-
-        public File DownloadFile(int fileId)
-        {
-
-            var dir = _fservice.GetSingleFileById(fileId);
-            return dir;
-        }
-        /*
+        
         public FileResult DownloadFile(int fileId)
         {
             
@@ -148,10 +141,10 @@ namespace goatCode.Controllers
             byte[] contentAsBytes = encoding.GetBytes(dir.content);
             
 
-            return File(contentAsBytes, dir.extension, dir.name);
+            return File(contentAsBytes, "."+dir.extension, dir.name);
         }
 
-        */
+        
 
 
 
