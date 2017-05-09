@@ -37,6 +37,12 @@ namespace goatCode.Tests.Services
         }
 
         [TestMethod]
+        public void DeleteFileTest()
+        {
+
+        }
+
+        [TestMethod]
         public void getFGetFilesByProjectIdTest1()
         {
             var query = fileService.GetFilesByProjectId(1);

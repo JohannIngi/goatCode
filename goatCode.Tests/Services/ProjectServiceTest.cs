@@ -59,7 +59,6 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void GetProjectByProjectIdTest1()
         {
-            //This works but it shouldn't
             var query = projectService.GetProjectByProjectId(1);
             Assert.AreNotEqual(0, query.ID);
             Assert.AreEqual(1, query.ID);
@@ -97,6 +96,72 @@ namespace goatCode.Tests.Services
             Assert.IsFalse(idSet.Contains(0));
             Assert.AreEqual(3, query.Count);
             Assert.AreNotEqual(0, query.Count);
+        }
+
+
+        [TestMethod]
+        public void DeleteProjectTest()
+        {
+            var query1 = projectService.GetProjectByProjectId(1);
+            Assert.AreEqual(1, query1.ID);
+
+            projectService.DeleteProject(1);
+
+            var query2 = projectService.GetAllProjects();
+
+            HashSet<int> idSet = new HashSet<int>();
+            foreach (var file in query2)
+            {
+                idSet.Add(file.ID);
+            }
+
+            Assert.IsFalse(idSet.Contains(1));
+            Assert.IsTrue(idSet.Contains(2));
+        }
+
+        [TestMethod]
+        public void AddNewProject()
+        {
+            Project proj = new Project { ID = 5, name = "project5" };
+            var query1 = projectService.GetProjectByProjectId(5);
+            Assert.AreNotEqual(5, query1);
+
+            projectService.AddNewProject(proj, "1231");
+
+            var query2 = projectService.GetAllProjects();
+
+            HashSet<int> idSet = new HashSet<int>();
+            foreach (var file in query2)
+            {
+                idSet.Add(file.ID);
+            }
+            Assert.IsTrue(idSet.Contains(5));
+        }
+
+        [TestMethod]
+        public void EditProjectNameTest()
+        {
+            Project proj = new Project { ID = 6, name = "project6" };
+            projectService.AddNewProject(proj, "1231");
+            var query = projectService.GetAllProjects();
+            
+            List<String> nameList = new List<String>();
+            foreach(var file in query)
+            {
+                nameList.Add(file.name);
+            }
+
+            Assert.IsTrue(nameList.Contains("project6"));
+
+            proj.name = "asdf";
+
+            projectService.EditProjectName(proj);
+            List<String> nameList2 = new List<String>();
+            foreach (var file in query)
+            {
+                nameList2.Add(file.name);
+            }
+            Assert.IsTrue(nameList2.Contains("asdf"));
         }
     }
 }
