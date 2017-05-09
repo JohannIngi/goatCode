@@ -14,11 +14,16 @@ namespace goatCode.Services
         /// <summary>
         /// Instance of database.
         /// </summary>
-        private ApplicationDbContext _db;
+        private readonly IAppDataContext _db;
 
         public ProjectService()
         {
             _db = new ApplicationDbContext();
+        }
+
+        public ProjectService(IAppDataContext context)
+        {
+            _db = context;
         }
 
         /// <summary>
@@ -51,10 +56,21 @@ namespace goatCode.Services
         public void AddNewProject(Project newProject, String uId)
         {
             _db.Projects.Add(newProject);
+            
+            var newfile = new File();
+            newfile.extension = "md";
+            newfile.content = "# " + newProject.name + "\n";
+            newfile.name = "readme";
+            _db.Files.Add(newfile);
             _db.SaveChanges();
+
 
             _db.ProjectOwners.Add(new ProjectOwner { userId = uId, projectId = newProject.ID });
             _db.UserProjects.Add(new UserProject { userId = uId, projectId = newProject.ID });
+            _db.SaveChanges();
+
+
+            _db.ProjectFiles.Add(new ProjectFile { fileId = newfile.ID, projectId = newProject.ID });
             _db.SaveChanges();
         }
 
@@ -92,7 +108,7 @@ namespace goatCode.Services
         /// <param name="project">Instance of Project class</param>
         public void EditProjectName(Project project)
         {
-            _db.Entry(project).State = EntityState.Modified;
+            _db.setModified(project);
             _db.SaveChanges();
         }
 
@@ -119,6 +135,19 @@ namespace goatCode.Services
                     join p in _db.Projects on pb.projectId equals p.ID
                     orderby p.name
                     select p).ToList();
+        }
+        public List<Project> GetProjectsNotOwnedByUser(string userName)
+        {
+            var allProjects = GetInUseProjectsByUserName(userName);
+
+            var ownedProjects = GetProjectsOwnedByUser(userName);
+
+            foreach(var project in ownedProjects)
+            {
+                allProjects.Remove(project);
+            }
+
+            return allProjects;
         }
     }
 }
