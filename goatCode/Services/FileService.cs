@@ -234,6 +234,7 @@ namespace goatCode.Services
             }
             _db.SaveChanges();
         }
+
         public bool DoesFileNameExistInProject(int projectId, string fileName)
         {
             var file = (from p in _db.Projects
@@ -261,6 +262,7 @@ namespace goatCode.Services
             _db.setModified(file);
             _db.SaveChanges();
         }
+
     }
 
 }

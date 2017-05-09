@@ -141,7 +141,20 @@ namespace goatCode.Controllers
  
             return RedirectToAction("Index", new { ProjectId = model.ProjectId });
         }
-       
+
+        
+        public FileResult DownloadFile(int fileId)
+        {
+            
+            var dir = _fservice.GetSingleFileById(fileId);
+            UTF8Encoding encoding = new UTF8Encoding();
+            byte[] contentAsBytes = encoding.GetBytes(dir.content);                       
+
+            return File(contentAsBytes, dir.extension, dir.name + "." + dir.extension);
+        }
+
+        
+
         // Gömul föll commenta þau út tímabundið
         /*public ActionResult UserProjects()
         {
