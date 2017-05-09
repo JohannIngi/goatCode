@@ -133,7 +133,7 @@ namespace goatCode.Controllers
             if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
             {
                 ModelState.AddModelError("name", "File name already exists");
-                return View(model);
+                return RedirectToAction("Index", new { projectId = model.ProjectId });
             }
 
             //model.name = Encoder.HtmlEncode(model.name, true);
