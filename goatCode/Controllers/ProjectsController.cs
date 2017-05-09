@@ -139,9 +139,10 @@ namespace goatCode.Controllers
             var dir = _fservice.GetSingleFileById(fileId);
             UTF8Encoding encoding = new UTF8Encoding();
             byte[] contentAsBytes = encoding.GetBytes(dir.content);
+            var name = dir.name + "." + dir.extension;
             
 
-            return File(contentAsBytes, "."+dir.extension, dir.name);
+            return File(contentAsBytes, dir.extension, name);
         }
 
         
