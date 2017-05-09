@@ -77,8 +77,19 @@ namespace goatCode.Controllers
 
             if (uservice.DoesUserExist(model.email))
             {
-                pservice.AddUserToProject(model);
-                return RedirectToAction("Index");
+                if (uservice.IsUserOwner(uservice.GetUserIdByName(model.email), model.projectId) == true)
+                {
+                    // Ef user er owner  þá getur hann ekki share-að
+                }
+                else if (uservice.IsUserRelatedToProject(uservice.GetUserIdByName(model.email), model.projectId) == true)
+                {
+                    // Ef user er nú þegar tengdur við project þá gerist ekkert
+                }
+                else
+                {
+                    pservice.AddUserToProject(model);
+                    return RedirectToAction("Index");
+                }
             }
             // Notandi sem reynt var að deila með er ekki til
             return View("UserDoesNotExistError");
