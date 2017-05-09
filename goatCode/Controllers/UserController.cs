@@ -25,6 +25,7 @@ namespace goatCode.Controllers
         {
             var ret = pservice.GetProjectsOwnedByUser(User.Identity.Name);
             ViewBag.NotOwned = pservice.GetProjectsNotOwnedByUser(User.Identity.Name);
+
             return View(ret);
         }
 
