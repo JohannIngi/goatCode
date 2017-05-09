@@ -14,11 +14,34 @@ namespace goatCode.Services
         /// <summary>
         /// Instance of database.
         /// </summary>
-        private ApplicationDbContext _db;
+        private readonly IAppDataContext _db;
+
+        public bool IsUserOwner(string userId, int projectId)
+        {
+            var owner = _db.ProjectOwners.Where(x => x.userId == userId && x.projectId == projectId).SingleOrDefault();
+            if (owner == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        internal void IsUserOwner()
+        {
+            throw new NotImplementedException();
+        }
 
         public UserService()
         {
             _db = new ApplicationDbContext();
+        }
+
+        public UserService(IAppDataContext context)
+        {
+            _db = context;
         }
 
         /// <summary>
@@ -54,18 +77,7 @@ namespace goatCode.Services
             return retValue;
         }
    
-        public bool IsUserOwner(string userId, int projectId)
-        {
-            var owner = _db.ProjectOwners.Where(x => x.userId == userId && x.projectId == projectId).SingleOrDefault();
-            if(owner == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+        
 
         /// <summary>
         /// Deleting a project relations from projectID. If selected projectID is in UserProjects table.

@@ -18,14 +18,32 @@ namespace goatCode.Models
             return userIdentity;
         }
     }
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public interface IAppDataContext
     {
-        public DbSet<File> Files { get; set; }
-        public DbSet<Project> Projects { get; set; }
-        public DbSet<ProjectFile> ProjectFiles { get; set; }
-        public DbSet<ProjectOwner> ProjectOwners { get; set; }
-        public DbSet<UserProject> UserProjects { get; set; }
+
+        IDbSet<File> Files { get; set; }
+        IDbSet<Project> Projects { get; set; }
+        IDbSet<ProjectFile> ProjectFiles { get; set; }
+        IDbSet<ProjectOwner> ProjectOwners { get; set; }
+        IDbSet<UserProject> UserProjects { get; set; }
+        IDbSet<ApplicationUser> Users { get; set; }
+        IDbSet<IdentityRole> Roles { get; set; }
+        int SaveChanges();
+        void setModified(object entry);
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IAppDataContext
+    {
+        public IDbSet<File> Files { get; set; }
+        public IDbSet<Project> Projects { get; set; }
+        public IDbSet<ProjectFile> ProjectFiles { get; set; }
+        public IDbSet<ProjectOwner> ProjectOwners { get; set; }
+        public IDbSet<UserProject> UserProjects { get; set; }
+
+        public void setModified(object entry)
+        {
+            Entry(entry).State = EntityState.Modified;
+        }
 
 
         public ApplicationDbContext()
@@ -41,5 +59,9 @@ namespace goatCode.Models
         public System.Data.Entity.DbSet<goatCode.Models.ViewModels.ProjectViewModel> ProjectViewModels { get; set; }
 
         public System.Data.Entity.DbSet<goatCode.Models.ViewModels.FileViewModel> FileViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<goatCode.Models.ViewModels.FileEditViewModel> FileEditViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<goatCode.Models.ViewModels.FileUpdateViewModel> FileUpdateViewModels { get; set; }
     }
 }
