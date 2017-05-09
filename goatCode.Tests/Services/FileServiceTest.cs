@@ -8,7 +8,8 @@ using System.Collections.Generic;
 namespace goatCode.Tests.Services
 {
     [TestClass]
-    public class FileServiceTest { 
+    public class FileServiceTest
+    { 
     
         private FileService fileService;
 
