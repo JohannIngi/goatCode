@@ -50,6 +50,9 @@
                 @Html.Raw(item.name)
             </td>
             <td>
+                @Html.Raw(item.name)
+            </td>
+            <td>
 
                 @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-edit" }) | <!--N-->
                 @Html.ActionLink(" ", "Index", "Projects", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-folder-open" }) | <!--Y-->
