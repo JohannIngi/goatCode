@@ -21,14 +21,13 @@
             @(Html.DisplayFor(modelItem => item.name) + "." + Html.DisplayFor(modelItem => item.extension))
         </td>
         <td>
+
             @Html.ActionLink("Edit", "Edit", new { FileId = item.ID }) |
-<<<<<<< HEAD
             @Html.ActionLink("DownloadFile", "DownloadFile", new { fileId = item.ID }) |
-=======
             @Html.ActionLink("Update FileName", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }) |
->>>>>>> 2267507397a3668f40acf1f6ec1d4da83121b128
             @Html.ActionLink("Delete", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId },
-    new { onclick = "return confirm('Are you sure you wish to delete this file?');"} )
+            new { onclick = "return confirm('Are you sure you wish to delete this file?');"} )
+
         </td>
     </tr>
 }

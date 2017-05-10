@@ -258,7 +258,10 @@ namespace goatCode.Controllers
         {
             return code == null ? View("Error") : View();
         }
-
+        public ActionResult mammatin()
+        {
+            return View("register");
+        }
         //
         // POST: /Account/ResetPassword
         [HttpPost]

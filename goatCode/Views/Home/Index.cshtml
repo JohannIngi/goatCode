@@ -1,122 +1,61 @@
 ﻿@using goatCode.Models
-@model LoginViewModel
 @{
     ViewBag.Title = "Home Page";
 }
-<head>
-    <title> GoatCode </title>
-    <style>
-        #divFyrirHjalpartexta {
-            width: 20%;
-            height: 270px;
-            float: left;
-	        margin-bottom: 1em;
-	        margin-left: 3%;
-            position: absolute;
-            top: 135px;
-            right: 20%;
-        }
-        #DivFyrirLogin{
-            width: 47%;
-            height: 500px;
-            float: left;
-	        margin-bottom: 1em;
-	        margin-left: 3%;
-            position: absolute;
-            top: 135px;
-            left: 15%;
-        }
-        #container{
-              width: 100%;
-              float: left;
-              margin-right: -200px;
-              
-        }
-        #Wrapper{
-            background:
-                repeat-y right;
-        }
-        .clearing {
-          height: 0;
-          clear: both;
-        }
-        .header {
-            text-align:center;
-        }
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <title>GoatCode</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
 
-    </style>
-</head>
-<body>
-    <div id="Wrapper">
-        <div id="container">
-            <div class="header">
-                <h1>Welcome to GoatCode!</h1>
-            </div>
-            <div id="divFyrirHjalpartexta">
-                <h3>Develop from the comfort of your browser!</h3>
-                <p>
-                    GoatCode is an online development tool. Connect to your project files whenever
-                    and wherever your are! Share your project with your teammates no matter where they are in the world!
-                </p><br />
-                    <h3>Web development was never so easy!</h3>
-                <p>GoatCode combines and online code editor with your own workspace in a cloud!+
-                </p>
-                
-            </div>
-            <div id="DivFyrirLogin">
-                <h2>Log in</h2>
-                <div class="row">
-                    <div class="col-md-8">
-                        <section id="loginForm">
-                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                                @Html.AntiForgeryToken()
-                                <h4>Use a local account to log in.</h4>
-                                <hr />
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                                    <div class="col-md-10">
-                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                                    <div class="col-md-10">
-                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <div class="checkbox">
-                                            @Html.CheckBoxFor(m => m.RememberMe)
-                                            @Html.LabelFor(m => m.RememberMe)
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" value="Log in" class="btn btn-default" />
-                                    </div>
-                                </div>
-                                <p>
-                                    @Html.ActionLink("Register as a new user", "Register")
-                                </p>
+        <link href="~/Content/Template/bootstrap.min.css" rel="stylesheet">
+        <link href="~/Content/Template/animate.min.css" rel="stylesheet">
+        <link href="~/Content/Template/font-awesome.min.css" rel="stylesheet">
+        <link href="~/Content/Template/lightbox.css" rel="stylesheet">
+        <link href="~/Content/Template/main.css" rel="stylesheet">
+        <link id="css-preset" href="~/Content/Template/presets/preset1.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <style type="text/css" media="screen">
+            body {
+                overflow: auto;
+            }
 
-                            }
-                        </section>
+        </style>
+    </head>
+    <body>
+        <div id="home-slider" class="carousel slide carousel-fade" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="item active" style="background-image: url(../../Content/Images/Slider/goat.jpg)">
+                    <div class="caption">
+                        <h1 class="animated fadeInLeftBig">Welcome to the <span>GoatCode</span></h1>
+                        <p class="animated fadeInRightBig">Online Editor - Multiple programming language options - More - More</p>
+                        <a data-scroll class="btn btn-start animated fadeInUpBig" href="~/Account/Register">Start now</a>
                     </div>
-
                 </div>
-
-                @section Scripts {
-                    @Scripts.Render("~/bundles/jqueryval")
-                }
+                <div class="item" style="background-image: url(../../Content/Images/Slider/goat2.jpg)">
+                    <div class="caption">
+                        <h1 class="animated fadeInLeftBig">Develop from the comfort of your <span> browser!</span></h1>
+                        <p class="animated fadeInRightBig">GoatCode is an online development tool. Connect to your project <br /> files whenever
+                         and wherever your are! Share your project with your <br />teammates no matter where they are in the world!</p>
+                        <a data-scroll class="btn btn-start animated fadeInUpBig" href="~/Account/Register">Start now</a>
+                    </div>
+                </div>
+                <div class="item" style="background-image: url(../../Content/Images/Slider/goat3.jpg)">
+                    <div class="caption">
+                        <h1 class="animated fadeInLeftBig">development was never so <span> easy!</span></h1>
+                        <p class="animated fadeInRightBig">
+                            GoatCode combines and online code editor with your own workspace in a cloud!
+                        </p>
+                        <a data-scroll class="btn btn-start animated fadeInUpBig" href="~/Account/Register">Start now</a>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="clearing">&nbsp;</div>
-    </div>
-</body>
+            <a class="left-control" href="#home-slider" data-slide="prev"><i class="fa fa-angle-double-left"></i></a>
+            <a class="right-control" href="#home-slider" data-slide="next"><i class="fa fa-angle-double-right"></i></a>
+        </div><!--/#home-slider-->
+    </body>
+</html>
