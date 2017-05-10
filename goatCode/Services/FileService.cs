@@ -151,10 +151,18 @@ namespace goatCode.Services
             _db.setModified(file);
             _db.SaveChanges();
         }
+        /// <summary>
+        /// Getting the number of occurrences a file extension appears in the system
+        /// </summary>
+        /// <returns></returns>
         public int GetExtensionOccurrences (string extension)
         {
             return _db.Files.Where(x => x.extension == extension).Count();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public StatViewModel GetStatistics()
         {
             var extensions = new ExtensionService().PopulateDropDownList();
