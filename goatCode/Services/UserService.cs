@@ -152,7 +152,7 @@ namespace goatCode.Services
         /// <param name="userName"></param>
         public void DeleteUser(string userName)
         {
-            ProjectService pservice = new ProjectService();
+            ProjectService pservice = new ProjectService(_db);
             var userId = GetUserIdByName(userName);
             var userprojects = pservice.GetProjectsOwnedByUser(userName);
 

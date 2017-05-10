@@ -17,7 +17,7 @@ namespace goatCode.Services
         /// Instance of database.
         /// </summary>
         private readonly IAppDataContext _db;
-        private UtilityService utservice = new UtilityService();
+        private ExtensionService utservice = new ExtensionService();
 
         public FileService()
         {
@@ -55,13 +55,13 @@ namespace goatCode.Services
             return _db.Files.ToList();
         }
 
-        public void AddNewFile(NewFileViewModel model)
+        public void AddNewFile(File model, int projectID)
         {
-            File file = new File { name = model.name, content = utservice.GetStartContentForExtension(model.extension), extension = model.extension };
-            _db.Files.Add(file);
+            model.content = utservice.GetStartContentForExtension(model.extension);
+            _db.Files.Add(model);
             _db.SaveChanges();
 
-            _db.ProjectFiles.Add(new ProjectFile { fileId = file.ID, projectId = model.ProjectId });
+            _db.ProjectFiles.Add(new ProjectFile { fileId = model.ID, projectId = projectID });
             _db.SaveChanges();
         }
 

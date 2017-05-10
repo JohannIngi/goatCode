@@ -241,7 +241,7 @@
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Services\UtilityService.cs" />
+    <Compile Include="Services\ExtensionService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

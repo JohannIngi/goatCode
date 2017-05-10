@@ -83,7 +83,7 @@ namespace goatCode.Services
         /// And is therefore connected to the project and can view and edit it.
         /// </summary>
         /// <param name="model">Instance of ShareViewModel, to use parameters from ShareViewModel</param>
-        internal void AddUserToProject(ShareViewModel model)
+        public void AddUserToProject(ShareViewModel model)
         {
             var user = _db.Users.Where(x => x.Email == model.email).SingleOrDefault();
             if (user != null)

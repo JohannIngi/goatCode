@@ -9,7 +9,7 @@ namespace goatCode.Models.ViewModels
 {
     public class FileEditViewModel
     {
-        private UtilityService  utservice = new UtilityService();
+        private ExtensionService  utservice = new ExtensionService();
         public int ID { get; set; }
         public int projectId { get; set; }
         public string name { get; set; }
