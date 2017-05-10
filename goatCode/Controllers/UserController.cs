@@ -4,7 +4,9 @@ using goatCode.Services;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -163,6 +165,44 @@ namespace goatCode.Controllers
             }
             
         }
-        
+        public FileContentResult DownloadProjectAsZip(int? projectId)
+        {
+            if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
+            {
+                var dir = fservice.GetFilesByProjectId(projectId.Value);
+                var e = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string path = e + @"\" + pservice.GetProjectByProjectId(projectId.Value).name;
+
+                Directory.CreateDirectory(path);
+
+                foreach (var file in dir)
+                {
+                    using (System.IO.StreamWriter data = new System.IO.StreamWriter(path + @"\" + file.name + "." + file.extension, true))
+                    {
+                        data.Write(file.content);
+                    }
+
+                }
+                var s = pservice.GetProjectByProjectId(projectId.Value).name + ".zip";
+                using (Ionic.Zip.ZipFile zip = new Ionic.Zip.ZipFile())
+                {
+                    zip.AddDirectory(path);
+                    zip.Comment = "This zip was created at " + DateTime.Now.ToString("G") + "Using GoatCode";
+                    zip.Save(@"C:\tempfolder\" + s);
+                }
+
+                UTF8Encoding encoding = new UTF8Encoding();
+                //byte[] contentAsBytes = encoding.GetBytes(dir.content);
+                byte[] thefile = System.IO.File.ReadAllBytes(@"C:\tempfolder\" + s);
+                
+
+                return File(thefile, "zip" , s);
+                
+                
+            }
+            return null;
+
+        }
+
     }
 }
