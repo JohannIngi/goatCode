@@ -15,7 +15,7 @@ namespace goatCode.Controllers
 {
     public class ProjectsController : Controller
     {
-       // private ProjectService _service = new ProjectService();
+        private UtilityService _utservice = new UtilityService();
         private ProjectService _pservice = new ProjectService();
         private UserService _uservice = new UserService();
         private FileService _fservice = new FileService();
@@ -111,7 +111,7 @@ namespace goatCode.Controllers
         {
             var model = new NewFileViewModel { ProjectId = ProjectId.Value };
             
-            ViewBag.Extensions = new SelectList(_fservice.PopulateDropDownList());
+            ViewBag.Extensions = new SelectList(_utservice.PopulateDropDownList());
             return View(model);
         }
 
@@ -257,6 +257,7 @@ namespace goatCode.Controllers
         {
             if (fileId.HasValue)
             {
+                _fservice.RemoveFileProjectConnection(fileId.Value);
                 _fservice.DeleteFile(fileId.Value);
             }
 
