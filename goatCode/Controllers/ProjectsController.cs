@@ -15,7 +15,7 @@ namespace goatCode.Controllers
 {
     public class ProjectsController : Controller
     {
-       // private ProjectService _service = new ProjectService();
+        private UtilityService _utservice = new UtilityService();
         private ProjectService _pservice = new ProjectService();
         private UserService _uservice = new UserService();
         private FileService _fservice = new FileService();
@@ -30,7 +30,7 @@ namespace goatCode.Controllers
         /// The view is from index in ProjectIndexViewModel</returns>
         public ActionResult Index(int? projectId)
         {
-            if (projectId.HasValue)
+            if(projectId.HasValue && _uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
             {
                 var model = new ProjectIndexViewModel()
                 {
@@ -41,7 +41,7 @@ namespace goatCode.Controllers
             }
             else
             {
-                return View("Error");
+                return View("ProjectPermissionError"); // Anton reddar þessu error viewi
             }
         }
 
@@ -111,7 +111,7 @@ namespace goatCode.Controllers
         {
             var model = new NewFileViewModel { ProjectId = ProjectId.Value };
             
-            ViewBag.Extensions = new SelectList(_fservice.PopulateDropDownList());
+            ViewBag.Extensions = new SelectList(_utservice.PopulateDropDownList());
             return View(model);
         }
 
@@ -124,23 +124,36 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult Create(NewFileViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                string fileName = HttpUtility.HtmlEncode(model.name);
-                model.name = fileName;
 
-                if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
-                {
-                    ModelState.AddModelError("name", "File name already exists");
-                }
-                else
-                {
-                    _fservice.AddNewFile(model);
-                    return RedirectToAction("Index", new { ProjectId = model.ProjectId });
-                }
+            if (ModelState.IsValid)
+
+            //StringBuilder projName = new StringBuilder();
+            //projName.Append(HttpUtility.HtmlEncode(model.name));
+            //model.name = projName.ToString();
+            string fileName = HttpUtility.HtmlEncode(model.name);
+            model.name = fileName;
+
+            if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
+            {
+                ModelState.AddModelError("name", "File name already exists");
+                return RedirectToAction("Index", new { projectId = model.ProjectId });
             }
-            ViewBag.Extensions = new SelectList(_fservice.PopulateDropDownList());
-            return View(model);
+
+            //model.name = Encoder.HtmlEncode(model.name, true);
+            _fservice.AddNewFile(model);
+ 
+            return RedirectToAction("Index", new { ProjectId = model.ProjectId });
+        }
+
+        
+        public FileResult DownloadFile(int fileId)
+        {
+            
+            var dir = _fservice.GetSingleFileById(fileId);
+            UTF8Encoding encoding = new UTF8Encoding();
+            byte[] contentAsBytes = encoding.GetBytes(dir.content);                       
+
+            return File(contentAsBytes, dir.extension, dir.name + "." + dir.extension);
         }
        
         /// <summary>
@@ -157,6 +170,7 @@ namespace goatCode.Controllers
         {
             if (fileId.HasValue)
             {
+                _fservice.RemoveFileProjectConnection(fileId.Value);
                 _fservice.DeleteFile(fileId.Value);
             }
 
@@ -167,6 +181,31 @@ namespace goatCode.Controllers
 
             return View("Error");
         }
+        [HttpGet]
+        public ActionResult UpdateFileName(int? fileId, int? projectId)
+        {
 
+            if (fileId.HasValue && projectId.HasValue && _uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
+            {
+                var file = _fservice.GetSingleFileById(fileId.Value);
+                var model = new FileUpdateViewModel()
+                {
+                    ID = file.ID,
+                    name = file.name,
+                    projectId = projectId.Value
+                };
+
+                
+                return View(model);
+            }  
+            return RedirectToAction("Error"); // Vantar custom error fyrir þetta shit Er ekki tengdur project/file
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult UpdateFileName(FileUpdateViewModel model)
+        {
+            _fservice.EditFileName(model);
+            return RedirectToAction("Index", new { projectId = model.projectId });
+        }
     }
 }
