@@ -25,10 +25,10 @@
         <td></td>
         <td align="right">
 
-            @Html.ActionLink(" ", "DownloadFile", new { fileId = item.ID }, new { @class = "glyphicon glyphicon-download-alt" }) |
-            @Html.ActionLink(" ", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }, new { @class = "glyphicon glyphicon-pencil" }) |
+            @Html.ActionLink(" ", "DownloadFile", new { fileId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title ="Download file" }) |
+            @Html.ActionLink(" ", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }, new { @class = "glyphicon glyphicon-pencil", title = "Rename file" }) |
             @Html.ActionLink(" ", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId },
-            new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash"} )
+            new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete file" } )
 
         </td>
     </tr>
