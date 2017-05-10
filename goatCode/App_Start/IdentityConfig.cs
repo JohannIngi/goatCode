@@ -32,7 +32,7 @@ namespace goatCode
             client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
 
-            // Creatte the credentials:
+            // Create the credentials:
             System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
             client.EnableSsl = true;
             client.Credentials = credentials;
