@@ -26,12 +26,11 @@
             </a>
         </td>
         <td></td>
-        <td>
+        <td align="right">
             @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @title = "Edit", @class = "glyphicon glyphicon-edit" }) | <!--N-->
-            @Html.ActionLink(" ", "Index", "Projects", new { projectId=item.ID }, new { @title = "See files", @class = "glyphicon glyphicon-folder-open" }) | <!--Y-->
             @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @title = "Share project", @class = "glyphicon glyphicon-link" }) |<!--Y-->
-            @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { @title = "Delete", @class = "glyphicon glyphicon-trash" }) |
-            @Html.ActionLink("downloadproject", "DownloadProjectAsZip", new { projectId = item.ID })
+            @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash" }) |
+            @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt" })
             <!--    new { onclick = "return confirm('Are you sure you wish to delete this file?');" }) | -->
        
         </td>
@@ -56,12 +55,11 @@
             <td>
                 @Html.Raw(item.projectOwner)
             </td>
-            <td>
+            <td align="right">
                 @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-pencil" }) | <!--N-->
                 @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link" }) | <!--Y-->
-                @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-trash" }) |
-                @Html.ActionLink("downloadproject", "DownloadProjectAsZip", new { projectId = item.ID })<!--Y-->
-                <!--    new { onclick = "return confirm('Are you sure you wish to delete this file?');" }) | -->
+                @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash" }) |
+                @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt" })<!--Y-->
 
             </td>
         </tr>
