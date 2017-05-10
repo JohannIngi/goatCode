@@ -25,6 +25,7 @@ namespace goatCode.Controllers
         {
             var ret = pservice.GetProjectsOwnedByUser(User.Identity.Name);
             ViewBag.NotOwned = pservice.GetProjectsNotOwnedByUser(User.Identity.Name);
+
             return View(ret);
         }
 
@@ -41,17 +42,20 @@ namespace goatCode.Controllers
             Project project = new Project();
             return View(project);
         }
-        public ActionResult user()
-        {
-            return RedirectToAction("");
-        }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(Project project)
         {
-            project.name = HttpUtility.HtmlEncode(project.name);
-            pservice.AddNewProject(project, User.Identity.GetUserId());           
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                project.name = HttpUtility.HtmlEncode(project.name);
+
+                pservice.AddNewProject(project, User.Identity.GetUserId());
+
+                return RedirectToAction("Index");
+            }
+            return View(project);
         }
 
         /// <summary>
@@ -63,7 +67,7 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult ShareProjects(int? ProjectId)
         {
-            if(uservice.IsUserRelatedToProject(User.Identity.GetUserId(), ProjectId.Value))
+            if(uservice.IsUserRelatedToProject(base.User.Identity.GetUserId(), ProjectId.Value))
             {
                return View(new ShareViewModel { projectId = ProjectId.Value }); 
             }            
@@ -80,11 +84,13 @@ namespace goatCode.Controllers
             {
                 if (uservice.IsUserOwner(uservice.GetUserIdByName(model.email), model.projectId) == true)
                 {
-                    // Ef user er owner  þá getur hann ekki share-að
+                    // Ef user er owner þá getur hann ekki share-að
+                    return View("UserIsOwnerError");
                 }
                 else if (uservice.IsUserRelatedToProject(uservice.GetUserIdByName(model.email), model.projectId) == true)
                 {
                     // Ef user er nú þegar tengdur við project þá gerist ekkert
+                    return View("CantShareWithThisUserError");
                 }
                 else
                 {
@@ -104,7 +110,7 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult Edit(int? projectId)
         {
-            if (uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
+            if (uservice.IsUserOwner(base.User.Identity.GetUserId(), projectId.Value))
             {
                 return View(pservice.GetProjectByProjectId(projectId.Value));
             }
@@ -130,15 +136,15 @@ namespace goatCode.Controllers
         public ActionResult Delete(int? projectId)
         {
             
-            if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
+            if (uservice.IsUserRelatedToProject(base.User.Identity.GetUserId(), projectId.Value))
             {
-                if (uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
+                if (uservice.IsUserOwner(base.User.Identity.GetUserId(), projectId.Value))
                 {
                     // Delete All Files
                     fservice.DeleteAllFilesinProject(projectId.Value);
                     // Delete All Relations
                     uservice.DeleteUserProjectRelations(projectId.Value);
-                    uservice.DeleteUserOwnerRelations(User.Identity.GetUserId(), projectId.Value);
+                    uservice.DeleteUserOwnerRelations(base.User.Identity.GetUserId(), projectId.Value);
                     // Delete Project
                     pservice.DeleteProject(projectId.Value);
 
@@ -146,7 +152,7 @@ namespace goatCode.Controllers
                 }
                 else
                 {
-                    uservice.DeleteSingleUserProjectRelations(User.Identity.GetUserId(), projectId.Value);
+                    uservice.DeleteSingleUserProjectRelations(base.User.Identity.GetUserId(), projectId.Value);
                 }
                 return RedirectToAction("Index");
             }

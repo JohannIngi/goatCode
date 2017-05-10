@@ -12,10 +12,11 @@ namespace goatCode.Models.ViewModels
         /// <summary>
         /// Parameter projectId is a part of NewFileViewModel to store data.
         /// </summary>
-        public int projectId { get; set; }
+        public int ProjectId { get; set; }
         /// <summary>
         /// Parameter name is a part of NewFileViewModel to store data.
         /// </summary>
+        [Display(Name = "File Name")]
         [Required (ErrorMessage = "Must have a name")]
         public string name { get; set; }
         /// <summary>
@@ -23,5 +24,6 @@ namespace goatCode.Models.ViewModels
         /// </summary>
         public string extension { get; set; }
         public IEnumerable<SelectListItem> extensionTypes { get; set; }
+
     }
 }

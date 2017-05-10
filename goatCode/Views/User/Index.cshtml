@@ -7,13 +7,14 @@
 <h2><br />Projects</h2>
 
 <p>
-    @Html.ActionLink("Create a new project", "Create")
+    @Html.ActionLink("Create a new project", "Create", new { @class = "btn btn-success" })
 </p>
 <table class="table">
     <tr>
         <th>
             Projects you own
         </th>
+        <th></th>
         <th></th>
     </tr>
 
@@ -22,6 +23,7 @@
         <td>
             @Html.Raw(item.name)        
         </td>
+        <td></td>
         <td>
             @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-edit" }) | <!--N-->
             @Html.ActionLink(" ", "Index", "Projects", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-folder-open" }) | <!--Y-->
@@ -37,6 +39,7 @@
         <th>
             Projects shared with you
         </th>
+        <th>Project owner</th>
         <th></th>
     </tr>
 
@@ -47,11 +50,13 @@
                 @Html.Raw(item.name)
             </td>
             <td>
+
                 @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-edit" }) | <!--N-->
                 @Html.ActionLink(" ", "Index", "Projects", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-folder-open" }) | <!--Y-->
                 @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link" }) | <!--Y-->
                 @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-trash" })  <!--Y-->
                 <!--    new { onclick = "return confirm('Are you sure you wish to delete this file?');" }) | -->
+
             </td>
         </tr>
     }

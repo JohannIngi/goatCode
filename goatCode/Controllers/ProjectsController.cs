@@ -9,12 +9,13 @@ using Microsoft.AspNet.Identity;
 using goatCode.Models.Entities;
 using System.Diagnostics;
 using System.Text;
+using System.Web.Security;
 
 namespace goatCode.Controllers
 {
     public class ProjectsController : Controller
     {
-       // private ProjectService _service = new ProjectService();
+        private UtilityService _utservice = new UtilityService();
         private ProjectService _pservice = new ProjectService();
         private UserService _uservice = new UserService();
         private FileService _fservice = new FileService();
@@ -29,7 +30,7 @@ namespace goatCode.Controllers
         /// The view is from index in ProjectIndexViewModel</returns>
         public ActionResult Index(int? projectId)
         {
-            if (projectId.HasValue)
+            if(projectId.HasValue && _uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
             {
                 var model = new ProjectIndexViewModel()
                 {
@@ -40,7 +41,7 @@ namespace goatCode.Controllers
             }
             else
             {
-                return View("Error");
+                return View("ProjectPermissionError"); // Anton reddar þessu error viewi
             }
         }
 
@@ -82,13 +83,14 @@ namespace goatCode.Controllers
                 var file = _fservice.GetSingleFileById(FileId.Value);
                 if (file != null)
                 {
-                    var model = new FileEditViewModel();
-                    
-                    model.content = file.content;
-                    model.extension = file.extension;
-                    model.ID = file.ID;
-                    model.name = file.name;
-                    model.projectId = _pservice.GetProjectIdByFileId(FileId.Value);
+                    var model = new FileEditViewModel()
+                    {
+                        content = file.content,
+                        extension = file.extension,
+                        ID = file.ID,
+                        name = file.name,
+                        projectId = _pservice.GetProjectIdByFileId(FileId.Value)
+                    };
                     ViewBag.DocumentID = FileId.Value;
                   
                     return View(model);
@@ -107,9 +109,9 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult Create(int? ProjectId)
         {
-            var model = new NewFileViewModel { projectId = ProjectId.Value };
+            var model = new NewFileViewModel { ProjectId = ProjectId.Value };
             
-            ViewBag.Extensions = new SelectList(_fservice.PopulateDropDownList());
+            ViewBag.Extensions = new SelectList(_utservice.PopulateDropDownList());
             return View(model);
         }
 
@@ -122,107 +124,38 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult Create(NewFileViewModel model)
         {
-            //StringBuilder projName = new StringBuilder();
-            //projName.Append(HttpUtility.HtmlEncode(model.name));
-            //model.name = projName.ToString();
-            string fileName = HttpUtility.HtmlEncode(model.name);
-            model.name = fileName;
-            //model.name = Encoder.HtmlEncode(model.name, true);
-           _fservice.AddNewFile(model);
- 
-            return RedirectToAction("Index", new { ProjectId = model.projectId });
-        }
 
-
-
-        // Gömul föll commenta þau út tímabundið
-        /*public ActionResult UserProjects()
-        {
-            string userId = User.Identity.GetUserId();
-            var viewModel = _uservice.GetProjectByUser(userId);
-
-            return View(viewModel);
-        }
-        [HttpGet]
-        public ActionResult Create()
-        {
-            ProjectViewModel anton = new ProjectViewModel();
-            anton.name = "";
-
-            return View(anton);
-        }
-        [HttpPost]
-        public ActionResult Create(ProjectViewModel model)
-        {
-            Project anton = new Project();
-            anton.name = model.name;
-            _service.AddNewProject(anton);
-
-            UserProject newProject = new UserProject();
-            string userId = User.Identity.GetUserId();
-
-            int projectId = _service.GetProjectIdByName(anton);
-
-            newProject.projectId = projectId;
-            newProject.userId = userId;
-            _uservice.addUserProjectConnection(newProject);
-            
-            return RedirectToAction("UserProjects");
-        }
-        [HttpGet]
-        public ActionResult Delete(int id)
-        {
-            // TODO: Are you sure you want to Delete, cockbreath?
-
-            Project model = _service.GetSingleProjectById(id);
-            if(model != null)
+            if (ModelState.IsValid)
             {
-                _uservice.deleteProjectConnections(model);
-                _service.DeleteProject(model);
-                return RedirectToAction("UserProjects");
+                //StringBuilder projName = new StringBuilder();
+                //projName.Append(HttpUtility.HtmlEncode(model.name));
+                //model.name = projName.ToString();
+                string fileName = HttpUtility.HtmlEncode(model.name);
+                model.name = fileName;
+                
+                if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
+                {
+                    ModelState.AddModelError("name", "File name already exists");
+                    return RedirectToAction("Index", new { projectId = model.ProjectId });
+                }
+
+                //model.name = Encoder.HtmlEncode(model.name, true);
+                _fservice.AddNewFile(model);
             }
-            return HttpNotFound();
+            return RedirectToAction("Index", new { ProjectId = model.ProjectId });
         }
- 
 
         
-        [HttpGet]
-        public ActionResult AddNewFile(int? projectId)
+        public FileResult DownloadFile(int fileId)
         {
             
-            FileViewModel newFile = new FileViewModel();
-            newFile.name = "";
-            newFile.projectId = projectId.Value;   
+            var dir = _fservice.GetSingleFileById(fileId);
+            UTF8Encoding encoding = new UTF8Encoding();
+            byte[] contentAsBytes = encoding.GetBytes(dir.content);                       
 
-            return View(newFile);
+            return File(contentAsBytes, dir.extension, dir.name + "." + dir.extension);
         }
-        [HttpPost]
-        public ActionResult AddNewFile(FileViewModel model)
-        {
-            File anton = new File();
-            anton.name = model.name;
-            anton.projectID = model.projectId;
-            _fservice.AddNewFile(anton);
-            
-            return RedirectToAction("Details", new { projectId = model.projectId });
-        }
-        public ActionResult RemoveFile(int id)
-        {
-            // TODO: Are you sure you want to Delete, cockbreath?
-            File model = _fservice.GetSingleFileById(id);
-            if(model != null)
-            {
-                int lastProject = model.projectID;
-                _fservice.DeleteFile(model);
-                return RedirectToAction("Details", lastProject);
-            }
-            return HttpNotFound();
-
-        }
-        */
-        // a medan file (sem notandi ytir a) hefur akvedid ID, er kallad i fall ur fileservice. 
-        // Svo ef projectId er til,
-        // fer notandi aftur a view thar sem hann ser listann af files thar sem buid er ad eyda einu.
+       
         /// <summary>
         /// While the file (which user clicks) has ID, this calls the DeleteFile from FileService and it will
         /// delete the fileID from the database. 
@@ -237,6 +170,7 @@ namespace goatCode.Controllers
         {
             if (fileId.HasValue)
             {
+                _fservice.RemoveFileProjectConnection(fileId.Value);
                 _fservice.DeleteFile(fileId.Value);
             }
 
@@ -247,6 +181,31 @@ namespace goatCode.Controllers
 
             return View("Error");
         }
+        [HttpGet]
+        public ActionResult UpdateFileName(int? fileId, int? projectId)
+        {
 
+            if (fileId.HasValue && projectId.HasValue && _uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
+            {
+                var file = _fservice.GetSingleFileById(fileId.Value);
+                var model = new FileUpdateViewModel()
+                {
+                    ID = file.ID,
+                    name = file.name,
+                    projectId = projectId.Value
+                };
+
+                
+                return View(model);
+            }  
+            return RedirectToAction("Error"); // Vantar custom error fyrir þetta shit Er ekki tengdur project/file
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult UpdateFileName(FileUpdateViewModel model)
+        {
+            _fservice.EditFileName(model);
+            return RedirectToAction("Index", new { projectId = model.projectId });
+        }
     }
 }

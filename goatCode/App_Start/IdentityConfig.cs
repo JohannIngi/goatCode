@@ -18,8 +18,31 @@ namespace goatCode
     {
         public Task SendAsync(IdentityMessage message)
         {
+            // Source: http://stackoverflow.com/questions/23612614/mvc-5-identity-2-0-registration-email-confirmation-issue
+
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            var credentialUserName = "goatcode69@gmail.com";
+            var sentFrom = "goatcode69@gmail.com";
+            var pwd = "flamingo123";
+
+            // Configure the client:
+            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("smtp.gmail.com");
+
+            client.Port = 587;
+            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+
+            // Create the credentials:
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
+            client.EnableSsl = true;
+            client.Credentials = credentials;
+
+            // Create the message:
+            var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+            mail.Subject = message.Subject;
+            mail.Body = message.Body;
+
+            return client.SendMailAsync(mail);
         }
     }
 

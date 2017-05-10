@@ -53,6 +53,12 @@ namespace goatCode.Services
             return _db.Projects.ToList();
         }
 
+        /// <summary>
+        /// Adds a new project to the database.
+        /// also takes care of adding adding the user, file and project relations to the database
+        /// </summary>
+        /// <param name="newProject"></param>
+        /// <param name="uId"></param>
         public void AddNewProject(Project newProject, String uId)
         {
             _db.Projects.Add(newProject);
@@ -64,11 +70,9 @@ namespace goatCode.Services
             _db.Files.Add(newfile);
             _db.SaveChanges();
 
-
             _db.ProjectOwners.Add(new ProjectOwner { userId = uId, projectId = newProject.ID });
             _db.UserProjects.Add(new UserProject { userId = uId, projectId = newProject.ID });
             _db.SaveChanges();
-
 
             _db.ProjectFiles.Add(new ProjectFile { fileId = newfile.ID, projectId = newProject.ID });
             _db.SaveChanges();
@@ -81,7 +85,6 @@ namespace goatCode.Services
         /// <param name="model">Instance of ShareViewModel, to use parameters from ShareViewModel</param>
         internal void AddUserToProject(ShareViewModel model)
         {
-            // TODO: Hvað á að gerast ef notandi er þegar í verkefninu?
             var user = _db.Users.Where(x => x.Email == model.email).SingleOrDefault();
             if (user != null)
             {
@@ -123,10 +126,22 @@ namespace goatCode.Services
             _db.Projects.Remove(project);
             _db.SaveChanges();
         }
+
+        /// <summary>
+        /// Returns the if of the project that the file is related to
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
         public int GetProjectIdByFileId(int fileId)
         {
             return _db.ProjectFiles.Where(x => x.fileId == fileId).Select(x => x.projectId).SingleOrDefault();
         }
+
+        /// <summary>
+        /// Returns a list of projects that the user has created
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public List<Project> GetProjectsOwnedByUser(string userName)
         {
             return (from user in _db.Users
@@ -136,10 +151,15 @@ namespace goatCode.Services
                     orderby p.name
                     select p).ToList();
         }
+
+        /// <summary>
+        /// Returns a list of projects that other users have shared with current user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public List<Project> GetProjectsNotOwnedByUser(string userName)
         {
             var allProjects = GetInUseProjectsByUserName(userName);
-
             var ownedProjects = GetProjectsOwnedByUser(userName);
 
             foreach(var project in ownedProjects)
