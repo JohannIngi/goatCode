@@ -22,11 +22,11 @@
         </td>
         <td>
 
-            @Html.ActionLink("Edit", "Edit", new { FileId = item.ID }) |
-            @Html.ActionLink("DownloadFile", "DownloadFile", new { fileId = item.ID }) |
-            @Html.ActionLink("Update FileName", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }) |
-            @Html.ActionLink("Delete", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId },
-            new { onclick = "return confirm('Are you sure you wish to delete this file?');"} )
+            @Html.ActionLink(" ", "Edit", new { FileId = item.ID }, new { @class = "glyphicon glyphicon-edit" }) |
+            @Html.ActionLink(" ", "DownloadFile", new { fileId = item.ID }, new { @class = "glyphicon glyphicon-download-alt" }) |
+            @Html.ActionLink(" ", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }, new { @class = "glyphicon glyphicon-pencil" }) |
+            @Html.ActionLink(" ", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId }, new { @class = "glyphicon glyphicon-trash" })
+           <!-- new { onclick = "return confirm('Are you sure you wish to delete this file?');"} )-->
 
         </td>
     </tr>
