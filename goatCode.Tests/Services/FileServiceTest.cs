@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using goatCode.Services;
 using goatCode.Tests.Util;
 using goatCode.Models.Entities;
+using goatCode.Models.ViewModels;
 using System.Collections.Generic;
 
 namespace goatCode.Tests.Services
@@ -47,6 +48,31 @@ namespace goatCode.Tests.Services
 
             var query2 = fileService.GetSingleFileById(1);
             Assert.AreEqual(1, query2.ID);
+        }
+
+        [TestMethod]
+        public void UpdateFileTest()
+        {
+            var query = fileService.GetAllFiles();
+        }
+
+        [TestMethod]
+        public void AddNewFileTest()
+        {
+            var query = fileService.GetAllFiles();
+
+            HashSet<int> idSet = new HashSet<int>();
+            foreach (var file in query)
+            {
+                idSet.Add(file.ID);
+            }
+            Assert.IsTrue(idSet.Contains(1));
+            Assert.IsTrue(idSet.Contains(2));
+            Assert.IsTrue(idSet.Contains(3));
+            Assert.IsTrue(idSet.Contains(4));
+
+            var newItem = new NewFileViewModel {name = "newFile", projectId = 10, extension = "c"};
+            fileService.AddNewFile(newItem);
         }
 
         [TestMethod] 
@@ -120,8 +146,6 @@ namespace goatCode.Tests.Services
             var query2 = fileService.GetSingleFileById(1);
             Assert.AreNotEqual(0, query);
             Assert.AreEqual(1, query2.ID);
-
-
         }
 
         [TestMethod]
@@ -134,10 +158,12 @@ namespace goatCode.Tests.Services
             {
                 idSet.Add(file.ID);
             }
+            Assert.IsFalse(idSet.Contains(0));
             Assert.IsTrue(idSet.Contains(1));
             Assert.IsTrue(idSet.Contains(2));
             Assert.IsTrue(idSet.Contains(3));
             Assert.IsTrue(idSet.Contains(4));
+            Assert.IsFalse(idSet.Contains(5));
         }
     }
 }
