@@ -124,21 +124,24 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult Create(NewFileViewModel model)
         {
-            //StringBuilder projName = new StringBuilder();
-            //projName.Append(HttpUtility.HtmlEncode(model.name));
-            //model.name = projName.ToString();
-            string fileName = HttpUtility.HtmlEncode(model.name);
-            model.name = fileName;
 
-            if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("name", "File name already exists");
-                return RedirectToAction("Index", new { projectId = model.ProjectId });
-            }
+                //StringBuilder projName = new StringBuilder();
+                //projName.Append(HttpUtility.HtmlEncode(model.name));
+                //model.name = projName.ToString();
+                string fileName = HttpUtility.HtmlEncode(model.name);
+                model.name = fileName;
+                
+                if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
+                {
+                    ModelState.AddModelError("name", "File name already exists");
+                    return RedirectToAction("Index", new { projectId = model.ProjectId });
+                }
 
-            //model.name = Encoder.HtmlEncode(model.name, true);
-            _fservice.AddNewFile(model);
- 
+                //model.name = Encoder.HtmlEncode(model.name, true);
+                _fservice.AddNewFile(model);
+            }
             return RedirectToAction("Index", new { ProjectId = model.ProjectId });
         }
 
@@ -152,97 +155,7 @@ namespace goatCode.Controllers
 
             return File(contentAsBytes, dir.extension, dir.name + "." + dir.extension);
         }
-
-        
-
-        // Gömul föll commenta þau út tímabundið
-        /*public ActionResult UserProjects()
-        {
-            string userId = User.Identity.GetUserId();
-            var viewModel = _uservice.GetProjectByUser(userId);
-
-            return View(viewModel);
-        }
-        [HttpGet]
-        public ActionResult Create()
-        {
-            ProjectViewModel anton = new ProjectViewModel();
-            anton.name = "";
-
-            return View(anton);
-        }
-        [HttpPost]
-        public ActionResult Create(ProjectViewModel model)
-        {
-            Project anton = new Project();
-            anton.name = model.name;
-            _service.AddNewProject(anton);
-
-            UserProject newProject = new UserProject();
-            string userId = User.Identity.GetUserId();
-
-            int projectId = _service.GetProjectIdByName(anton);
-
-            newProject.projectId = projectId;
-            newProject.userId = userId;
-            _uservice.addUserProjectConnection(newProject);
-            
-            return RedirectToAction("UserProjects");
-        }
-        [HttpGet]
-        public ActionResult Delete(int id)
-        {
-            // TODO: Are you sure you want to Delete, cockbreath?
-
-            Project model = _service.GetSingleProjectById(id);
-            if(model != null)
-            {
-                _uservice.deleteProjectConnections(model);
-                _service.DeleteProject(model);
-                return RedirectToAction("UserProjects");
-            }
-            return HttpNotFound();
-        }
- 
-
-        
-        [HttpGet]
-        public ActionResult AddNewFile(int? projectId)
-        {
-            
-            FileViewModel newFile = new FileViewModel();
-            newFile.name = "";
-            newFile.projectId = projectId.Value;   
-
-            return View(newFile);
-        }
-        [HttpPost]
-        public ActionResult AddNewFile(FileViewModel model)
-        {
-            File anton = new File();
-            anton.name = model.name;
-            anton.projectID = model.projectId;
-            _fservice.AddNewFile(anton);
-            
-            return RedirectToAction("Details", new { projectId = model.projectId });
-        }
-        public ActionResult RemoveFile(int id)
-        {
-            // TODO: Are you sure you want to Delete, cockbreath?
-            File model = _fservice.GetSingleFileById(id);
-            if(model != null)
-            {
-                int lastProject = model.projectID;
-                _fservice.DeleteFile(model);
-                return RedirectToAction("Details", lastProject);
-            }
-            return HttpNotFound();
-
-        }
-        */
-        // a medan file (sem notandi ytir a) hefur akvedid ID, er kallad i fall ur fileservice. 
-        // Svo ef projectId er til,
-        // fer notandi aftur a view thar sem hann ser listann af files thar sem buid er ad eyda einu.
+       
         /// <summary>
         /// While the file (which user clicks) has ID, this calls the DeleteFile from FileService and it will
         /// delete the fileID from the database. 
