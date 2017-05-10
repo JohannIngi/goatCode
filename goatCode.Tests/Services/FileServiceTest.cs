@@ -41,13 +41,13 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void DeleteFileTest()
         {
-            var query1 = fileService.GetSingleFileById(1);
-            Assert.AreEqual(1, query1.ID);
+            var query1 = fileService.GetSingleFileById(2);
+            Assert.AreEqual(2, query1.ID);
 
-            fileService.DeleteFile(1);
+            fileService.DeleteFile(2);
 
-            var query2 = fileService.GetSingleFileById(1);
-            Assert.AreEqual(1, query2.ID);
+            var query2 = fileService.GetSingleFileById(2);
+            Assert.AreEqual(null, query2);
         }
 
         [TestMethod]
@@ -59,7 +59,10 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void AddNewFileTest()
         {
+            var newFile = new File { ID = 5, name = "file5", extension = "c", content = "abc5" };
+            fileService.AddNewFile(newFile, 1);
             var query = fileService.GetAllFiles();
+
 
             HashSet<int> idSet = new HashSet<int>();
             foreach (var file in query)
@@ -70,9 +73,7 @@ namespace goatCode.Tests.Services
             Assert.IsTrue(idSet.Contains(2));
             Assert.IsTrue(idSet.Contains(3));
             Assert.IsTrue(idSet.Contains(4));
-
-            var newItem = new NewFileViewModel {name = "newFile", projectId = 10, extension = "c"};
-            fileService.AddNewFile(newItem);
+            Assert.IsTrue(idSet.Contains(5));
         }
 
         [TestMethod] 

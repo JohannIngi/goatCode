@@ -4,6 +4,7 @@ using goatCode.Models;
 using goatCode.Services;
 using goatCode.Tests.Util;
 using goatCode.Models.Entities;
+using goatCode.Models.ViewModels;
 using System.Collections.Generic;
 
 namespace goatCode.Tests.Services
@@ -168,8 +169,13 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void AddUserToProjectTest()
         {
-            
-            //Þetta er ekki hægt
+            var addUser = new ShareViewModel { email = "a3@a.com", projectId = 1 };
+            projectService.AddUserToProject(addUser);
+            var query = projectService.GetProjectsNotOwnedByUser
+                ("a3@a.com");
+
+
+
         }
     }
 }

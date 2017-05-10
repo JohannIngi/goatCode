@@ -110,10 +110,12 @@ namespace goatCode.Services
         /// <param name="id">Lets the ID in file be the same as the parameter</param>
         public void DeleteFile(int id)
         {
-            File file = new File { ID = id };
-            _db.Files.Attach(file);
-            _db.Files.Remove(file);
-            _db.SaveChanges();
+            var file = GetSingleFileById(id);
+            if (file != null)
+            {
+                _db.Files.Remove(file);
+                _db.SaveChanges();
+            }
         }
 
         public void RemoveFileProjectConnection(int fileId)
