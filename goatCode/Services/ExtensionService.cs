@@ -1,21 +1,22 @@
-﻿using goatCode.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+
 
 namespace goatCode.Services
 {
-    public class UtilityService
+    public class ExtensionService
     {
-        private IAppDataContext _db;
-        public UtilityService()
+        public List<string> PopulateDropDownList()
         {
-            _db = new ApplicationDbContext();
+            return extensions.OrderBy(x => x).ToList();
         }
-        public UtilityService(IAppDataContext context)
+        public string GetStartContentForExtension(string extension)
         {
-            _db = context;
+            if (startContent.ContainsKey(extension))
+            {
+                return startContent[extension];
+            }
+            return "";
         }
         public string GetAceSettingsValueForExtension(string extension)
         {
@@ -26,7 +27,7 @@ namespace goatCode.Services
             return "txt";
         }
 
-        static Dictionary<string, string> AceMap = new Dictionary<string, string>
+        private static Dictionary<string, string> AceMap = new Dictionary<string, string>
         {
             ["c"] = "c_cpp",
             ["cpp"] = "c_cpp",
@@ -54,7 +55,7 @@ namespace goatCode.Services
             ["rb"] = "ruby",
             ["tex"] = "tex"
         };
-        static Dictionary<string, string> startContent = new Dictionary<string, string>
+        private static Dictionary<string, string> startContent = new Dictionary<string, string>
         {
             ["c"] = "#include <stdio.h>\n\nint main() {\n\tprintf(\"Hello World\\n\")\n\treturn 0;\n}",
             ["cpp"] = "#include <iostream>\n\nusing namespace std;\n\nint main()\n{\n\tcout << \"Hello World\" << endl;\n\nreturn 0;\n}",
@@ -82,47 +83,33 @@ namespace goatCode.Services
             ["rb"] = "# Hello World Program in Ruby\nputs \"Hello World!\";",
             ["tex"] = "\\documentclass{article}\n\\usepackage{graphicx}\n\n\\begin{document}\n\n\t\\author{Author's Name}\n\n\t\\begin{abstract}\n\t\tThe abstract text goes here.\n\t\\end{abstract}\n\t\\begin{equation}\n\t\t\\label{simple_equation}\n\t\t\\alpha = \\sqrt{ \\beta }\n\t\\end{equation}\n\\end{document}"
         };
-        public List<string> PopulateDropDownList()
+        private static List<string> extensions = new List<string>()
         {
-            List<string> extensions = new List<string>();
-
-            extensions.Add("c");
-            extensions.Add("cpp");
-            extensions.Add("cc");
-            extensions.Add("html");
-            extensions.Add("java");
-            extensions.Add("py");
-            extensions.Add("sql");
-            extensions.Add("sql");
-            extensions.Add("txt");
-            extensions.Add("js");
-            extensions.Add("go");
-            extensions.Add("hs");
-            extensions.Add("lhs");
-            extensions.Add("scm");
-            extensions.Add("ss");
-            extensions.Add("md");
-            extensions.Add("pp");
-            extensions.Add("pas");
-            extensions.Add("inc");
-            extensions.Add("php");
-            extensions.Add("phps");
-            extensions.Add("pl");
-            extensions.Add("p");
-            extensions.Add("rb");
-            extensions.Add("tex");
-
-            return extensions.OrderBy(x => x).ToList();
-        }
-
-        public string GetStartContentForExtension(string extension)
-        {
-            if (startContent.ContainsKey(extension))
-            {
-                return startContent[extension];
-            }
-            return "";
-        }
-
+            "c",
+            "cpp",
+            "cc",
+            "html",
+            "java",
+            "py",
+            "sql",
+            "sql",
+            "txt",
+            "js",
+            "go",
+            "hs",
+            "lhs",
+            "scm",
+            "ss",
+            "md",
+            "pp",
+            "pas",
+            "inc",
+            "php",
+            "phps",
+            "pl",
+            "p",
+            "rb",
+            "tex"
+        };
     }
 }

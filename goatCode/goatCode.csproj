@@ -237,11 +237,12 @@
     <Compile Include="Models\ViewModels\ProjectIndexViewModel.cs" />
     <Compile Include="Models\ViewModels\ProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\ShareViewModel.cs" />
+    <Compile Include="Models\ViewModels\StatViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Services\UtilityService.cs" />
+    <Compile Include="Services\ExtensionService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -347,14 +348,13 @@
     <Content Include="Views\User\ProjectPermissionError.cshtml" />
     <Content Include="Views\Projects\FilePermissionError.cshtml" />
     <Content Include="Views\Admin\Projects.cshtml" />
-
     <Content Include="Views\User\CantShareWithThisUserError.cshtml" />
     <Content Include="Views\User\UserDoesNotExistError.cshtml" />
     <Content Include="Views\User\UserIsOwnerError.cshtml" />
     <Content Include="Views\Projects\UpdateFileName.cshtml" />
     <Content Include="Views\Projects\ProjectPermissionError.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
-
+    <Content Include="Views\Admin\Stats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
