@@ -57,10 +57,28 @@ namespace goatCode.Tests.Services
             Assert.IsTrue(query);
         }
         [TestMethod]
-        public void UDoesUserExistTest2()
+        public void DoesUserExistTest2()
         {
             var query = userService.DoesUserExist("bb@b.com");
             Assert.IsFalse(query);
         }
+
+        [TestMethod]
+        public void IsUserOwnerTest1()
+        {
+            var query = userService.IsUserOwner("1231", 1);
+            //Assert
+        }
+        [TestMethod] 
+        public void IsUserRelatedToProjectTest()
+        {
+            var query = userService.IsUserRelatedToProject("1231", 1);
+            var query2 = userService.IsUserRelatedToProject("1231", 3);
+            var query3 = userService.IsUserRelatedToProject("1233", 1);
+            Assert.IsTrue(query);
+            Assert.IsFalse(query2);
+            Assert.IsFalse(query3);
+        }
+        
     }
 }
