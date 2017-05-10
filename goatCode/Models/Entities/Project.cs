@@ -20,9 +20,10 @@ namespace goatCode.Models.Entities
         /// <summary>
         /// Parameter name is a part of Project to store data.
         /// </summary>
+        
         [Display(Name = "Project Name")]
-        [RegularExpression(@"([a-z A-Z \d]+[\w \d]*|)[a-z A-Z]+[\w \d.]*",
-            ErrorMessage = "Invalid name")]
+        [RegularExpression(@"^[a-zA-Z0-9]{0,30}$",
+            ErrorMessage = "Invalid name, must be between 1-30 characters and only letters and numbers.")]
         [Required(ErrorMessage = "Project must have a name")]
         public string name { get; set; }
     }
