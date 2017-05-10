@@ -220,6 +220,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\CodeHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\File.cs" />
@@ -353,6 +354,7 @@
     <Content Include="Views\Projects\UpdateFileName.cshtml" />
     <Content Include="Views\Projects\ProjectPermissionError.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
+    <Content Include="Views\Home\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
