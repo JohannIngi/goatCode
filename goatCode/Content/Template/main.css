@@ -59,6 +59,7 @@ h3 {
     background-color: darkseagreen;
   border: 0;
   border-radius: 0;
+  color: black;
 }
 
 .btn.btn-primary:hover {
@@ -855,7 +856,7 @@ ul.address {
   display: block;
   padding: 12px;
   width: 100%;
-  color: dimgrey;
+  color: black;
   border:0;
   margin-top: 40px;
 }
