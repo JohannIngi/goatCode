@@ -20,19 +20,18 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.Raw(item.name)        
+        <td>    
+            <a href="@Url.Action("Index", "Projects", new { projectId=item.ID })">
+                @Html.Raw(item.name)
+            </a>
         </td>
         <td></td>
         <td>
 
             @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-edit" }) | <!--N-->
-            @Html.ActionLink(" ", "Index", "Projects", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-folder-open" }) | <!--Y-->
             @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link" }) |<!--Y-->
             @Html.ActionLink(" ", "Delete", new { projectId = item.ID },
             new { onclick = "return confirm('Are you sure you wish to delete this project?');", @class = "glyphicon glyphicon-trash"  })
-
-           
           
         </td>
     </tr>
@@ -49,14 +48,15 @@
     {
         <tr>
             <td>
-                @Html.Raw(item.name)
+                <a href="@Url.Action("Index", "Projects", new { projectId=item.ID })">
+                    @Html.Raw(item.name)
+                </a>
             </td>
             <td>
                 @Html.Raw(item.name)
             </td>
             <td>
                 @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-edit" }) | <!--N-->
-                @Html.ActionLink(" ", "Index", "Projects", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-folder-open" }) | <!--Y-->
                 @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link" }) | <!--Y-->
                 @Html.ActionLink(" ", "Delete", new { projectId = item.ID },
                 new { onclick = "return confirm('Are you sure you wish to delete this project?');", @class = "glyphicon glyphicon-trash"  })
