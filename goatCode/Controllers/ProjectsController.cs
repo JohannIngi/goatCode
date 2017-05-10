@@ -132,8 +132,8 @@ namespace goatCode.Controllers
                 //model.name = projName.ToString();
                 string fileName = HttpUtility.HtmlEncode(model.name);
                 model.name = fileName;
-
-                if (_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
+                
+                if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
                 {
                     ModelState.AddModelError("name", "File name already exists");
                     return RedirectToAction("Index", new { projectId = model.ProjectId });
