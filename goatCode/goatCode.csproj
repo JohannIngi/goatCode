@@ -324,6 +324,7 @@
     <Content Include="Views\User\UserIsOwnerError.cshtml" />
     <Content Include="Views\Projects\UpdateFileName.cshtml" />
     <Content Include="Views\Projects\ProjectPermissionError.cshtml" />
+    <Content Include="Views\Shared\Info.cshtml" />
 
   </ItemGroup>
   <ItemGroup>
