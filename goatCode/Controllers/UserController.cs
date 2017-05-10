@@ -47,12 +47,15 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult Create(Project project)
         {
-            project.name = HttpUtility.HtmlEncode(project.name);
+            if (ModelState.IsValid)
+            {
+                project.name = HttpUtility.HtmlEncode(project.name);
 
-            pservice.AddNewProject(project, User.Identity.GetUserId());
+                pservice.AddNewProject(project, User.Identity.GetUserId());
 
-
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            return View(project);
         }
 
         /// <summary>
@@ -81,11 +84,13 @@ namespace goatCode.Controllers
             {
                 if (uservice.IsUserOwner(uservice.GetUserIdByName(model.email), model.projectId) == true)
                 {
-                    // Ef user er owner  þá getur hann ekki share-að
+                    // Ef user er owner þá getur hann ekki share-að
+                    return View("UserIsOwnerError");
                 }
                 else if (uservice.IsUserRelatedToProject(uservice.GetUserIdByName(model.email), model.projectId) == true)
                 {
                     // Ef user er nú þegar tengdur við project þá gerist ekkert
+                    return View("CantShareWithThisUserError");
                 }
                 else
                 {

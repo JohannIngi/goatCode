@@ -317,10 +317,14 @@
     <Content Include="Views\Admin\Files.cshtml" />
     <Content Include="Views\User\ProjectPermissionError.cshtml" />
     <Content Include="Views\Projects\FilePermissionError.cshtml" />
-    <Content Include="Views\User\UserDoesNotExistError.cshtml" />
     <Content Include="Views\Admin\Projects.cshtml" />
+
+    <Content Include="Views\User\CantShareWithThisUserError.cshtml" />
+    <Content Include="Views\User\UserDoesNotExistError.cshtml" />
+    <Content Include="Views\User\UserIsOwnerError.cshtml" />
     <Content Include="Views\Projects\UpdateFileName.cshtml" />
     <Content Include="Views\Projects\ProjectPermissionError.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
