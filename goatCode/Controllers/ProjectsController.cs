@@ -1,21 +1,16 @@
 ﻿using goatCode.Models.ViewModels;
 using goatCode.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using goatCode.Models.Entities;
-using System.Diagnostics;
 using System.Text;
-using System.Web.Security;
 
 namespace goatCode.Controllers
 {
     public class ProjectsController : Controller
     {
-        private UtilityService _utservice = new UtilityService();
+        private ExtensionService _utservice = new ExtensionService();
         private ProjectService _pservice = new ProjectService();
         private UserService _uservice = new UserService();
         private FileService _fservice = new FileService();
@@ -140,7 +135,7 @@ namespace goatCode.Controllers
                 }
 
                 //model.name = Encoder.HtmlEncode(model.name, true);
-                _fservice.AddNewFile(model);
+                _fservice.AddNewFile(new File {extension = model.extension, name = model.name }, model.ProjectId);
             }
             return RedirectToAction("Index", new { ProjectId = model.ProjectId });
         }
