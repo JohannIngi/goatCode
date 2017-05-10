@@ -28,7 +28,7 @@
         <td></td>
         <td>
 
-            @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-edit" }) | <!--N-->
+            @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-pencil" }) | <!--N-->
             @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link" }) |<!--Y-->
             @Html.ActionLink(" ", "Delete", new { projectId = item.ID },
             new { onclick = "return confirm('Are you sure you wish to delete this project?');", @class = "glyphicon glyphicon-trash"  })
@@ -56,7 +56,7 @@
                 @Html.Raw(item.name)
             </td>
             <td>
-                @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-edit" }) | <!--N-->
+                @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-pencil" }) | <!--N-->
                 @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link" }) | <!--Y-->
                 @Html.ActionLink(" ", "Delete", new { projectId = item.ID },
                 new { onclick = "return confirm('Are you sure you wish to delete this project?');", @class = "glyphicon glyphicon-trash"  })
