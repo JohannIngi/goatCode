@@ -15,7 +15,22 @@ namespace goatCode.Services
         /// Instance of database.
         /// </summary>
         private readonly IAppDataContext _db;
+        public UserService()
+        {
+            _db = new ApplicationDbContext();
+        }
 
+        public UserService(IAppDataContext context)
+        {
+            _db = context;
+        }
+
+        /// <summary>
+        /// Checks if the user is the owner of a project
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
         public bool IsUserOwner(string userId, int projectId)
         {
             var owner = _db.ProjectOwners.Where(x => x.userId == userId && x.projectId == projectId).SingleOrDefault();
@@ -28,22 +43,7 @@ namespace goatCode.Services
                 return true;
             }
         }
-
-        internal void IsUserOwner()
-        {
-            throw new NotImplementedException();
-        }
-
-        public UserService()
-        {
-            _db = new ApplicationDbContext();
-        }
-
-        public UserService(IAppDataContext context)
-        {
-            _db = context;
-        }
-
+        
         /// <summary>
         /// Checking if user account is in the database. 
         /// </summary>
@@ -67,7 +67,6 @@ namespace goatCode.Services
         /// </summary>
         /// <param name="userId">To let ProjectOwners.userId have the same value as parameter userId</param>
         /// <returns>If the userID is in ProjectOwners table it will return true, otherwise false.</returns>
-
         public List<AdminUsersViewModel> GetAllUsers()
         {
             var role = _db.Roles.SingleOrDefault(x => x.Name == "Admin");
@@ -76,8 +75,6 @@ namespace goatCode.Services
 
             return retValue;
         }
-   
-        
 
         /// <summary>
         /// Deleting a project relations from projectID. If selected projectID is in UserProjects table.
@@ -96,6 +93,10 @@ namespace goatCode.Services
                 return true;
             }
         }
+        /// <summary>
+        /// Takes care of removing the relations between a project and all of the users that were connected to it
+        /// </summary>
+        /// <param name="projectId"></param>
         public void DeleteUserProjectRelations(int projectId)
         {
             var userProject = _db.UserProjects.Where(x => x.projectId == projectId).ToList();
@@ -134,10 +135,21 @@ namespace goatCode.Services
             _db.SaveChanges();
 
         }
+        
+        /// <summary>
+        /// returns the id of a user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public string GetUserIdByName(string userName)
         {
             return _db.Users.Where(x => x.UserName == userName).Select(x => x.Id).SingleOrDefault();
         }
+
+        /// <summary>
+        /// Removes the user from the database and the projects owned by that user
+        /// </summary>
+        /// <param name="userName"></param>
         public void DeleteUser(string userName)
         {
             ProjectService pservice = new ProjectService();
@@ -151,6 +163,12 @@ namespace goatCode.Services
             _db.Users.Remove(_db.Users.Where(x => x.UserName == userName).SingleOrDefault());
             _db.SaveChanges();
         }
+
+        /// <summary>
+        /// returns the userid of the owner of a project
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
         public string GetProjectOwnerIdByProjectId(int projectId)
         {
             return _db.ProjectOwners.Where(x => x.projectId == projectId).SingleOrDefault().userId;
