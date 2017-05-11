@@ -31,5 +31,6 @@ namespace goatCode.Controllers
         {
             return RedirectToAction("Register", "Account");
         }
+
     }
 }

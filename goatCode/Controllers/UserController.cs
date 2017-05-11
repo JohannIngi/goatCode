@@ -165,6 +165,12 @@ namespace goatCode.Controllers
             }
             
         }
+
+        public ActionResult Chat()
+        {
+            return View();
+        }
+
         public ActionResult DownloadProjectAsZip(int? projectId)
         {
             if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value) == false)
@@ -210,6 +216,5 @@ namespace goatCode.Controllers
         }
 
         }
-
     }
 }
