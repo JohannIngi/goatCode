@@ -1,4 +1,5 @@
-﻿using System;
+﻿using goatCode.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace goatCode.Models.ViewModels
         /// <summary>
         /// Parameter files is a list of ProjectViewModel to store data.
         /// </summary>
-        public List<FileViewModel> files { get; set; }
+        
+        public string projectOwner { get; set; }
     }
 }
