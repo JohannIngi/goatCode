@@ -124,7 +124,7 @@ namespace goatCode.Controllers
         public ActionResult Edit(Project project)
         {
             project.name = HttpUtility.HtmlEncode(project.name);
-            pservice.EditProjectName(project);
+            pservice.EditProjectName(project.name, project.ID);
 
             return RedirectToAction("Index");
         }

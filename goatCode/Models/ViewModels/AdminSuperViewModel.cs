@@ -12,6 +12,6 @@ namespace goatCode.Models.ViewModels
         public List<ApplicationUser> allUsers { get; set; }
         public List<Project> allProjects { get; set; }
         public List<File> allFiles { get; set; }
-        public ExtensionStat[] statData { get; set; }
+        public Dictionary<string, int> statData { get; set; }
     }
 }

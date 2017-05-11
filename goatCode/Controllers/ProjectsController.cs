@@ -54,9 +54,7 @@ namespace goatCode.Controllers
         [HttpPost]
         public ActionResult SaveCode(File file)
         {
-            // TODO: Þetta virkar ekki þarf að skoða þetta betur seinna.
-            
-            _fservice.UpdateFile(file);
+            _fservice.UpdateFile(file.content, file.ID);
             return RedirectToAction("Edit", new { FileId = file.ID });
         }
 

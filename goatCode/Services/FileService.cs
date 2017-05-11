@@ -92,11 +92,11 @@ namespace goatCode.Services
         /// </summary>
         /// <param name="content">Lets the content be same as the content in the parameter (from the editor)</param>
 
-        public void UpdateFile(File file)
+        public void UpdateFile(string content, int id)
         {
-            //TODO : Þetta virkar ekki þarf að skoða betur seinna.
+            var file = _db.Files.SingleOrDefault(x => x.ID == id);
+            file.content = content;
             _db.setModified(file);
-
             _db.SaveChanges();
         }
 
@@ -160,28 +160,21 @@ namespace goatCode.Services
             return _db.Files.Where(x => x.extension == extension).Count();
         }
         /// <summary>
-        /// Here we actually get all the extensions types and the number of extensions for each type. The reason we use an array is becuse we need to process the last element in the array specially
+        /// Here we actually get all the extensions types and the number of extensions for each type. We use a hashMap and go through each extenisiona and count
         /// </summary>
         /// <returns></returns>
-        public ExtensionStat[] GetStatistics()
+        public Dictionary<string, int> GetStatistics()
         {
             var extensions = new ExtensionService().PopulateDropDownList();
-            var stats = new ExtensionStat[extensions.Count];
-            int index = 0;
+            var stats = new Dictionary<string, int>();
             foreach(var extension in extensions)
             {
-                stats[index++] = new ExtensionStat { extension = extension, count = GetExtensionOccurrences(extension)};
+                if (extension != "md")
+                {
+                    stats[extension] = GetExtensionOccurrences(extension);
+                }
             }
             return stats;
-        }
-        /// <summary>
-        /// Defines the variables the array in the GetStatistics function
-        /// </summary>
-        /// <returns></returns>
-        public struct ExtensionStat
-        {
-            public string extension { get; set; }
-            public int count { get; set; }
         }
     }
 }

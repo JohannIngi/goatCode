@@ -42,12 +42,10 @@
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Extension', 'Number of files'],
-           /* In the for loop we use -1 because we don't want to include the "," at the end of the list we show in stats*/
-          @for (int i = 0; i < @Model.statData.Length - 1; i++)
+          @foreach (var pair in Model.statData)
           {
-              @Html.Raw("['" + @Model.statData[i].extension + "'," + @Model.statData[i].count + "],")
+              @Html.Raw("['" + @pair.Key + "'," + @pair.Value + "],")
           }
-          @Html.Raw("['" + @Model.statData[@Model.statData.Length - 1].extension + "'," + @Model.statData[@Model.statData.Length - 1].count + "]")
         ]);
         var options = {
             title: 'File type statistics',

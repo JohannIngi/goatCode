@@ -109,8 +109,10 @@ namespace goatCode.Services
         /// User can edit name of selected project.
         /// </summary>
         /// <param name="project">Instance of Project class</param>
-        public void EditProjectName(Project project)
+        public void EditProjectName(string name, int id)
         {
+            var project = _db.Projects.SingleOrDefault(x => x.ID == id);
+            project.name = name;
             _db.setModified(project);
             _db.SaveChanges();
         }
