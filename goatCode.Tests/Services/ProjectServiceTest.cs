@@ -144,14 +144,10 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void EditProjectNameTest()
         {
-            var editProject = new Project { ID = 1, name = "editProject1" };
-            var getById = projectService.GetProjectByProjectId(1);
-            Assert.AreEqual("project1", getById.name);
-
-            projectService.EditProjectName(editProject);
+            projectService.EditProjectName("editName", 1);
 
             var getEdit = projectService.GetProjectByProjectId(1);
-            Assert.AreEqual("editProject1", getEdit.name);
+            Assert.AreEqual("editName", getEdit.name);
         }
 
         [TestMethod]

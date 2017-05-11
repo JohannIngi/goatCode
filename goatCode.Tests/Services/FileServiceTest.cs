@@ -68,15 +68,10 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void UpdateFileTest()
         {
-            var upFile = new File { ID = 1, name = "notFile1", extension = "cpp", content = "abc1123" };
-            var getFile = fileService.GetSingleFileById(1);
-
-            Assert.AreEqual("file1", getFile.name);
-
-            fileService.UpdateFile(upFile);
+            fileService.UpdateFile("abc1123", 1);
 
             var checkUpdate = fileService.GetSingleFileById(1);
-            Assert.AreEqual("notFile1", checkUpdate.name);
+            Assert.AreEqual("abc1123", checkUpdate.content);
         }
 
         [TestMethod]
