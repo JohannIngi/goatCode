@@ -39,6 +39,8 @@ namespace goatCode.Tests.Services
             mock.UserProjects.Add(new UserProject { id = 2, projectId = 1, userId = "1232" });
             mock.UserProjects.Add(new UserProject { id = 3, projectId = 2, userId = "1231" });
             mock.UserProjects.Add(new UserProject { id = 4, projectId = 2, userId = "1232" });
+            mock.UserProjects.Add(new UserProject { id = 5, projectId = 3, userId = "1232" });
+            mock.UserProjects.Add(new UserProject { id = 6, projectId = 4, userId = "1232" });
 
             mock.Files.Add(new File { ID = 1, name = "file1", extension = "c", content = "abc1" });
             mock.Files.Add(new File { ID = 2, name = "file2", extension = "cpp", content = "abc2" });
@@ -55,13 +57,6 @@ namespace goatCode.Tests.Services
         }
 
         [TestMethod]
-        public void UserTest()
-        {
-            var query = userv.DoesUserExist("a1@a.com");
-            Assert.IsTrue(query);
-        }
-
-        [TestMethod]
         public void GetProjectByProjectIdTest1()
         {
             var query = projectService.GetProjectByProjectId(1);
@@ -74,14 +69,9 @@ namespace goatCode.Tests.Services
         public void GetProjectIdByFileIdTest1()
         {
             var query = projectService.GetProjectIdByFileId(4);
+            Assert.AreNotEqual(0, query);
             Assert.AreEqual(1, query);
-        }
-
-        [TestMethod]
-        public void GetProjectIdByFileIdTest2()
-        {
-            var query = projectService.GetProjectIdByFileId(0);
-            Assert.AreNotEqual(1, query);
+            Assert.AreNotEqual(2, query);
         }
 
         [TestMethod]
@@ -145,25 +135,31 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void EditProjectNameTest()
         {
-            Project proj = new Project { ID = 6, name = "project6" };
-            projectService.AddNewProject(proj, "1231");
-            var query = projectService.GetAllProjects();
-            
-            List<String> nameList = new List<String>();
-            foreach(var file in query)
-            {
-                nameList.Add(file.name);
-            }
-            Assert.IsTrue(nameList.Contains("project6"));
+            var editProject = new Project { ID = 1, name = "editProject1" };
+            var query = projectService.GetProjectByProjectId(1);
+            Assert.AreSame("project1", query.name);
 
-            proj.name = "asdf";
-            projectService.EditProjectName(proj);
-            List<String> nameList2 = new List<String>();
+            projectService.EditProjectName(editProject);
+
+            var query2 = projectService.GetProjectByProjectId(1);
+            Assert.AreSame("editProject1", query2.name);
+        }
+
+        [TestMethod]
+        public void GetProjectsNotOwnedByUserTest()
+        {
+            var query = projectService.GetProjectsNotOwnedByUser("a2@a.com");
+
+            HashSet<int> idSet = new HashSet<int>();
             foreach (var file in query)
             {
-                nameList2.Add(file.name);
+                idSet.Add(file.ID);
             }
-            Assert.IsTrue(nameList2.Contains("asdf"));
+
+            Assert.IsTrue(idSet.Contains(1));
+            Assert.IsTrue(idSet.Contains(2));
+            Assert.IsTrue(idSet.Contains(3));
+            Assert.IsTrue(idSet.Contains(4));
         }
 
         [TestMethod]
@@ -171,11 +167,16 @@ namespace goatCode.Tests.Services
         {
             var addUser = new ShareViewModel { email = "a3@a.com", projectId = 1 };
             projectService.AddUserToProject(addUser);
-            var query = projectService.GetProjectsNotOwnedByUser
-                ("a3@a.com");
+            var query = projectService.GetProjectsNotOwnedByUser("a3@a.com");
 
-
-
+            HashSet<int> idSet = new HashSet<int>();
+            foreach (var file in query)
+            {
+                idSet.Add(file.ID);
+            }
+            Assert.IsFalse(idSet.Contains(0));
+            Assert.IsTrue(idSet.Contains(1));
+            Assert.IsFalse(idSet.Contains(2));
         }
     }
 }

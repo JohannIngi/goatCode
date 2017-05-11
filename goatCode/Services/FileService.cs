@@ -98,7 +98,6 @@ namespace goatCode.Services
 
         public void UpdateFile(File file)
         {
-            //TODO : Þetta virkar ekki þarf að skoða betur seinna.
             _db.setModified(file);
 
             _db.SaveChanges();

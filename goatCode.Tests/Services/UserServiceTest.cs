@@ -51,6 +51,21 @@ namespace goatCode.Tests.Services
             userService = new UserService(mock);
         }
         [TestMethod]
+        public void GetAllUsersTest()
+        {
+            var query = userService.GetAllUsers();
+
+            HashSet<string> idSet = new HashSet<string>();
+            foreach (var file in query)
+            {
+                idSet.Add(file.email);
+            }
+            Assert.IsTrue(idSet.Contains("a1@a.com"));
+            Assert.IsTrue(idSet.Contains("a2@a.com"));
+            Assert.IsTrue(idSet.Contains("a3@a.com"));
+            Assert.IsTrue(idSet.Contains("a4@a.com"));
+        }
+        [TestMethod]
         public void DoesUserExistTest1()
         {
             var query = userService.DoesUserExist("a1@a.com");

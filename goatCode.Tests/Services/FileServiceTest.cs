@@ -53,7 +53,41 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void UpdateFileTest()
         {
-            var query = fileService.GetAllFiles();
+            var upFile = new File { ID = 1, name = "notFile1", extension = "cpp", content = "abc1123" };
+            var query = fileService.GetSingleFileById(1);
+            Assert.AreSame("file1", query.name);
+            Assert.AreSame("c", query.extension);
+            Assert.AreSame("abc1", query.content);
+
+            fileService.UpdateFile(upFile);
+
+            var query2 = fileService.GetSingleFileById(1);
+            Assert.AreSame("notFile1", query2.name);
+            Assert.AreSame("cpp", query2.extension);
+            Assert.AreSame("abc1123", query2.content);
+        }
+
+        [TestMethod]
+        public void DoesFileNameExistInProjectTest()
+        {
+            var query = fileService.DoesFileNameExistInProject(1, "file1");
+            var query2 = fileService.DoesFileNameExistInProject(1, "file2");
+            Assert.IsTrue(query);
+            Assert.IsFalse(query2);
+
+        }
+
+        [TestMethod]
+        public void EditFileNameTest()
+        {
+            var editFile = new FileUpdateViewModel { ID = 1, projectId = 1, name = "editFile1" };
+            var query = fileService.GetSingleFileById(1);
+            Assert.AreSame("file1", query.name);
+
+            fileService.EditFileName(editFile);
+            
+            var query2 = fileService.GetSingleFileById(1);
+            Assert.AreSame("editFile1", query2.name);           
         }
 
         [TestMethod]
