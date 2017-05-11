@@ -51,7 +51,7 @@ namespace goatCode.Tests.Util
 
         public void setModified(object entry)
         {
-
+            
         }
 
         public void Dispose()

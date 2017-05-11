@@ -9,14 +9,6 @@ body {
   line-height: 24px;
   color: #666;
   background-color: #FFFBFF;
-  margin:0;
-  padding:0;
-  height:100%;
-     padding:10px;
-}
-#container {
-   min-height:100%;
-   position:relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -301,15 +293,12 @@ section {
 
 .our-services .col-sm-4 {
   border-right:1px solid #f2f2f2;
-  border-bottom:1px solid #f2f2f2;
-  padding-bottom: 50px;
 }
 
 .our-services .col-sm-4:nth-child(4), 
 .our-services .col-sm-4:nth-child(5), 
 .our-services .col-sm-4:nth-child(6) {
   border-bottom:0;
-  padding-top: 60px;
 }
 
 .our-services .col-sm-4:nth-child(3), 

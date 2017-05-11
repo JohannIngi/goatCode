@@ -76,6 +76,13 @@ namespace goatCode.Services
             return retValue;
         }
 
+        public List<ApplicationUser> GetUserz()
+        {
+            var role = _db.Roles.SingleOrDefault(x => x.Name == "Admin");
+            var model = _db.Users.Where(x => x.Roles.All(r => r.RoleId != role.Id)).ToList();
+            return model;
+        }
+
         /// <summary>
         /// Deleting a project relations from projectID. If selected projectID is in UserProjects table.
         /// The function will remove the ID from the table UserProjects.
