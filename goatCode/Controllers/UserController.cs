@@ -165,6 +165,12 @@ namespace goatCode.Controllers
             }
             
         }
+
+        public ActionResult Chat()
+        {
+            return View();
+        }
+
         public ActionResult DownloadProjectAsZip(int? projectId)
         {
             if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value) == false)
@@ -174,7 +180,7 @@ namespace goatCode.Controllers
             else
             {
 
-                var dir = fservice.GetFilesByProjectId(projectId.Value);
+            var dir = fservice.GetFilesByProjectId(projectId.Value);
             var e = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string path = e + @"\" + pservice.GetProjectByProjectId(projectId.Value).name;
 
@@ -210,6 +216,5 @@ namespace goatCode.Controllers
         }
 
         }
-
     }
 }

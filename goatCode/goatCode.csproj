@@ -223,6 +223,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\CodeHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\File.cs" />
@@ -355,6 +356,7 @@
     <Content Include="Views\Projects\UpdateFileName.cshtml" />
     <Content Include="Views\Projects\ProjectPermissionError.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
+    <Content Include="Views\User\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -384,7 +386,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1947</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

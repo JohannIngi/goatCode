@@ -56,10 +56,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2><br />Files</h2>
+<h2><br />@Model.name</h2> 
 <p>
     @Html.ActionLink("Create a new file", "Create", new { ProjectId = Model.projectId })
 </p>
+
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for files" title="Type in a name">
 <div class="container">
     <div class=" row">
@@ -83,13 +84,11 @@
                                 </a>
                             </td>
                             <td class="col col-xs-3">
-
-                                @Html.ActionLink(" ", "DownloadFile", new { fileId = item.ID }, new { @class = "glyphicon glyphicon-download-alt" }) |
-                                @Html.ActionLink(" ", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }, new { @class = "glyphicon glyphicon-pencil" }) |
+                                @Html.ActionLink(" ", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }, new { @class = "glyphicon glyphicon-pencil", title = "Rename file" }) |
                                 @Html.ActionLink(" ", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId },
-                                 new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash" })
-                                <!--    new { onclick = "return confirm('Are you sure you wish to delete this file?');" }) | -->
-                            </td>
+                                new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete file" } ) |
+                                @Html.ActionLink(" ", "DownloadFile", new { fileId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download file" })
+                             </td>
                         </tr>
                     }
                 </table>

@@ -81,7 +81,6 @@
 <p>
     @Html.ActionLink("Create a new project", "Create", new { @class = "btn btn-success" })
 </p>
-
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for projects..." title="Type in a name">
 <div class="container">
     <div class=" row">
@@ -91,7 +90,7 @@
                     <thead>
                         <tr>
                             <th class="col col-xs-8">
-                                Projects you own
+                                <h4>Projects you own</h4>
                             </th>
                             <th></th>
                         </tr>
@@ -104,12 +103,11 @@
                                         @Html.Raw(item.name)
                                     </a>
                                 </td>
-                                <td class="col col-xs-3">
-                                    @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @title = "Edit", @class = "glyphicon glyphicon-edit" }) | <!--N-->
-                                    @Html.ActionLink(" ", "Index", "Projects", new { projectId = item.ID }, new { @title = "See files", @class = "glyphicon glyphicon-folder-open" }) | <!--Y-->
-                                    @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @title = "Share project", @class = "glyphicon glyphicon-link" }) |<!--Y-->
-                                    @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { @title = "Delete", @class = "glyphicon glyphicon-trash" }) |
-                                    @Html.ActionLink("downloadproject", "DownloadProjectAsZip", new { projectId = item.ID })
+                                <td class="col col-xs-3" allign="right">
+                                     @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-pencil", title = "Rename project" }) | <!--N-->
+                                     @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link", title = "Share project" }) |<!--Y-->
+                                     @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete project" }) |
+                                     @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download project" })
                                     <!--    new { onclick = "return confirm('Are you sure you wish to delete this file?');" }) | -->
                                 </td>
                             </tr>
@@ -119,6 +117,7 @@
         </div>
     </div>
 </div>
+
 
 <input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search for projects..." title="Type in a name">
 <div class="container">
@@ -146,12 +145,11 @@
                                 <td class="col col-xs-1">
                                     @Html.Raw(item.projectOwner)
                                 </td>
-                                <td class="col col-xs-4">
-                                    @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-pencil" }) | <!--N-->
-                                    @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link" }) | <!--Y-->
-                                    @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-trash" }) |
-                                    @Html.ActionLink("downloadproject", "DownloadProjectAsZip", new { projectId = item.ID })<!--Y-->
-                                    <!--    new { onclick = "return confirm('Are you sure you wish to delete this file?');" }) | -->
+                                <td>
+                                    @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-pencil", title = "Rename project" }) | <!--N-->
+                                    @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link", title = "Share project" }) |<!--Y-->
+                                    @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete project" }) |
+                                    @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download project" })
 
                                 </td>
                             </tr>

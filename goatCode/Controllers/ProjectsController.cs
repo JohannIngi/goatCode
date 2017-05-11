@@ -30,7 +30,8 @@ namespace goatCode.Controllers
                 var model = new ProjectIndexViewModel()
                 {
                     files = _fservice.GetFilesByProjectId(projectId.Value),
-                    projectId = projectId.Value
+                    projectId = projectId.Value,
+                    name = _pservice.GetProjectByProjectId(projectId.Value).name
                 };
                 return View(model);
             }
