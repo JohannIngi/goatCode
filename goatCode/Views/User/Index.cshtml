@@ -99,12 +99,12 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td class="col col-xs-8">
+                                <td class="col col-xs-9">
                                     <a href="@Url.Action("Index", "Projects", new { projectId=item.ID })">
                                         @Html.Raw(item.name)
                                     </a>
                                 </td>
-                                <td class="col col-xs-4">
+                                <td class="col col-xs-3">
                                     @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @title = "Edit", @class = "glyphicon glyphicon-edit" }) | <!--N-->
                                     @Html.ActionLink(" ", "Index", "Projects", new { projectId = item.ID }, new { @title = "See files", @class = "glyphicon glyphicon-folder-open" }) | <!--Y-->
                                     @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @title = "Share project", @class = "glyphicon glyphicon-link" }) |<!--Y-->
