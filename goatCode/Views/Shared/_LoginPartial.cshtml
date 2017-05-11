@@ -7,9 +7,6 @@
 
     <ul class="nav navbar-nav navbar-right" style="margin-top: -15px">
         <li>
-            @Html.ActionLink("Chat", "Chat", "Home", new { area = "" })
-        </li>
-        <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
 
