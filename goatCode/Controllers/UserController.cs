@@ -25,9 +25,9 @@ namespace goatCode.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
+            pservice.UserIndexHelper(User.Identity.Name);
             var ret = pservice.GetProjectsOwnedByUser(User.Identity.Name);
-            ViewBag.NotOwned = pservice.GetProjectsNotOwnedByUser(User.Identity.Name);
-
+            ViewBag.NotOwned = pservice.UserIndexHelper(User.Identity.Name);
             return View(ret);
         }
 
@@ -197,8 +197,7 @@ namespace goatCode.Controllers
                 
 
                 return File(thefile, "zip" , s);
-                
-                
+            
             }
             return null;
 

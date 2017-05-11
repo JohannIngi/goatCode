@@ -169,5 +169,32 @@ namespace goatCode.Services
 
             return allProjects;
         }
+        /// <summary>
+        /// Skítamix til þessa að redda fá project owner í neðri töfluna í user view
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>Skilar Viewmodeli af projectum sem notandi á ekki og bætir við nafni eiganda þess projects við viewmodelið</returns>
+        public List<ProjectViewModel> UserIndexHelper(string userName)
+        {
+            List<Project> notOwned = GetProjectsNotOwnedByUser(userName);
+            List<ProjectViewModel> list = new List<ProjectViewModel>();
+
+            var projectOwnerNames = (from notaowner in notOwned
+                           join po in _db.ProjectOwners on notaowner.ID equals po.projectId
+                           join user in _db.Users on po.userId equals user.Id
+                           select user.UserName).ToList();
+            
+
+            for(int i = 0; i < notOwned.Count(); i++)
+            {
+                ProjectViewModel model = new ProjectViewModel();
+
+                model.ID = notOwned[i].ID;
+                model.name = notOwned[i].name;
+                model.projectOwner = projectOwnerNames[i];
+                list.Add(model);
+            }
+            return list;
+        }
     }
 }
