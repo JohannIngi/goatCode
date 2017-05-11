@@ -13,7 +13,6 @@ namespace goatCode.Tests.Services
     { 
     
         private FileService fileService;
-       
 
         [TestInitialize]
         public void Initialize()
@@ -36,6 +35,18 @@ namespace goatCode.Tests.Services
             mock.ProjectFiles.Add(new ProjectFile { id = 4, fileId = 4, projectId = 1 });
 
             fileService = new FileService(mock);
+        }
+
+        [TestMethod]
+        public void AddFileToProjectTest()
+        {
+            var files = fileService.GetFilesByProjectId(1);
+            
+            var newFile = new File { ID = 5, name = "file5", extension = "c", content = "abc5" };
+
+            fileService.AddNewFile(newFile, 1);
+            Assert.IsFalse(fileService.DoesFileNameExistInProject(2, "file5"));
+            Assert.IsTrue(fileService.DoesFileNameExistInProject(1, "file5"));
         }
 
         [TestMethod]
@@ -93,7 +104,6 @@ namespace goatCode.Tests.Services
             var newFile = new File { ID = 5, name = "file5", extension = "c", content = "abc5" };
             fileService.AddNewFile(newFile, 1);
             var getAll = fileService.GetAllFiles();
-
 
             HashSet<int> idSet = new HashSet<int>();
             foreach (var file in getAll)

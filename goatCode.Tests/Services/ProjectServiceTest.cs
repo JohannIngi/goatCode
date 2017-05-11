@@ -75,25 +75,6 @@ namespace goatCode.Tests.Services
         }
 
         [TestMethod]
-        public void AddFileToProjectTest()
-        {
-            var q = projectService.GetProjectByProjectId(1);
-            
-            HashSet<int> idSet = new HashSet<int>();
-            foreach(var file in idSet)
-            {
-                idSet.Add(1);
-            }
-            Assert.IsTrue(idSet.Contains(1));
-            Assert.IsFalse(idSet.Contains(2));
-            Assert.IsTrue(idSet.Contains(3));
-            Assert.IsTrue(idSet.Contains(4));
-            Assert.IsFalse(idSet.Contains(5));
-
-            var newFile = new File { ID = 5, name = "file5", extension = "c", content = "abc5" };
-        }
-
-        [TestMethod]
         public void GetProjectsOwnedByUserProjectTest()
         {
             var projectsOwned = projectService.GetProjectsOwnedByUser("a1@a.com");
