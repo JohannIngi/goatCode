@@ -165,41 +165,49 @@ namespace goatCode.Controllers
             }
             
         }
-        public FileContentResult DownloadProjectAsZip(int? projectId)
+        public ActionResult DownloadProjectAsZip(int? projectId)
         {
-            if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
+            if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value) == false)
             {
-                var dir = fservice.GetFilesByProjectId(projectId.Value);
-                var e = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                string path = e + @"\" + pservice.GetProjectByProjectId(projectId.Value).name;
-
-                Directory.CreateDirectory(path);
-
-                foreach (var file in dir)
-                {
-                    using (System.IO.StreamWriter data = new System.IO.StreamWriter(path + @"\" + file.name + "." + file.extension, true))
-                    {
-                        data.Write(file.content);
-                    }
-
-                }
-                var s = pservice.GetProjectByProjectId(projectId.Value).name + ".zip";
-                using (Ionic.Zip.ZipFile zip = new Ionic.Zip.ZipFile())
-                {
-                    zip.AddDirectory(path);
-                    zip.Comment = "This zip was created at " + DateTime.Now.ToString("G") + "Using GoatCode";
-                    zip.Save(@"C:\tempfolder\" + s);
-                }
-
-                UTF8Encoding encoding = new UTF8Encoding();
-                //byte[] contentAsBytes = encoding.GetBytes(dir.content);
-                byte[] thefile = System.IO.File.ReadAllBytes(@"C:\tempfolder\" + s);
-                
-
-                return File(thefile, "zip" , s);
-            
+                return View("ProjectPermissionError");
             }
-            return null;
+            else
+            {
+
+                var dir = fservice.GetFilesByProjectId(projectId.Value);
+            var e = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = e + @"\" + pservice.GetProjectByProjectId(projectId.Value).name;
+
+            Directory.CreateDirectory(path);
+
+            foreach (var file in dir)
+            {
+                using (System.IO.StreamWriter data = new System.IO.StreamWriter(path + @"\" + file.name + "." + file.extension, true))
+                {
+                    data.Write(file.content);
+                }
+
+            }
+            var s = pservice.GetProjectByProjectId(projectId.Value).name + ".zip";
+            using (Ionic.Zip.ZipFile zip = new Ionic.Zip.ZipFile())
+            {
+                zip.AddDirectory(path);
+                zip.Comment = "This zip was created at " + DateTime.Now.ToString("G") + " Using GoatCode";
+                zip.Save(path + @"/" + s);
+            }
+            UTF8Encoding encoding = new UTF8Encoding();
+            byte[] thefile = System.IO.File.ReadAllBytes(path + @"/" + s);
+
+            System.IO.DirectoryInfo di = new DirectoryInfo(path);
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            di.Delete(true);
+
+            return File(thefile, "zip", s);
+        }
 
         }
 
