@@ -1,26 +1,232 @@
-﻿@using goatCode.Services
+﻿@model goatCode.Models.ViewModels.AdminSuperViewModel
+.
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "AdminView";
 }
-<h2>Admin Stuff</h2>
 
-<p>
-    @Html.ActionLink("List of Files", "Files")
-    <br />
-    Numer of Files: @ViewBag.Files
+<style>
+    .table-fixed thead {
+        width: 97%;
+    }
 
-</p>
-<p>
-    @Html.ActionLink("List of Projects", "Projects")
-    <br />
-    Number of Projects: @ViewBag.Projects
-</p>
-<p>
-    @Html.ActionLink("List of Users", "Users")
-    <br />
-    Number of Users: @ViewBag.Users
-    
-</p>
+    .table-fixed tbody {
+        height: 300px;
+        overflow-y: auto;
+        width: 100%;
+    }
 
-<p>@Html.ActionLink("Stats", "Stats");</p>
+    .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+    }
+
+        .table-fixed tbody td, .table-fixed thead > tr > th {
+            float: left;
+            border-bottom-width: 0;
+        }
+
+    #myInput, #myInput2, #myInput3 {
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+</style>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Extension', 'Number of files'],
+           /* In the for loop we use -1 because we don't want to include the "," at the end of the list we show in stats*/
+          @for (int i = 0; i < @Model.statData.Length - 1; i++)
+          {
+              @Html.Raw("['" + @Model.statData[i].extension + "'," + @Model.statData[i].count + "],")
+          }
+          @Html.Raw("['" + @Model.statData[@Model.statData.Length - 1].extension + "'," + @Model.statData[@Model.statData.Length - 1].count + "]")
+        ]);
+        var options = {
+            title: 'File type statistics',
+            pieHole: 0.4,
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+    }
+</script>
+<div id="donutchart" style="width: 900px; height: 500px; width: 50%; margin: 0 auto;" ></div>
+
+
+<h3>Users in Database</h3>
+<h5>Number of Users: @ViewBag.Users</h5>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for users..." title="Type in a name">
+<div class="container">
+    <div class=" row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <table class="table table-fixed" id="myTable">
+                    <thead>
+                        <tr>
+                            <th class="col col-xs-8">
+                                User name
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.allUsers)
+                    {
+                        <tr>
+                            <td class="col col-xs-10">
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td class="col col-xs-2">
+                                @Html.ActionLink("Delete User", "DeleteUser", new { userName = item.Email }, new { onclick = "return confirm('Are you sure you wish to delete this user?');" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <br />
+<h3>Projects</h3>
+<h5>Number of Projects: @ViewBag.Projects</h5>
+<input type="text" id="myInput3" onkeyup="myFunction3()" placeholder="Search for projects.." title="Type in a name">
+<div class="container">
+    <div class=" row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <table class="table table-fixed" id="myTable3">
+                    <thead>
+                        <tr>
+                            <th class="col col-xs-8">
+                                Project Name
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.allProjects)
+                    {
+                        <tr>
+                            <td class="col col-xs-10">
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td class="col col-xs-2">
+                                @Html.ActionLink("Delete Project", "DeleteProject", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this project?');" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+
+<h3>Files in Database</h3>
+<h5>Number of Files: @ViewBag.Files</h5>
+<input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search for files.." title="Type in a name">
+<div class="container">
+    <div class=" row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <table class="table table-fixed" id="myTable2">
+                    <thead>
+                        <tr>
+                            <th class="col col-xs-8">
+                                File Name
+                            </th>
+                            <th class="col col-xs-2">
+                                Extension
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.allFiles)
+            {
+                        <tr>
+                            <td class="col col-xs-8">
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td class="col col-xs-2">
+                                @Html.DisplayFor(modelItem => item.extension)
+                            </td>
+                            <td class="col col-xs-2">
+                                @Html.ActionLink("Delete File", "DeleteFile", new { fileId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function myFunction2() {
+        var input, filter, table, tr, td, i, td2;
+        input = document.getElementById("myInput2");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable2");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            td2 = tr[i].getElementsByTagName("td")[1];
+            if (td || td2) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1 || td2.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+<script>
+    function myFunction3() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput3");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable3");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
