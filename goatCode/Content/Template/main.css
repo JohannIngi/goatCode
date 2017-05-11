@@ -9,6 +9,15 @@ body {
   line-height: 24px;
   color: #666;
   background-color: #FFFBFF;
+  margin:0;
+  padding:0;
+  height:100%;
+     padding:10px;
+   padding-bottom:60px;   /* Height of the footer */
+}
+#container {
+   min-height:100%;
+   position:relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -863,6 +872,11 @@ ul.address {
 
 #footer {
   color:#fff;
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:60px;   /* Height of the footer */
+  background:#6cf;
 }
 
 .footer-top {
@@ -883,47 +897,4 @@ ul.address {
   display: inline-block;
   margin-bottom: 5px;
 }
-
-#footer .social-icons {
-  margin-top: 15px;
-}
-
-#footer .social-icons ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#footer .social-icons ul li a {
-  background-color: rgba(0,0,0,.2);
-  border-radius: 4px;
-  line-height: 33px;
-}
-
-#footer .social-icons ul li a:hover {
-  color: #fff
-}
-
-#footer .social-icons ul li a.envelope:hover {
-  background-color: #CECB26;
-}
-
-#footer .social-icons ul li a.facebook:hover {
-  background-color: #3b5999;
-}
-#footer .social-icons ul li a.twitter:hover {
-  background-color: #2ac6f7;
-}
-#footer .social-icons ul li a.dribbble:hover {
-  background-color: #ff5b92;
-}
-#footer .social-icons ul li a.linkedin:hover {
-  background-color: #036dc0;
-}
-#footer .social-icons ul li a.tumblr:hover {
-  background-color: #ff6b00;
-}
-
-/*Presets*/
-
 

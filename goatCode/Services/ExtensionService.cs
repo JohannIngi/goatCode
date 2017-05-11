@@ -92,7 +92,6 @@ namespace goatCode.Services
             "java",
             "py",
             "sql",
-            "sql",
             "txt",
             "js",
             "go",

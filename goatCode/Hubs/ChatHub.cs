@@ -9,8 +9,8 @@ namespace goatCode.Hubs
     {
         public void Send(string name, string message)
         {
-            // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(name, message);
+            // Call the broadcastMessage method to update clients.
+            Clients.All.broadcastMessage(name, message);
         }
     }
 }
