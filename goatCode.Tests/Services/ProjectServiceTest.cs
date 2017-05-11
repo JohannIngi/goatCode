@@ -25,7 +25,7 @@ namespace goatCode.Tests.Services
             mock.Projects.Add(new Project { ID = 3, name = "project3" });
             mock.Projects.Add(new Project { ID = 4, name = "project4" });
 
-            mock.Users.Add(new ApplicationUser {Id = "1231", Email = "a1@a.com", UserName = "a1@a.com", PasswordHash = "a1", SecurityStamp = "b1" });
+            mock.Users.Add(new ApplicationUser { Id = "1231", Email = "a1@a.com", UserName = "a1@a.com", PasswordHash = "a1", SecurityStamp = "b1" });
             mock.Users.Add(new ApplicationUser { Id = "1232", Email = "a2@a.com", UserName = "a2@a.com", PasswordHash = "a2", SecurityStamp = "b2" });
             mock.Users.Add(new ApplicationUser { Id = "1233", Email = "a3@a.com", UserName = "a3@a.com", PasswordHash = "a3", SecurityStamp = "b3" });
             mock.Users.Add(new ApplicationUser { Id = "1234", Email = "a4@a.com", UserName = "a4@a.com", PasswordHash = "a4", SecurityStamp = "b4" });
@@ -59,28 +59,47 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void GetProjectByProjectIdTest1()
         {
-            var query = projectService.GetProjectByProjectId(1);
-            Assert.AreNotEqual(0, query.ID);
-            Assert.AreEqual(1, query.ID);
-            Assert.AreNotEqual(2, query.ID);
+            var getProjectId = projectService.GetProjectByProjectId(1);
+            Assert.AreNotEqual(0, getProjectId.ID);
+            Assert.AreEqual(1, getProjectId.ID);
+            Assert.AreNotEqual(2, getProjectId.ID);
         }
 
         [TestMethod]
         public void GetProjectIdByFileIdTest1()
         {
-            var query = projectService.GetProjectIdByFileId(4);
-            Assert.AreNotEqual(0, query);
-            Assert.AreEqual(1, query);
-            Assert.AreNotEqual(2, query);
+            var getProject = projectService.GetProjectIdByFileId(4);
+            Assert.AreNotEqual(0, getProject);
+            Assert.AreEqual(1, getProject);
+            Assert.AreNotEqual(2, getProject);
+        }
+
+        [TestMethod]
+        public void AddFileToProjectTest()
+        {
+            var q = projectService.GetProjectByProjectId(1);
+            
+            HashSet<int> idSet = new HashSet<int>();
+            foreach(var file in idSet)
+            {
+                idSet.Add(1);
+            }
+            Assert.IsTrue(idSet.Contains(1));
+            Assert.IsFalse(idSet.Contains(2));
+            Assert.IsTrue(idSet.Contains(3));
+            Assert.IsTrue(idSet.Contains(4));
+            Assert.IsFalse(idSet.Contains(5));
+
+            var newFile = new File { ID = 5, name = "file5", extension = "c", content = "abc5" };
         }
 
         [TestMethod]
         public void GetProjectsOwnedByUserProjectTest()
         {
-            var query = projectService.GetProjectsOwnedByUser("a1@a.com");
+            var projectsOwned = projectService.GetProjectsOwnedByUser("a1@a.com");
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query)
+            foreach (var file in projectsOwned)
             {
                 idSet.Add(file.ID);
             }
@@ -89,23 +108,22 @@ namespace goatCode.Tests.Services
             Assert.IsFalse(idSet.Contains(4));
             Assert.IsTrue(idSet.Contains(2));
             Assert.IsFalse(idSet.Contains(0));
-            Assert.AreEqual(3, query.Count);
-            Assert.AreNotEqual(0, query.Count);
+            Assert.AreEqual(3, projectsOwned.Count);
+            Assert.AreNotEqual(0, projectsOwned.Count);
         }
-
 
         [TestMethod]
         public void DeleteProjectTest()
         {
-            var query1 = projectService.GetProjectByProjectId(1);
-            Assert.AreEqual(1, query1.ID);
+            var getOne = projectService.GetProjectByProjectId(1);
+            Assert.AreEqual(1, getOne.ID);
 
             projectService.DeleteProject(1);
 
-            var query2 = projectService.GetAllProjects();
+            var getAll = projectService.GetAllProjects();
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query2)
+            foreach (var file in getAll)
             {
                 idSet.Add(file.ID);
             }
@@ -118,14 +136,14 @@ namespace goatCode.Tests.Services
         public void AddNewProject()
         {
             Project proj = new Project { ID = 5, name = "project5" };
-            var query1 = projectService.GetProjectByProjectId(5);
-            Assert.AreNotEqual(5, query1);
+            var getById = projectService.GetProjectByProjectId(5);
+            Assert.AreNotEqual(5, getById);
 
             projectService.AddNewProject(proj, "1231");
-            var query2 = projectService.GetAllProjects();
+            var getAll = projectService.GetAllProjects();
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query2)
+            foreach (var file in getAll)
             {
                 idSet.Add(file.ID);
             }
@@ -136,22 +154,22 @@ namespace goatCode.Tests.Services
         public void EditProjectNameTest()
         {
             var editProject = new Project { ID = 1, name = "editProject1" };
-            var query = projectService.GetProjectByProjectId(1);
-            Assert.AreSame("project1", query.name);
+            var getById = projectService.GetProjectByProjectId(1);
+            Assert.AreEqual("project1", getById.name);
 
             projectService.EditProjectName(editProject);
 
-            var query2 = projectService.GetProjectByProjectId(1);
-            Assert.AreSame("editProject1", query2.name);
+            var getEdit = projectService.GetProjectByProjectId(1);
+            Assert.AreEqual("editProject1", getEdit.name);
         }
 
         [TestMethod]
         public void GetProjectsNotOwnedByUserTest()
         {
-            var query = projectService.GetProjectsNotOwnedByUser("a2@a.com");
+            var userProjects = projectService.GetProjectsNotOwnedByUser("a2@a.com");
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query)
+            foreach (var file in userProjects)
             {
                 idSet.Add(file.ID);
             }
@@ -167,10 +185,10 @@ namespace goatCode.Tests.Services
         {
             var addUser = new ShareViewModel { email = "a3@a.com", projectId = 1 };
             projectService.AddUserToProject(addUser);
-            var query = projectService.GetProjectsNotOwnedByUser("a3@a.com");
+            var notOwned = projectService.GetProjectsNotOwnedByUser("a3@a.com");
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query)
+            foreach (var file in notOwned)
             {
                 idSet.Add(file.ID);
             }

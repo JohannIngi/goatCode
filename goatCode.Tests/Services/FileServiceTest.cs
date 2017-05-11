@@ -41,39 +41,36 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void DeleteFileTest()
         {
-            var query1 = fileService.GetSingleFileById(2);
-            Assert.AreEqual(2, query1.ID);
+            var getFile = fileService.GetSingleFileById(2);
+            Assert.AreEqual(2, getFile.ID);
 
             fileService.DeleteFile(2);
 
-            var query2 = fileService.GetSingleFileById(2);
-            Assert.AreEqual(null, query2);
+            var checkDeleted = fileService.GetSingleFileById(2);
+            Assert.AreEqual(null, checkDeleted);
         }
 
         [TestMethod]
         public void UpdateFileTest()
         {
             var upFile = new File { ID = 1, name = "notFile1", extension = "cpp", content = "abc1123" };
-            var query = fileService.GetSingleFileById(1);
-            Assert.AreSame("file1", query.name);
-            Assert.AreSame("c", query.extension);
-            Assert.AreSame("abc1", query.content);
+            var getFile = fileService.GetSingleFileById(1);
+
+            Assert.AreEqual("file1", getFile.name);
 
             fileService.UpdateFile(upFile);
 
-            var query2 = fileService.GetSingleFileById(1);
-            Assert.AreSame("notFile1", query2.name);
-            Assert.AreSame("cpp", query2.extension);
-            Assert.AreSame("abc1123", query2.content);
+            var checkUpdate = fileService.GetSingleFileById(1);
+            Assert.AreEqual("notFile1", checkUpdate.name);
         }
 
         [TestMethod]
         public void DoesFileNameExistInProjectTest()
         {
-            var query = fileService.DoesFileNameExistInProject(1, "file1");
-            var query2 = fileService.DoesFileNameExistInProject(1, "file2");
-            Assert.IsTrue(query);
-            Assert.IsFalse(query2);
+            var exists = fileService.DoesFileNameExistInProject(1, "file1");
+            var existsNot = fileService.DoesFileNameExistInProject(1, "file2");
+            Assert.IsTrue(exists);
+            Assert.IsFalse(existsNot);
 
         }
 
@@ -81,13 +78,13 @@ namespace goatCode.Tests.Services
         public void EditFileNameTest()
         {
             var editFile = new FileUpdateViewModel { ID = 1, projectId = 1, name = "editFile1" };
-            var query = fileService.GetSingleFileById(1);
-            Assert.AreSame("file1", query.name);
+            var getFile = fileService.GetSingleFileById(1);
+            Assert.AreEqual("file1", getFile.name);
 
             fileService.EditFileName(editFile);
             
-            var query2 = fileService.GetSingleFileById(1);
-            Assert.AreSame("editFile1", query2.name);           
+            var getEdited = fileService.GetSingleFileById(1);
+            Assert.AreEqual("editFile1", getEdited.name);           
         }
 
         [TestMethod]
@@ -95,11 +92,11 @@ namespace goatCode.Tests.Services
         {
             var newFile = new File { ID = 5, name = "file5", extension = "c", content = "abc5" };
             fileService.AddNewFile(newFile, 1);
-            var query = fileService.GetAllFiles();
+            var getAll = fileService.GetAllFiles();
 
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query)
+            foreach (var file in getAll)
             {
                 idSet.Add(file.ID);
             }
@@ -114,10 +111,10 @@ namespace goatCode.Tests.Services
         public void DeleteAllFilesinProjectTest()
         {
             fileService.DeleteAllFilesinProject(1);
-            var query = fileService.GetFilesByProjectId(1);
+            var getFiles = fileService.GetFilesByProjectId(1);
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query)
+            foreach (var file in getFiles)
             {
                 idSet.Add(file.ID);
             }
@@ -130,10 +127,10 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void GetFilesByProjectIdTest1()
         {
-            var query = fileService.GetFilesByProjectId(1);
+            var getFiles = fileService.GetFilesByProjectId(1);
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query)
+            foreach (var file in getFiles)
             {
                 idSet.Add(file.ID);
             }
@@ -146,23 +143,15 @@ namespace goatCode.Tests.Services
             Assert.AreEqual(3, idSet.Count);
         }
 
-
-        [TestMethod]
-        public void GetFilesByProjectIdTest2()
-        {
-            var query = fileService.GetFilesByProjectId(3);
-            Assert.AreEqual(0, query.Count);
-        }
-
         [TestMethod]
         public void RemoveFileProjectConnectionTest()
         {
            fileService.RemoveFileProjectConnection(1);
 
-            var query = fileService.GetFilesByProjectId(1);
+            var getFiles = fileService.GetFilesByProjectId(1);
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query)
+            foreach (var file in getFiles)
             {
                 idSet.Add(file.ID);
             }
@@ -177,19 +166,19 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void GetSingleFileByIdTest()
         {
-            var query = fileService.GetSingleFileById(0);
-            var query2 = fileService.GetSingleFileById(1);
-            Assert.AreNotEqual(0, query);
-            Assert.AreEqual(1, query2.ID);
+            var getNot = fileService.GetSingleFileById(0);
+            var getFile = fileService.GetSingleFileById(1);
+            Assert.AreEqual(null, getNot);
+            Assert.AreEqual(1, getFile.ID);
         }
 
         [TestMethod]
         public void GetAllFilesTest()
         {
-            var query = fileService.GetAllFiles();
+            var getAll = fileService.GetAllFiles();
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query)
+            foreach (var file in getAll)
             {
                 idSet.Add(file.ID);
             }
