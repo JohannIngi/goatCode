@@ -1,12 +1,8 @@
 ﻿using goatCode.Models;
 using goatCode.Models.Entities;
 using goatCode.Models.ViewModels;
-using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 
 
 namespace goatCode.Services
@@ -155,6 +151,37 @@ namespace goatCode.Services
             _db.setModified(file);
             _db.SaveChanges();
         }
-
+        /// <summary>
+        /// Getting the number of occurrences a file extension appears in the system
+        /// </summary>
+        /// <returns></returns>
+        public int GetExtensionOccurrences (string extension)
+        {
+            return _db.Files.Where(x => x.extension == extension).Count();
+        }
+        /// <summary>
+        /// Here we actually get all the extensions types and the number of extensions for each type. The reason we use an array is becuse we need to process the last element in the array specially
+        /// </summary>
+        /// <returns></returns>
+        public StatViewModel GetStatistics()
+        {
+            var extensions = new ExtensionService().PopulateDropDownList();
+            var stats = new ExtensionStat[extensions.Count];
+            int index = 0;
+            foreach(var extension in extensions)
+            {
+                stats[index++] = new ExtensionStat { extension = extension, count = GetExtensionOccurrences(extension)};
+            }
+            return new StatViewModel { statData = stats };
+        }
+        /// <summary>
+        /// Defines the variables the array in the GetStatistics function
+        /// </summary>
+        /// <returns></returns>
+        public struct ExtensionStat
+        {
+            public string extension { get; set; }
+            public int count { get; set; }
+        }
     }
 }

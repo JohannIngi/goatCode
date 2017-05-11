@@ -163,6 +163,13 @@ namespace goatCode.Controllers
             }
             
         }
-        
+        public ActionResult Chat()
+        {
+            return View();
+        }
+        public ActionResult chatAction()
+        {
+            return RedirectToAction("Chat", "User");
+        }
     }
 }

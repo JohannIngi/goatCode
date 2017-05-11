@@ -31,9 +31,6 @@ namespace goatCode.Controllers
         {
             return RedirectToAction("Register", "Account");
         }
-        public ActionResult Chat()
-        {
-            return View();
-        }
+
     }
 }
