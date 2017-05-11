@@ -57,6 +57,16 @@ namespace goatCode.Tests.Services
         }
 
         [TestMethod]
+        public void UserProjectTest()
+        {
+
+            var addProject = new Project { ID = 5, name = "project5" };
+            projectService.AddNewProject(addProject, "1231");
+            Assert.IsTrue(userv.IsUserRelatedToProject("1231", 5));
+            Assert.IsFalse(userv.IsUserRelatedToProject("1232", 5));
+        }
+
+        [TestMethod]
         public void GetProjectByProjectIdTest1()
         {
             var getProjectId = projectService.GetProjectByProjectId(1);

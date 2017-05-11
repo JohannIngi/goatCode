@@ -28,11 +28,17 @@ namespace goatCode.Tests.Services
             mock.Files.Add(new File { ID = 2, name = "file2", extension = "cpp", content = "abc2" });
             mock.Files.Add(new File { ID = 3, name = "file3", extension = "java", content = "abc3" });
             mock.Files.Add(new File { ID = 4, name = "file4", extension = "hs", content = "abc4" });
+            mock.Files.Add(new File { ID = 6, name = "test1", extension = "hs", content = "abc4" });
+            mock.Files.Add(new File { ID = 7, name = "test2", extension = "hs", content = "abc4" });
+            mock.Files.Add(new File { ID = 8, name = "test3", extension = "hs", content = "abc4" });
 
             mock.ProjectFiles.Add(new ProjectFile { id = 1, fileId = 1, projectId = 1 });
             mock.ProjectFiles.Add(new ProjectFile { id = 2, fileId = 2, projectId = 2 });
             mock.ProjectFiles.Add(new ProjectFile { id = 3, fileId = 3, projectId = 1 });
             mock.ProjectFiles.Add(new ProjectFile { id = 4, fileId = 4, projectId = 1 });
+            mock.ProjectFiles.Add(new ProjectFile { id = 5, fileId = 6, projectId = 1 });
+            mock.ProjectFiles.Add(new ProjectFile { id = 6, fileId = 7, projectId = 1 });
+            mock.ProjectFiles.Add(new ProjectFile { id = 7, fileId = 8, projectId = 1 });
 
             fileService = new FileService(mock);
         }
@@ -115,6 +121,16 @@ namespace goatCode.Tests.Services
             Assert.IsTrue(idSet.Contains(5));
         }
 
+        [TestMethod]
+        public void GetExtensionOccurrencesTest()
+        {
+            var stats1 = fileService.GetExtensionOccurrences("hs");
+            var stats2 = fileService.GetExtensionOccurrences("c");
+            Assert.AreEqual(4, stats1);
+            Assert.AreEqual(1, stats2);
+            
+        }
+
         [TestMethod] 
         public void DeleteAllFilesinProjectTest()
         {
@@ -148,7 +164,7 @@ namespace goatCode.Tests.Services
             Assert.IsTrue(idSet.Contains(3));
             Assert.IsTrue(idSet.Contains(4));
             Assert.IsFalse(idSet.Contains(123));
-            Assert.AreEqual(3, idSet.Count);
+            Assert.AreEqual(6, idSet.Count);
         }
 
         [TestMethod]
@@ -168,7 +184,7 @@ namespace goatCode.Tests.Services
             Assert.IsFalse(idSet.Contains(2));
             Assert.IsTrue(idSet.Contains(3));
             Assert.IsTrue(idSet.Contains(4));
-            Assert.AreEqual(2, idSet.Count);
+            Assert.AreEqual(5, idSet.Count);
         }
 
         [TestMethod]
@@ -196,6 +212,7 @@ namespace goatCode.Tests.Services
             Assert.IsTrue(idSet.Contains(3));
             Assert.IsTrue(idSet.Contains(4));
             Assert.IsFalse(idSet.Contains(5));
+            Assert.AreEqual(7, idSet.Count);
         }
     }
 }

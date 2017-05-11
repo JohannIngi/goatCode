@@ -52,12 +52,6 @@ namespace goatCode.Tests.Services
         }
 
         [TestMethod]
-        public void asdf()
-        {
-            var newUser = new ApplicationUser { Id = "1235", Email = "a5@a.com", UserName = "a5@a.com", PasswordHash = "a5", SecurityStamp = "b5" };
-        }
-
-        [TestMethod]
         public void GetAllUsersTest()
         {
             var getAll = userService.GetAllUsers();
@@ -71,7 +65,9 @@ namespace goatCode.Tests.Services
             Assert.IsTrue(emailSet.Contains("a2@a.com"));
             Assert.IsTrue(emailSet.Contains("a3@a.com"));
             Assert.IsTrue(emailSet.Contains("a4@a.com"));
+            Assert.AreEqual(4, emailSet.Count);
         }
+
         [TestMethod]
         public void DoesUserExistTest1()
         {
