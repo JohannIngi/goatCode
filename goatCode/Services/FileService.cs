@@ -160,7 +160,7 @@ namespace goatCode.Services
             return _db.Files.Where(x => x.extension == extension).Count();
         }
         /// <summary>
-        /// 
+        /// Here we actually get all the extensions types and the number of extensions for each type. The reason we use an array is becuse we need to process the last element in the array specially
         /// </summary>
         /// <returns></returns>
         public StatViewModel GetStatistics()
@@ -174,6 +174,10 @@ namespace goatCode.Services
             }
             return new StatViewModel { statData = stats };
         }
+        /// <summary>
+        /// Defines the variables the array in the GetStatistics function
+        /// </summary>
+        /// <returns></returns>
         public struct ExtensionStat
         {
             public string extension { get; set; }

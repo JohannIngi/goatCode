@@ -58,8 +58,8 @@ namespace goatCode.Services
         private static Dictionary<string, string> startContent = new Dictionary<string, string>
         {
             ["c"] = "#include <stdio.h>\n\nint main() {\n\tprintf(\"Hello World\\n\")\n\treturn 0;\n}",
-            ["cpp"] = "#include <iostream>\n\nusing namespace std;\n\nint main()\n{\n\tcout << \"Hello World\" << endl;\n\nreturn 0;\n}",
-            ["cc"] = "#include <iostream>\n\nusing namespace std;\n\nint main()\n{\n\tcout << \"Hello World\" << endl;\n\nreturn 0;\n}",
+            ["cpp"] = "#include <iostream>\n\nusing namespace std;\n\nint main()\n{\n\tcout << \"Hello World\" << endl;\n\n\treturn 0;\n}",
+            ["cc"] = "#include <iostream>\n\nusing namespace std;\n\nint main()\n{\n\tcout << \"Hello World\" << endl;\n\n\treturn 0;\n}",
             ["cs"] = "using System.IO;\nusing System;\n\nclass Program\n{\n\tstatic void Main()\n{\n\tConsole.WriteLine(\"Hello, World!\");\n}\n}",
             ["html"] = "<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<title>Web Page Design</title>\n\t\t<style type=\"text / css\">\n\t\tdiv\n\t\t{\n\t\t\twidth:100px;\n\t\t\theight:75px;\n\t\t\tbackground-color:red;\n\t\t\tborder:1px solid black;\n\t\t}\n\t\t</style>\n\t</head>\n\t<body>\n\t\t<div>Hello, World!</div>\n\t</body>\n</html>",
             ["java"] = "public class HelloWorld{\n\n\tpublic static void main(String []args){\n\t\tSystem.out.println(\"Hello World\");\n\t}\n}",

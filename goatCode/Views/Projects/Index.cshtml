@@ -12,21 +12,23 @@
         <th>
             Name
         </th>
-        <th></th>
+        <th></th><th></th>
     </tr>
 
 @foreach (var item in Model.files) {
     <tr>
         <td>
-            @(Html.DisplayFor(modelItem => item.name) + "." + Html.DisplayFor(modelItem => item.extension))
+            <a href="@Url.Action("Edit", new { FileId=item.ID })">
+                @(Html.DisplayFor(modelItem => item.name) + "." + Html.DisplayFor(modelItem => item.extension))
+            </a>
         </td>
+        <td></td>
         <td>
 
-            @Html.ActionLink(" ", "Edit", new { FileId = item.ID }, new { @title = "Edit", @class = "glyphicon glyphicon-edit" }) |
-            @Html.ActionLink(" ", "DownloadFile", new { fileId = item.ID }, new { @title = "Download", @class = "glyphicon glyphicon-download-alt" }) |
-            @Html.ActionLink(" ", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }, new { @title = "Update name", @class = "glyphicon glyphicon-pencil" }) |
-            @Html.ActionLink(" ", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId }, new { @title = "Delete", @class = "glyphicon glyphicon-trash" })
-           <!-- new { onclick = "return confirm('Are you sure you wish to delete this file?');"} )-->
+            @Html.ActionLink(" ", "DownloadFile", new { fileId = item.ID }, new { @class = "glyphicon glyphicon-download-alt" }) |
+            @Html.ActionLink(" ", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }, new { @class = "glyphicon glyphicon-pencil" }) |
+            @Html.ActionLink(" ", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId },
+            new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash"} )
 
         </td>
     </tr>
