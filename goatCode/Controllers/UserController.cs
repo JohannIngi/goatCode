@@ -167,9 +167,5 @@ namespace goatCode.Controllers
         {
             return View();
         }
-        public ActionResult chatAction()
-        {
-            return RedirectToAction("Chat", "User");
-        }
     }
 }
