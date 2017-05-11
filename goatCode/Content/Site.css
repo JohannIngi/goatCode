@@ -1,9 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    margin:0;
-    padding:0;
-    height:100%;
+    
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -24,23 +22,4 @@ input,
 select,
 textarea {
     max-width: 280px;
-}
-#container {
-   min-height:100%;
-   position:relative;
-}
-#header {
-   background:#ff0;
-   padding:10px;
-}
-#body {
-   padding:10px;
-
-}
-#footer2 {
-   position:absolute;
-   bottom:0;
-   width:100%;
-   height:60px;   /* Height of the footer */
-   background:#6cf;
 }

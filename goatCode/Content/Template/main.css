@@ -9,14 +9,6 @@ body {
   line-height: 24px;
   color: #666;
   background-color: #FFFBFF;
-  margin:0;
-  padding:0;
-  height:100%;
-     padding:10px;
-}
-#container {
-   min-height:100%;
-   position:relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
