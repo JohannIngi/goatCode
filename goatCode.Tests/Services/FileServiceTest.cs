@@ -40,8 +40,6 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void AddFileToProjectTest()
         {
-            var files = fileService.GetFilesByProjectId(1);
-            
             var newFile = new File { ID = 5, name = "file5", extension = "c", content = "abc5" };
 
             fileService.AddNewFile(newFile, 1);

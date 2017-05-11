@@ -50,20 +50,27 @@ namespace goatCode.Tests.Services
 
             userService = new UserService(mock);
         }
+
+        [TestMethod]
+        public void asdf()
+        {
+            var newUser = new ApplicationUser { Id = "1235", Email = "a5@a.com", UserName = "a5@a.com", PasswordHash = "a5", SecurityStamp = "b5" };
+        }
+
         [TestMethod]
         public void GetAllUsersTest()
         {
             var getAll = userService.GetAllUsers();
 
-            HashSet<string> idSet = new HashSet<string>();
+            HashSet<string> emailSet = new HashSet<string>();
             foreach (var file in getAll)
             {
-                idSet.Add(file.email);
+                emailSet.Add(file.email);
             }
-            Assert.IsTrue(idSet.Contains("a1@a.com"));
-            Assert.IsTrue(idSet.Contains("a2@a.com"));
-            Assert.IsTrue(idSet.Contains("a3@a.com"));
-            Assert.IsTrue(idSet.Contains("a4@a.com"));
+            Assert.IsTrue(emailSet.Contains("a1@a.com"));
+            Assert.IsTrue(emailSet.Contains("a2@a.com"));
+            Assert.IsTrue(emailSet.Contains("a3@a.com"));
+            Assert.IsTrue(emailSet.Contains("a4@a.com"));
         }
         [TestMethod]
         public void DoesUserExistTest1()
