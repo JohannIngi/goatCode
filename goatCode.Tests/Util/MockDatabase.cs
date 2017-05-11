@@ -51,7 +51,21 @@ namespace goatCode.Tests.Util
 
         public void setModified(object entry)
         {
-            // TODO: Manual updating
+            // TODO: update servicecalls and remove this...
+            if (entry.GetType() == typeof(Project))
+            {
+                var projectEntry = (Project)entry;
+                Project project = Projects.SingleOrDefault(x => x.ID == projectEntry.ID);
+                project.name = projectEntry.name;
+            }
+            else if (entry.GetType() == typeof(File))
+            {
+                var fileEntry = (File)entry;
+                File file = Files.SingleOrDefault(x => x.ID == fileEntry.ID);
+                file.name = fileEntry.name;
+                file.extension = fileEntry.extension;
+                file.content = fileEntry.content;
+            }
         }
 
         public void Dispose()
