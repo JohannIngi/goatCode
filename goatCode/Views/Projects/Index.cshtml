@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2><br />Files</h2>
+<h2><br />@Model.name</h2> 
 <p>
     @Html.ActionLink("Create a new file", "Create", new { ProjectId = Model.projectId })
 </p>
@@ -17,19 +17,17 @@
 
 @foreach (var item in Model.files) {
     <tr>
-        <td>
+        <td> 
             <a href="@Url.Action("Edit", new { FileId=item.ID })">
                 @(Html.DisplayFor(modelItem => item.name) + "." + Html.DisplayFor(modelItem => item.extension))
             </a>
         </td>
         <td></td>
         <td align="right">
-
-            @Html.ActionLink(" ", "DownloadFile", new { fileId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title ="Download file" }) |
             @Html.ActionLink(" ", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }, new { @class = "glyphicon glyphicon-pencil", title = "Rename file" }) |
             @Html.ActionLink(" ", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId },
-            new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete file" } )
-
+            new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete file" } ) |
+            @Html.ActionLink(" ", "DownloadFile", new { fileId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download file" })
         </td>
     </tr>
 }

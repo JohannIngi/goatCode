@@ -12,34 +12,37 @@
 <table class="table table-striped">
     <tr>
         <th>
-            Projects you own
+            <h4>Projects you own</h4>
         </th>
         <th></th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>    
-            <a href="@Url.Action("Index", "Projects", new { projectId=item.ID })">
-                @Html.Raw(item.name)
-            </a>
-        </td>
-        <td></td>
-        <td align="right">
-            @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-edit", title = "Rename project" }) | <!--N-->
-            @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link", title = "Share project" }) |<!--Y-->
-            @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete project" }) |
-            @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download project" })
+    @foreach (var item in Model) {
+        <tr>
+            <td>    
+                <a href="@Url.Action("Index", "Projects", new { projectId=item.ID})">
+                    @Html.Raw(item.name)
+                </a>
+            </td>
+            <td></td>
+            <td align="right">
+                @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-pencil", title = "Rename project" }) | <!--N-->
+                @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link", title = "Share project" }) |<!--Y-->
+                @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete project" }) |
+                @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download project" })
        
-        </td>
-    </tr>
-}
+            </td>
+        </tr>
+    }
+    
     <tr>
         <th>
-            Projects shared with you
+            <h4>Projects shared with you</h4>
         </th>
-        <th>Project owner</th>
+            <th>
+                <h4>Project owner</h4>
+            </th>
         <th></th>
     </tr>
 
@@ -55,9 +58,8 @@
                 @Html.Raw(item.projectOwner)
             </td>
             <td align="right">
-                @Html.ActionLink(" ", "Edit", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-pencil", title = "Rename project" }) | <!--N-->
                 @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link", title = "Share project" }) | <!--Y-->
-                @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete project" }) |
+                @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Removes your connection from project" }) |
                 @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download project" })<!--Y-->
 
             </td>
