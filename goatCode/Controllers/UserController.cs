@@ -4,7 +4,9 @@ using goatCode.Services;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,9 +25,9 @@ namespace goatCode.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
+            pservice.UserIndexHelper(User.Identity.Name);
             var ret = pservice.GetProjectsOwnedByUser(User.Identity.Name);
-            ViewBag.NotOwned = pservice.GetProjectsNotOwnedByUser(User.Identity.Name);
-
+            ViewBag.NotOwned = pservice.UserIndexHelper(User.Identity.Name);
             return View(ret);
         }
 
@@ -163,6 +165,51 @@ namespace goatCode.Controllers
             }
             
         }
-        
+        public ActionResult DownloadProjectAsZip(int? projectId)
+        {
+            if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value) == false)
+            {
+                return View("ProjectPermissionError");
+            }
+            else
+            {
+
+                var dir = fservice.GetFilesByProjectId(projectId.Value);
+            var e = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = e + @"\" + pservice.GetProjectByProjectId(projectId.Value).name;
+
+            Directory.CreateDirectory(path);
+
+            foreach (var file in dir)
+            {
+                using (System.IO.StreamWriter data = new System.IO.StreamWriter(path + @"\" + file.name + "." + file.extension, true))
+                {
+                    data.Write(file.content);
+                }
+
+            }
+            var s = pservice.GetProjectByProjectId(projectId.Value).name + ".zip";
+            using (Ionic.Zip.ZipFile zip = new Ionic.Zip.ZipFile())
+            {
+                zip.AddDirectory(path);
+                zip.Comment = "This zip was created at " + DateTime.Now.ToString("G") + " Using GoatCode";
+                zip.Save(path + @"/" + s);
+            }
+            UTF8Encoding encoding = new UTF8Encoding();
+            byte[] thefile = System.IO.File.ReadAllBytes(path + @"/" + s);
+
+            System.IO.DirectoryInfo di = new DirectoryInfo(path);
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            di.Delete(true);
+
+            return File(thefile, "zip", s);
+        }
+
+        }
+
     }
 }
