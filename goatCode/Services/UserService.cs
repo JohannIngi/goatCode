@@ -159,14 +159,6 @@ namespace goatCode.Services
         /// <param name="userName"></param>
         public void DeleteUser(string userName)
         {
-            ProjectService pservice = new ProjectService(_db);
-            var userId = GetUserIdByName(userName);
-            var userprojects = pservice.GetProjectsOwnedByUser(userName);
-
-            foreach(var item in userprojects)
-            {
-                _db.UserProjects.Remove(_db.UserProjects.Where(x => x.projectId == item.ID).SingleOrDefault());
-            }
             _db.Users.Remove(_db.Users.Where(x => x.UserName == userName).SingleOrDefault());
             _db.SaveChanges();
         }

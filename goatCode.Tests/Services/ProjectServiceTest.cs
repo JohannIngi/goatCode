@@ -4,6 +4,7 @@ using goatCode.Models;
 using goatCode.Services;
 using goatCode.Tests.Util;
 using goatCode.Models.Entities;
+using goatCode.Models.ViewModels;
 using System.Collections.Generic;
 
 namespace goatCode.Tests.Services
@@ -24,7 +25,7 @@ namespace goatCode.Tests.Services
             mock.Projects.Add(new Project { ID = 3, name = "project3" });
             mock.Projects.Add(new Project { ID = 4, name = "project4" });
 
-            mock.Users.Add(new ApplicationUser {Id = "1231", Email = "a1@a.com", UserName = "a1@a.com", PasswordHash = "a1", SecurityStamp = "b1" });
+            mock.Users.Add(new ApplicationUser { Id = "1231", Email = "a1@a.com", UserName = "a1@a.com", PasswordHash = "a1", SecurityStamp = "b1" });
             mock.Users.Add(new ApplicationUser { Id = "1232", Email = "a2@a.com", UserName = "a2@a.com", PasswordHash = "a2", SecurityStamp = "b2" });
             mock.Users.Add(new ApplicationUser { Id = "1233", Email = "a3@a.com", UserName = "a3@a.com", PasswordHash = "a3", SecurityStamp = "b3" });
             mock.Users.Add(new ApplicationUser { Id = "1234", Email = "a4@a.com", UserName = "a4@a.com", PasswordHash = "a4", SecurityStamp = "b4" });
@@ -38,6 +39,8 @@ namespace goatCode.Tests.Services
             mock.UserProjects.Add(new UserProject { id = 2, projectId = 1, userId = "1232" });
             mock.UserProjects.Add(new UserProject { id = 3, projectId = 2, userId = "1231" });
             mock.UserProjects.Add(new UserProject { id = 4, projectId = 2, userId = "1232" });
+            mock.UserProjects.Add(new UserProject { id = 5, projectId = 3, userId = "1232" });
+            mock.UserProjects.Add(new UserProject { id = 6, projectId = 4, userId = "1232" });
 
             mock.Files.Add(new File { ID = 1, name = "file1", extension = "c", content = "abc1" });
             mock.Files.Add(new File { ID = 2, name = "file2", extension = "cpp", content = "abc2" });
@@ -54,42 +57,40 @@ namespace goatCode.Tests.Services
         }
 
         [TestMethod]
-        public void UserTest()
+        public void UserProjectTest()
         {
-            var query = userv.DoesUserExist("a1@a.com");
-            Assert.IsTrue(query);
+
+            var addProject = new Project { ID = 5, name = "project5" };
+            projectService.AddNewProject(addProject, "1231");
+            Assert.IsTrue(userv.IsUserRelatedToProject("1231", 5));
+            Assert.IsFalse(userv.IsUserRelatedToProject("1232", 5));
         }
 
         [TestMethod]
         public void GetProjectByProjectIdTest1()
         {
-            var query = projectService.GetProjectByProjectId(1);
-            Assert.AreNotEqual(0, query.ID);
-            Assert.AreEqual(1, query.ID);
-            Assert.AreNotEqual(2, query.ID);
+            var getProjectId = projectService.GetProjectByProjectId(1);
+            Assert.AreNotEqual(0, getProjectId.ID);
+            Assert.AreEqual(1, getProjectId.ID);
+            Assert.AreNotEqual(2, getProjectId.ID);
         }
 
         [TestMethod]
         public void GetProjectIdByFileIdTest1()
         {
-            var query = projectService.GetProjectIdByFileId(4);
-            Assert.AreEqual(1, query);
-        }
-
-        [TestMethod]
-        public void GetProjectIdByFileIdTest2()
-        {
-            var query = projectService.GetProjectIdByFileId(0);
-            Assert.AreNotEqual(1, query);
+            var getProject = projectService.GetProjectIdByFileId(4);
+            Assert.AreNotEqual(0, getProject);
+            Assert.AreEqual(1, getProject);
+            Assert.AreNotEqual(2, getProject);
         }
 
         [TestMethod]
         public void GetProjectsOwnedByUserProjectTest()
         {
-            var query = projectService.GetProjectsOwnedByUser("a1@a.com");
+            var projectsOwned = projectService.GetProjectsOwnedByUser("a1@a.com");
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query)
+            foreach (var file in projectsOwned)
             {
                 idSet.Add(file.ID);
             }
@@ -98,23 +99,22 @@ namespace goatCode.Tests.Services
             Assert.IsFalse(idSet.Contains(4));
             Assert.IsTrue(idSet.Contains(2));
             Assert.IsFalse(idSet.Contains(0));
-            Assert.AreEqual(3, query.Count);
-            Assert.AreNotEqual(0, query.Count);
+            Assert.AreEqual(3, projectsOwned.Count);
+            Assert.AreNotEqual(0, projectsOwned.Count);
         }
-
 
         [TestMethod]
         public void DeleteProjectTest()
         {
-            var query1 = projectService.GetProjectByProjectId(1);
-            Assert.AreEqual(1, query1.ID);
+            var getOne = projectService.GetProjectByProjectId(1);
+            Assert.AreEqual(1, getOne.ID);
 
             projectService.DeleteProject(1);
 
-            var query2 = projectService.GetAllProjects();
+            var getAll = projectService.GetAllProjects();
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query2)
+            foreach (var file in getAll)
             {
                 idSet.Add(file.ID);
             }
@@ -127,14 +127,14 @@ namespace goatCode.Tests.Services
         public void AddNewProject()
         {
             Project proj = new Project { ID = 5, name = "project5" };
-            var query1 = projectService.GetProjectByProjectId(5);
-            Assert.AreNotEqual(5, query1);
+            var getById = projectService.GetProjectByProjectId(5);
+            Assert.AreNotEqual(5, getById);
 
             projectService.AddNewProject(proj, "1231");
-            var query2 = projectService.GetAllProjects();
+            var getAll = projectService.GetAllProjects();
 
             HashSet<int> idSet = new HashSet<int>();
-            foreach (var file in query2)
+            foreach (var file in getAll)
             {
                 idSet.Add(file.ID);
             }
@@ -144,32 +144,48 @@ namespace goatCode.Tests.Services
         [TestMethod]
         public void EditProjectNameTest()
         {
-            Project proj = new Project { ID = 6, name = "project6" };
-            projectService.AddNewProject(proj, "1231");
-            var query = projectService.GetAllProjects();
-            
-            List<String> nameList = new List<String>();
-            foreach(var file in query)
-            {
-                nameList.Add(file.name);
-            }
-            Assert.IsTrue(nameList.Contains("project6"));
+            var editProject = new Project { ID = 1, name = "editProject1" };
+            var getById = projectService.GetProjectByProjectId(1);
+            Assert.AreEqual("project1", getById.name);
 
-            proj.name = "asdf";
-            projectService.EditProjectName(proj);
-            List<String> nameList2 = new List<String>();
-            foreach (var file in query)
+            projectService.EditProjectName(editProject);
+
+            var getEdit = projectService.GetProjectByProjectId(1);
+            Assert.AreEqual("editProject1", getEdit.name);
+        }
+
+        [TestMethod]
+        public void GetProjectsNotOwnedByUserTest()
+        {
+            var userProjects = projectService.GetProjectsNotOwnedByUser("a2@a.com");
+
+            HashSet<int> idSet = new HashSet<int>();
+            foreach (var file in userProjects)
             {
-                nameList2.Add(file.name);
+                idSet.Add(file.ID);
             }
-            Assert.IsTrue(nameList2.Contains("asdf"));
+
+            Assert.IsTrue(idSet.Contains(1));
+            Assert.IsTrue(idSet.Contains(2));
+            Assert.IsTrue(idSet.Contains(3));
+            Assert.IsTrue(idSet.Contains(4));
         }
 
         [TestMethod]
         public void AddUserToProjectTest()
         {
-            
-            //Þetta er ekki hægt
+            var addUser = new ShareViewModel { email = "a3@a.com", projectId = 1 };
+            projectService.AddUserToProject(addUser);
+            var notOwned = projectService.GetProjectsNotOwnedByUser("a3@a.com");
+
+            HashSet<int> idSet = new HashSet<int>();
+            foreach (var file in notOwned)
+            {
+                idSet.Add(file.ID);
+            }
+            Assert.IsFalse(idSet.Contains(0));
+            Assert.IsTrue(idSet.Contains(1));
+            Assert.IsFalse(idSet.Contains(2));
         }
     }
 }
