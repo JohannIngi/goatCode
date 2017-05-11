@@ -31,9 +31,14 @@
         </td>
     </tr>
 }
-
 </table>
+
+<p>
+    @Html.ActionLink("List of users in project", "ProjectUsersList", "User", new { ProjectId = Model.projectId}, new { title = "List of users in project" })
+</p>
+
 
 <p>
     @Html.ActionLink("Back to list of projects", "Index", "User")
 </p>
+

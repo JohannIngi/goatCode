@@ -173,5 +173,19 @@ namespace goatCode.Services
         {
             return _db.ProjectOwners.Where(x => x.projectId == projectId).SingleOrDefault().userId;
         }
+
+        public List<ApplicationUser> GetProjectUsersByProjectId(int projectId, string userId)
+        {
+            var users = (from userproj in _db.UserProjects
+                        where projectId == userproj.projectId && userId != userproj.userId
+                        join proj in _db.Projects
+                        on userproj.projectId equals proj.ID
+                        join uzerz in _db.Users on userproj.userId equals uzerz.Id
+                        select uzerz).ToList();
+
+            return users;
+        }
     }
 }
+
+
