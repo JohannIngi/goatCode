@@ -163,7 +163,7 @@ namespace goatCode.Services
         /// Here we actually get all the extensions types and the number of extensions for each type. The reason we use an array is becuse we need to process the last element in the array specially
         /// </summary>
         /// <returns></returns>
-        public StatViewModel GetStatistics()
+        public ExtensionStat[] GetStatistics()
         {
             var extensions = new ExtensionService().PopulateDropDownList();
             var stats = new ExtensionStat[extensions.Count];
@@ -172,7 +172,7 @@ namespace goatCode.Services
             {
                 stats[index++] = new ExtensionStat { extension = extension, count = GetExtensionOccurrences(extension)};
             }
-            return new StatViewModel { statData = stats };
+            return stats;
         }
         /// <summary>
         /// Defines the variables the array in the GetStatistics function
