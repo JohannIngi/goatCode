@@ -80,8 +80,10 @@ namespace goatCode.Controllers
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                 {
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
-                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
-                    return View("Error"); 
+
+                    ModelState.AddModelError("", "You must have a confirmed email to log on");
+
+                    return View(model); 
                 }
             }
 
@@ -137,7 +139,7 @@ namespace goatCode.Controllers
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
 
                     ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
-                     + "before you can log in.";
+                     + "before you can log in";
 
                     return View("Info");
                    // return RedirectToAction("Index", "Home");

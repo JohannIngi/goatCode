@@ -92,7 +92,7 @@ namespace goatCode.Controllers
                 else if (uservice.IsUserRelatedToProject(uservice.GetUserIdByName(model.email), model.projectId) == true)
                 {
                     // Ef user er nú þegar tengdur við project þá gerist ekkert
-                    return View("CantShareWithThisUserError");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
