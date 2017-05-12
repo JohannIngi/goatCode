@@ -56,7 +56,7 @@ namespace goatCode.Controllers
         {
             // TODO: Þetta virkar ekki þarf að skoða þetta betur seinna.
             
-            _fservice.UpdateFile(file);
+            _fservice.UpdateFile(file.content, file.ID);
             return RedirectToAction("Edit", new { FileId = file.ID });
         }
 

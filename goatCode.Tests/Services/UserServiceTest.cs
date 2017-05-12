@@ -50,108 +50,128 @@ namespace goatCode.Tests.Services
 
             userService = new UserService(mock);
         }
+
+        [TestMethod]
+        public void GetAllUsersTest()
+        {
+            var getAll = userService.GetAllUsers();
+
+            HashSet<string> emailSet = new HashSet<string>();
+            foreach (var file in getAll)
+            {
+                emailSet.Add(file.email);
+            }
+            Assert.IsTrue(emailSet.Contains("a1@a.com"));
+            Assert.IsTrue(emailSet.Contains("a2@a.com"));
+            Assert.IsTrue(emailSet.Contains("a3@a.com"));
+            Assert.IsTrue(emailSet.Contains("a4@a.com"));
+            Assert.AreEqual(4, emailSet.Count);
+        }
+
         [TestMethod]
         public void DoesUserExistTest1()
         {
-            var query = userService.DoesUserExist("a1@a.com");
-            Assert.IsTrue(query);
+            var user = userService.DoesUserExist("a1@a.com");
+            Assert.IsTrue(user);
         }
         [TestMethod]
         public void DoesUserExistTest2()
         {
-            var query = userService.DoesUserExist("bb@b.com");
-            Assert.IsFalse(query);
+            var user = userService.DoesUserExist("bb@b.com");
+            Assert.IsFalse(user);
         }
 
         [TestMethod]
         public void IsUserOwnerTest1()
         {
-            var query = userService.IsUserOwner("1231", 1);
-            var query2 = userService.IsUserOwner("1232", 1);
-            var query3 = userService.IsUserOwner("1231", 4);
-            Assert.IsTrue(query);
-            Assert.IsFalse(query2);
-            Assert.IsFalse(query3);
+            var owner1 = userService.IsUserOwner("1231", 1);
+            var owner2 = userService.IsUserOwner("1232", 1);
+            var onwer3 = userService.IsUserOwner("1231", 4);
+            Assert.IsTrue(owner1);
+            Assert.IsFalse(owner2);
+            Assert.IsFalse(onwer3);
         }
+
         [TestMethod] 
         public void IsUserRelatedToProjectTest()
         {
-            var query = userService.IsUserRelatedToProject("1231", 1);
-            var query2 = userService.IsUserRelatedToProject("1231", 3);
-            var query3 = userService.IsUserRelatedToProject("1233", 1);
-            Assert.IsTrue(query);
-            Assert.IsFalse(query2);
-            Assert.IsFalse(query3);
+            var user1 = userService.IsUserRelatedToProject("1231", 1);
+            var user2 = userService.IsUserRelatedToProject("1231", 3);
+            var user3 = userService.IsUserRelatedToProject("1233", 1);
+            Assert.IsTrue(user1);
+            Assert.IsFalse(user2);
+            Assert.IsFalse(user3);
         }
         [TestMethod]
         public void DeleteUserOwnerRelationsTest()
         {
-            var query = userService.IsUserOwner("1231", 1);
-            Assert.IsTrue(query);
+            var checkOwner = userService.IsUserOwner("1231", 1);
+            Assert.IsTrue(checkOwner);
 
             userService.DeleteUserOwnerRelations("1231", 1);
 
-            var query2 = userService.IsUserOwner("1231", 1);
-            Assert.IsFalse(query2);
+            var checkDelete = userService.IsUserOwner("1231", 1);
+            Assert.IsFalse(checkDelete);
         }
         [TestMethod] 
         public void DeleteUserProjectRelationsTest()
         {
-            var query = userService.IsUserRelatedToProject("1231", 1);
-            var query2 = userService.IsUserRelatedToProject("1232", 1);
-            Assert.IsTrue(query);
-            Assert.IsTrue(query2);
+            var userRelated1 = userService.IsUserRelatedToProject("1231", 1);
+            var userRelated2 = userService.IsUserRelatedToProject("1232", 1);
+            Assert.IsTrue(userRelated1);
+            Assert.IsTrue(userRelated2);
 
             userService.DeleteUserProjectRelations(1);
 
-            var query3 = userService.IsUserRelatedToProject("1231", 1);
-            var query4 = userService.IsUserRelatedToProject("1232", 1);
-            var query5 = userService.IsUserRelatedToProject("1232", 2);
-            var query6 = userService.IsUserRelatedToProject("1231", 2);
-            Assert.IsFalse(query3);
-            Assert.IsFalse(query4);
-            Assert.IsTrue(query5);
-            Assert.IsTrue(query6);
+            var userRelated3 = userService.IsUserRelatedToProject("1231", 1);
+            var userRelated4 = userService.IsUserRelatedToProject("1232", 1);
+            var userRelated5 = userService.IsUserRelatedToProject("1232", 2);
+            var userRelated6 = userService.IsUserRelatedToProject("1231", 2);
+            Assert.IsFalse(userRelated3);
+            Assert.IsFalse(userRelated4);
+            Assert.IsTrue(userRelated5);
+            Assert.IsTrue(userRelated6);
         }
+
         [TestMethod]
         public void DeleteSingleUserProjectRelationsTest()
         {
-            var query = userService.IsUserRelatedToProject("1231", 1);
-            var query2 = userService.IsUserRelatedToProject("1232", 1);
-            Assert.IsTrue(query);
-            Assert.IsTrue(query2);
+            var userRelated = userService.IsUserRelatedToProject("1231", 1);
+            var userRelated2 = userService.IsUserRelatedToProject("1232", 1);
+            Assert.IsTrue(userRelated);
+            Assert.IsTrue(userRelated2);
 
             userService.DeleteSingleUserProjectRelations("1231", 1);
 
-            var query3 = userService.IsUserRelatedToProject("1231", 1);
-            var query4 = userService.IsUserRelatedToProject("1232", 1);
-            Assert.IsFalse(query3);
-            Assert.IsTrue(query4);
+            var userRelated3 = userService.IsUserRelatedToProject("1231", 1);
+            var userRelated4 = userService.IsUserRelatedToProject("1232", 1);
+            Assert.IsFalse(userRelated3);
+            Assert.IsTrue(userRelated4);
         }
+
         [TestMethod] 
         public void GetUserIdByNameTest()
         {
-            var query = userService.GetUserIdByName("a1@a.com");
-            Assert.AreSame("1231", query);
+            Assert.AreEqual("1231", userService.GetUserIdByName("a1@a.com"));
         }
 
         [TestMethod]
         public void DeleteUserTest()
         {
-            var query = userService.DoesUserExist("a1@a.com");
-            Assert.IsTrue(query);
+            var user = userService.DoesUserExist("a1@a.com");
+            Assert.IsTrue(user);
 
             userService.DeleteUser("a1@a.com");
 
-            var query2 = userService.DoesUserExist("a1@a.com");
-            Assert.IsFalse(query2);
+            var userDeleted = userService.DoesUserExist("a1@a.com");
+            Assert.IsFalse(userDeleted);
         }
 
         [TestMethod]
         public void GetProjectOwnerIdByProjectIdTest()
         {
-            var query = userService.GetProjectOwnerIdByProjectId(1);
-            Assert.AreSame("1231", query);
+            var owner = userService.GetProjectOwnerIdByProjectId(1);
+            Assert.AreEqual("1231", owner);
         }
     }
 }

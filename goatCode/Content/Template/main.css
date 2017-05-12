@@ -293,15 +293,12 @@ section {
 
 .our-services .col-sm-4 {
   border-right:1px solid #f2f2f2;
-  border-bottom:1px solid #f2f2f2;
-  padding-bottom: 50px;
 }
 
 .our-services .col-sm-4:nth-child(4), 
 .our-services .col-sm-4:nth-child(5), 
 .our-services .col-sm-4:nth-child(6) {
   border-bottom:0;
-  padding-top: 60px;
 }
 
 .our-services .col-sm-4:nth-child(3), 
@@ -861,10 +858,6 @@ ul.address {
   margin-top: 40px;
 }
 
-#footer {
-  color:#fff;
-}
-
 .footer-top {
   position: relative;
   padding:30px 0
@@ -883,47 +876,4 @@ ul.address {
   display: inline-block;
   margin-bottom: 5px;
 }
-
-#footer .social-icons {
-  margin-top: 15px;
-}
-
-#footer .social-icons ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#footer .social-icons ul li a {
-  background-color: rgba(0,0,0,.2);
-  border-radius: 4px;
-  line-height: 33px;
-}
-
-#footer .social-icons ul li a:hover {
-  color: #fff
-}
-
-#footer .social-icons ul li a.envelope:hover {
-  background-color: #CECB26;
-}
-
-#footer .social-icons ul li a.facebook:hover {
-  background-color: #3b5999;
-}
-#footer .social-icons ul li a.twitter:hover {
-  background-color: #2ac6f7;
-}
-#footer .social-icons ul li a.dribbble:hover {
-  background-color: #ff5b92;
-}
-#footer .social-icons ul li a.linkedin:hover {
-  background-color: #036dc0;
-}
-#footer .social-icons ul li a.tumblr:hover {
-  background-color: #ff6b00;
-}
-
-/*Presets*/
-
 

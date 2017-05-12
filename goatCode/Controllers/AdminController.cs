@@ -1,4 +1,5 @@
-﻿using goatCode.Services;
+﻿using goatCode.Models.ViewModels;
+using goatCode.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,25 +28,16 @@ namespace goatCode.Controllers
             ViewBag.Files = fservice.GetAllFiles().Count;
             ViewBag.Projects = pservice.GetAllProjects().Count();
             ViewBag.Users = uservice.GetAllUsers().Count;
+            AdminSuperViewModel model = new AdminSuperViewModel()
+            {
+                allFiles = fservice.GetAllFiles().OrderBy(x => x.name).ToList(),
+                allProjects = pservice.GetAllProjects().OrderBy(x => x.name).ToList(),
+                allUsers = uservice.GetUserz().OrderBy(x => x.UserName).ToList(),
+                statData = fservice.GetStatistics()
 
-            return View();
-        }
-        public ActionResult Files()
-        {
-            var model = fservice.GetAllFiles();
+            };
             return View(model);
         }
-        public ActionResult Projects()
-        {
-            var model = pservice.GetAllProjects();
-            return View(model);
-        }
-        public ActionResult Users()
-        {
-            var model = uservice.GetAllUsers();
-            return View(model);
-        }
-      
         public ActionResult DeleteProject(int projectId)
         {
             fservice.DeleteAllFilesinProject(projectId);           
@@ -53,13 +45,13 @@ namespace goatCode.Controllers
             uservice.DeleteUserOwnerRelations(uservice.GetProjectOwnerIdByProjectId(projectId), projectId);        
             pservice.DeleteProject(projectId);
 
-            return RedirectToAction("Projects");
+            return RedirectToAction("Index");
         }
         public ActionResult DeleteFile(int fileId)
         {
             fservice.RemoveFileProjectConnection(fileId);
             fservice.DeleteFile(fileId);
-            return RedirectToAction("Files");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -75,12 +67,7 @@ namespace goatCode.Controllers
                 pservice.DeleteProject(project.ID);
             }
             uservice.DeleteUser(userName);
-            return RedirectToAction("Users");
-        }
-
-        public ActionResult Stats()
-        {
-            return View(fservice.GetStatistics());
+            return RedirectToAction("Index");
         }
     }
 }
