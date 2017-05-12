@@ -129,7 +129,7 @@ namespace goatCode.Tests.Services
         [TestMethod] 
         public void DeleteAllFilesinProjectTest()
         {
-            fileService.DeleteAllFilesinProject(1);
+            fileService.DeleteAllFilesInProject(1);
             var getFiles = fileService.GetFilesByProjectId(1);
 
             HashSet<int> idSet = new HashSet<int>();

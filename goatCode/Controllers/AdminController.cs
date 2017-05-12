@@ -40,7 +40,7 @@ namespace goatCode.Controllers
         }
         public ActionResult DeleteProject(int projectId)
         {
-            fservice.DeleteAllFilesinProject(projectId);           
+            fservice.DeleteAllFilesInProject(projectId);           
             uservice.DeleteUserProjectRelations(projectId);
             uservice.DeleteUserOwnerRelations(uservice.GetProjectOwnerIdByProjectId(projectId), projectId);        
             pservice.DeleteProject(projectId);
@@ -59,7 +59,7 @@ namespace goatCode.Controllers
         {
             foreach (var project in pservice.GetProjectsOwnedByUser(userName))
             {
-                fservice.DeleteAllFilesinProject(project.ID);
+                fservice.DeleteAllFilesInProject(project.ID);
                 // Delete All Relations
                 uservice.DeleteUserProjectRelations(project.ID);
                 uservice.DeleteUserOwnerRelations(uservice.GetUserIdByName(userName), project.ID);

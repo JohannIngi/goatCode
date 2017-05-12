@@ -143,7 +143,7 @@ namespace goatCode.Controllers
                 if (uservice.IsUserOwner(base.User.Identity.GetUserId(), projectId.Value))
                 {
                     // Delete All Files
-                    fservice.DeleteAllFilesinProject(projectId.Value);
+                    fservice.DeleteAllFilesInProject(projectId.Value);
                     // Delete All Relations
                     uservice.DeleteUserProjectRelations(projectId.Value);
                     uservice.DeleteUserOwnerRelations(base.User.Identity.GetUserId(), projectId.Value);
