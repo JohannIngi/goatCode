@@ -27,6 +27,10 @@ namespace goatCode.Controllers
             }
             return View();
         }
+        /// <summary>
+        /// Dislplays the register page if a user clicks a button on the home page.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Register()
         {
             return RedirectToAction("Register", "Account");
