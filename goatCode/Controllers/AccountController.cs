@@ -137,7 +137,7 @@ namespace goatCode.Controllers
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
 
                     ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
-                     + "before you can log in.";
+                     + "before you can log in";
 
                     return View("Info");
                    // return RedirectToAction("Index", "Home");
