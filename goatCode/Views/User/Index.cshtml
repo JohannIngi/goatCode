@@ -90,7 +90,7 @@
                     <thead>
                         <tr>
                             <th class="col col-xs-8">
-                                <h4>Projects you own</h4>
+                                <h4>&emsp;Projects you own</h4>
                             </th>
                             <th></th>
                         </tr>
@@ -103,7 +103,7 @@
                                         @Html.Raw(item.name)
                                     </a>
                                 </td>
-                                <td class="col col-xs-3" allign="right">
+                                <td class="col col-xs-3" align="right">
                                      @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-pencil", title = "Rename project" }) | <!--N-->
                                      @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link", title = "Share project" }) |<!--Y-->
                                      @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete project" }) |
@@ -127,29 +127,28 @@
                 <table class="table table-striped table-fixed" id="myTable2">
                     <thead>
                         <tr>
-                            <th class="col col-xs-8">
+                            <th class="col col-xs-9">
                                 Projects shared with you
                             </th>
-                            <th>Project owner</th>
+                            <th class="col col-xs-2">Project owner</th>
                             <th></th>
                         </tr>
                         </thead>
                         @foreach (var item in ViewBag.NotOwned)
                         {
                             <tr>
-                                <td class="col col-xs-3">
+                                <td class="col col-xs-9">
                                     <a href="@Url.Action("Index", "Projects", new { projectId=item.ID })">
                                         @Html.Raw(item.name)
                                     </a>
                                 </td>
-                                <td class="col col-xs-1">
+                                <td class="col col-xs-2">
                                     @Html.Raw(item.projectOwner)
                                 </td>
                                 <td>
                                     @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link", title = "Share project" }) |<!--Y-->
                                     @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you want to leave this project?');", @class = "glyphicon glyphicon-trash", title = "Leave project" }) |
                                     @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download project" })
-
                                 </td>
                             </tr>
                         }

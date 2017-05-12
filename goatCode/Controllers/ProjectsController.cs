@@ -33,6 +33,10 @@ namespace goatCode.Controllers
                     projectId = projectId.Value,
                     name = _pservice.GetProjectByProjectId(projectId.Value).name
                 };
+
+                ViewBag.Owner = _uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value);
+
+
                 return View(model);
             }
             else
