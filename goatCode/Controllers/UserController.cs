@@ -123,10 +123,15 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(Project project)
         {
-            project.name = HttpUtility.HtmlEncode(project.name);
-            pservice.EditProjectName(project.name, project.ID);
+            if (ModelState.IsValid)
+            {
+                project.name = HttpUtility.HtmlEncode(project.name);
+                pservice.EditProjectName(project.name, project.ID);
+                return RedirectToAction("Index");
+            }
+             return View("ProjectEditError");
 
-            return RedirectToAction("Index");
+
         }
 
         /// <summary>
