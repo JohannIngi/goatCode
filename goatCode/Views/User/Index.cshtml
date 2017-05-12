@@ -146,9 +146,8 @@
                                     @Html.Raw(item.projectOwner)
                                 </td>
                                 <td>
-                                    @Html.ActionLink(" ", "Edit", new { projectId=item.ID }, new { @class = "glyphicon glyphicon-pencil", title = "Rename project" }) | <!--N-->
                                     @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link", title = "Share project" }) |<!--Y-->
-                                    @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete project" }) |
+                                    @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you want to remove your connection from this project?');", @class = "glyphicon glyphicon-trash", title = "Delete your connection to project" }) |
                                     @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download project" })
 
                                 </td>
