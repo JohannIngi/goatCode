@@ -13,7 +13,7 @@
     <link href="~/Content/Template/font-awesome.min.css" rel="stylesheet">
     <link href="~/Content/Template/lightbox.css" rel="stylesheet">
     <link href="~/Content/Template/main.css" rel="stylesheet">
-    <link id="css-preset" href="~/Content/Template/presets/preset1.css" rel="stylesheet">
+    <link id="css-preset" href="~/Content/Template/presets/preset4.css" rel="stylesheet">
     <link href="~/Content/Template/responsive.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/favicon.ico" />
@@ -29,27 +29,18 @@
 </head>
 
 <body>
-    <!--.preloader-->
-    <div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
-    <!--/.preloader-->
-
     <header id="home"></header>
     <div class="container body-content">
         @RenderBody()
     </div>
     <section id="services">
-        <div class="text-center our-services">
             <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #000000; height:10px;">
                 <div class="container">
                     <div class="navbar-header">
                         <a href="~/">
                             <img src="~/Content/Images/goatcodelogonav.jpg" style="height: 35px; width:35px; padding-top: 10px" />
                         </a>
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
+
                         @Html.ActionLink("GoatCode", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     </div>
                     <div class="navbar-collapse collapse">
@@ -57,26 +48,24 @@
                     </div>
                 </div>
             </div>
-        </div>
-     
+    </section>
 
-    </section><!--/#services-->
-        <footer id="footer" style="background-color: black;">
-            <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms" style="background-color: black;">
-                <div class="footer-bottom" style="background-color: black;">
-                    <div class="container" style="background-color: black;">
-                        <div class="row" style="background-color: black;">
-                            <div class="col-sm-6" style="background-color: black; font-size:smaller;">
-                                <p>&copy; 2016 Oxygen Theme.</p>
-                            </div>
-                            <div class="col-sm-6" style="background-color: black; font-size:smaller;">
-                                <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie - All templates are licensed under the Creative Commons Attribution 3.0 license.</a></p>
-                            </div>
+    <footer id="footer" style="background-color: black;">
+        <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms" style="background-color: black;">
+            <div class="footer-bottom" style="background-color: black;">
+                <div class="container" style="background-color: black;">
+                    <div class="row" style="background-color: black;">
+                        <div class="col-sm-6" style="background-color: black; font-size:smaller;">
+                            <p>&copy; 2016 Oxygen Theme.</p>
+                        </div>
+                        <div class="col-sm-6" style="background-color: black; font-size:smaller;">
+                            <p class="pull-right">Crafted by <a href="http://designscrazed.org/">Allie - All templates are licensed under the Creative Commons Attribution 3.0 license.</a></p>
                         </div>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
+      </footer>
  
 
 
