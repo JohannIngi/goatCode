@@ -240,7 +240,9 @@ namespace goatCode.Controllers
         public ActionResult DeleteUserFromProject(string userId, int? projectId)
         {
             uservice.DeleteSingleUserProjectRelations(userId, projectId.Value);
-            return View("ProjectUsersList", projectId.Value);
+            return RedirectToAction("ProjectUsersList", new { projectId = projectId.Value});
+
+            //return View("ProjectUsersList", projectId.Value);
         }
 
     }
