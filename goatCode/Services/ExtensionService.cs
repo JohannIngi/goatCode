@@ -8,13 +8,13 @@ namespace goatCode.Services
     {
         public List<string> PopulateDropDownList()
         {
-            return extensions.OrderBy(x => x).ToList();
+            return Extensions.OrderBy(x => x).ToList();
         }
         public string GetStartContentForExtension(string extension)
         {
-            if (startContent.ContainsKey(extension))
+            if (StartContent.ContainsKey(extension))
             {
-                return startContent[extension];
+                return StartContent[extension];
             }
             return "";
         }
@@ -48,9 +48,9 @@ namespace goatCode.Services
             ["rb"] = "ruby",
             ["tex"] = "tex"
         };
-        private static Dictionary<string, string> startContent = new Dictionary<string, string>
+        private static Dictionary<string, string> StartContent = new Dictionary<string, string>
         {
-            ["c"] = "#include <stdio.h>\n\nint main() {\n\tprintf(\"Hello World\\n\")\n\treturn 0;\n}",
+            ["c"] = "#include <stdio.h>\n\nint main() {\n\tprintf(\"Hello World\\n\");\n\treturn 0;\n}",
             ["cpp"] = "#include <iostream>\n\nusing namespace std;\n\nint main()\n{\n\tcout << \"Hello World\" << endl;\n\n\treturn 0;\n}",
             ["cs"] = "using System.IO;\nusing System;\n\nclass Program\n{\n\tstatic void Main()\n{\n\tConsole.WriteLine(\"Hello, World!\");\n}\n}",
             ["html"] = "<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<title>Web Page Design</title>\n\t\t<style type=\"text / css\">\n\t\tdiv\n\t\t{\n\t\t\twidth:100px;\n\t\t\theight:75px;\n\t\t\tbackground-color:red;\n\t\t\tborder:1px solid black;\n\t\t}\n\t\t</style>\n\t</head>\n\t<body>\n\t\t<div>Hello, World!</div>\n\t</body>\n</html>",
@@ -69,7 +69,7 @@ namespace goatCode.Services
             ["rb"] = "# Hello World Program in Ruby\nputs \"Hello World!\";",
             ["tex"] = "\\documentclass{article}\n\\usepackage{graphicx}\n\n\\begin{document}\n\n\t\\author{Author's Name}\n\n\t\\begin{abstract}\n\t\tThe abstract text goes here.\n\t\\end{abstract}\n\t\\begin{equation}\n\t\t\\label{simple_equation}\n\t\t\\alpha = \\sqrt{ \\beta }\n\t\\end{equation}\n\\end{document}"
         };
-        private static List<string> extensions = new List<string>()
+        private static List<string> Extensions = new List<string>()
         {
             "c",
             "cpp",

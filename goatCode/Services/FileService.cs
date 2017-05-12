@@ -76,7 +76,7 @@ namespace goatCode.Services
         /// </summary>
         /// <param name="projectId">So projectId in ProjectFiles table gets the same value as parameter projectId</param>
 
-        public void DeleteAllFilesinProject(int projectId)
+        public void DeleteAllFilesInProject(int projectId)
         {
             var files = _db.ProjectFiles.Where(x => x.projectId == projectId).ToList();
             foreach (var file in files)
