@@ -207,7 +207,7 @@ namespace goatCode.Controllers
                 _fservice.EditFileName(model);
                 return RedirectToAction("Index", new { projectId = model.projectId });
             }
-            return RedirectToAction("Error");
+            return View("FileEditError");
         }
     }
 }
