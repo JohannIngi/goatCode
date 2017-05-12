@@ -216,5 +216,24 @@ namespace goatCode.Controllers
         }
 
         }
+
+        public ActionResult ProjectUsersList(int? projectId)
+        {
+            if(uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
+            {
+                var temp = new ProjectUsersViewModel();
+                temp.projectId = projectId.Value;
+                temp.list = uservice.GetProjectUsersByProjectId(projectId.Value, User.Identity.GetUserId());
+                return View(temp);
+            }
+            return View("Error");
+        }
+
+        public ActionResult DeleteUserFromProject(string userId, int? projectId)
+        {
+            uservice.DeleteSingleUserProjectRelations(userId, projectId.Value);
+            return View("ProjectUsersList", projectId.Value);
+        }
+
     }
 }
