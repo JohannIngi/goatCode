@@ -147,7 +147,9 @@
                                 </td>
                                 <td>
                                     @Html.ActionLink(" ", "ShareProjects", new { ProjectId = item.ID }, new { @class = "glyphicon glyphicon-link", title = "Share project" }) |<!--Y-->
+
                                     @Html.ActionLink(" ", "Delete", new { projectId = item.ID }, new { onclick = "return confirm('Are you sure you want to leave this project?');", @class = "glyphicon glyphicon-trash", title = "Leave project" }) |
+
                                     @Html.ActionLink(" ", "DownloadProjectAsZip", new { projectId = item.ID }, new { @class = "glyphicon glyphicon-download-alt", title = "Download project" })
                                 </td>
                             </tr>

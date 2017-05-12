@@ -147,6 +147,7 @@ namespace goatCode.Tests.Services
             projectService.EditProjectName("editName", 1);
 
             var getEdit = projectService.GetProjectByProjectId(1);
+            Assert.AreNotEqual("notEdited", getEdit.name);
             Assert.AreEqual("editName", getEdit.name);
         }
 

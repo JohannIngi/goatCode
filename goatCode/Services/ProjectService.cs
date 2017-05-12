@@ -160,7 +160,7 @@ namespace goatCode.Services
         /// <param name="userName"></param>
         /// <returns></returns>
         public List<Project> GetProjectsNotOwnedByUser(string userName)
-        {
+        {   
             var allProjects = GetInUseProjectsByUserName(userName);
             var ownedProjects = GetProjectsOwnedByUser(userName);
 
