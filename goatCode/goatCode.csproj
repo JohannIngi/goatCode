@@ -358,6 +358,7 @@
     <Content Include="Views\Admin\Stats.cshtml" />
     <Content Include="Views\User\ProjectUsersList.cshtml" />
     <Content Include="Views\User\Chat.cshtml" />
+    <Content Include="Views\User\ProjectEditError.cshtml" />
     <Content Include="Views\Projects\FileEditError.cshtml" />
   </ItemGroup>
   <ItemGroup>
