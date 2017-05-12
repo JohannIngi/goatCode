@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 namespace goatCode.Models.Entities
 {
     /// <summary>
@@ -18,6 +19,7 @@ namespace goatCode.Models.Entities
         /// <summary>
         /// Parameter name is a part of File to store data.
         /// </summary>
+
         public string name { get; set; }
         /// <summary>
         /// Parameter extension is a part of File to store data.
