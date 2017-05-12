@@ -19,6 +19,7 @@ namespace goatCode.Models.Entities
 
         /// <summary>
         /// Parameter name is a part of Project to store data.
+        /// Regular expression to check if name is legal.
         /// </summary>
         
         [Display(Name = "Project Name")]

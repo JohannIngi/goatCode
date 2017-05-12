@@ -95,7 +95,9 @@ namespace goatCode.Controllers
                   
                     return View(model);
                 }
+               
             }
+           
             return View("Error");
         }
 
@@ -147,7 +149,11 @@ namespace goatCode.Controllers
             return RedirectToAction("Index", new { ProjectId = model.ProjectId });
         }
 
-        
+        /// <summary>
+        /// Downloads a specific file.
+        /// </summary>
+        /// <param name="fileId">Is used to get value of the parameter fileId</param>
+        /// <returns>The file</returns>
         public FileResult DownloadFile(int fileId)
         {
             
@@ -183,6 +189,12 @@ namespace goatCode.Controllers
 
             return View("Error");
         }
+        /// <summary>
+        /// Gets the new name to update and the file id and project id.
+        /// </summary>
+        /// <param name="fileId">Is used to get value of the parameter fileId</param>
+        /// <param name="projectId">Is used to get value of the parameter projectId</param>
+        /// <returns>A view with the model that was made.</returns>
         [HttpGet]
         public ActionResult UpdateFileName(int? fileId, int? projectId)
         {
@@ -200,6 +212,11 @@ namespace goatCode.Controllers
              
             return RedirectToAction("Error"); 
         }
+        /// <summary>
+        /// Callse the EditFileName function in the fileservice class.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult UpdateFileName(FileUpdateViewModel model)

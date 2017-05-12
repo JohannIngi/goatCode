@@ -38,6 +38,12 @@ namespace goatCode.Controllers
             };
             return View(model);
         }
+        /// <summary>
+        /// Admin can delete a project.
+        /// It deletes all files in project, all relations to the project and then the project.
+        /// </summary>
+        /// <param name="projectId">Is used to get value of the parameter projectId</param>
+        /// <returns>An Index page</returns>
         public ActionResult DeleteProject(int projectId)
         {
             fservice.DeleteAllFilesInProject(projectId);           
@@ -47,13 +53,25 @@ namespace goatCode.Controllers
 
             return RedirectToAction("Index");
         }
+        /// <summary>
+        /// Admin can delete a file.
+        /// It deletes all connections to the file and then deletes the file.
+        /// </summary>
+        /// <param name="fileId">Is used to get value of the parameter fileId</param>
+        /// <returns> An index page</returns>
         public ActionResult DeleteFile(int fileId)
         {
             fservice.RemoveFileProjectConnection(fileId);
             fservice.DeleteFile(fileId);
             return RedirectToAction("Index");
         }
-
+        /// <summary>
+        /// Admin can delete a user.
+        /// It deletes all files in in his projects, then delets all project relations and then the projects.
+        /// Then it deletes the User.
+        /// </summary>
+        /// <param name="userName">Is used to get value of the parameter userName</param>
+        /// <returns>An Index page</returns>
         [HttpGet]
         public ActionResult DeleteUser(string userName)
         {

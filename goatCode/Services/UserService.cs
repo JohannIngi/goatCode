@@ -187,8 +187,8 @@ namespace goatCode.Services
                         where projectId == userproj.projectId && userId != userproj.userId
                         join proj in _db.Projects
                         on userproj.projectId equals proj.ID
-                        join uzerz in _db.Users on userproj.userId equals uzerz.Id
-                        select uzerz).ToList();
+                        join us in _db.Users on userproj.userId equals us.Id
+                        select us).ToList();
 
             return users;
         }
