@@ -4,7 +4,8 @@
     ViewBag.Title = "UpdateFileName";
 }
 
-<h2>UpdateFileName</h2>
+<h2>Edit file name</h2>
+<br />
 
 
 @using (Html.BeginForm())
@@ -12,7 +13,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>FileUpdateViewModel</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)

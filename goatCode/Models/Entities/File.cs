@@ -4,9 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
-#pragma warning disable CS0105 // The using directive for 'System.Web.Mvc' appeared previously in this namespace
-using System.Web.Mvc;
-#pragma warning restore CS0105 // The using directive for 'System.Web.Mvc' appeared previously in this namespace
+
 namespace goatCode.Models.Entities
 {
     /// <summary>

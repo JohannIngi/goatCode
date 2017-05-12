@@ -37,6 +37,8 @@ namespace goatCode.Tests.Services
             mock.UserProjects.Add(new UserProject { id = 2, projectId = 1, userId = "1232" });
             mock.UserProjects.Add(new UserProject { id = 3, projectId = 2, userId = "1231" });
             mock.UserProjects.Add(new UserProject { id = 4, projectId = 2, userId = "1232" });
+            mock.UserProjects.Add(new UserProject { id = 5, projectId = 1, userId = "1233" });
+            mock.UserProjects.Add(new UserProject { id = 6, projectId = 1, userId = "1234" });
 
             mock.Files.Add(new File { ID = 1, name = "file1", extension = "c", content = "abc1" });
             mock.Files.Add(new File { ID = 2, name = "file2", extension = "cpp", content = "abc2" });
@@ -82,6 +84,24 @@ namespace goatCode.Tests.Services
         }
 
         [TestMethod]
+        public void GetProjectUsersByProjectIdTest()
+        {
+            //Gets all users in project except owner
+            var projectUsers = userService.GetProjectUsersByProjectId(1, "1231");
+
+            HashSet<string> idSet = new HashSet<string>();
+            foreach (var user in projectUsers)
+            {
+                idSet.Add(user.Id);
+            }
+            Assert.IsFalse(idSet.Contains("1231"));
+            Assert.IsTrue(idSet.Contains("1232"));
+            Assert.IsTrue(idSet.Contains("1233"));
+            Assert.IsTrue(idSet.Contains("1234"));
+            Assert.AreEqual(3, idSet.Count);
+        }
+
+        [TestMethod]
         public void IsUserOwnerTest1()
         {
             var owner1 = userService.IsUserOwner("1231", 1);
@@ -97,11 +117,12 @@ namespace goatCode.Tests.Services
         {
             var user1 = userService.IsUserRelatedToProject("1231", 1);
             var user2 = userService.IsUserRelatedToProject("1231", 3);
-            var user3 = userService.IsUserRelatedToProject("1233", 1);
+            var user3 = userService.IsUserRelatedToProject("1233", 2);
             Assert.IsTrue(user1);
             Assert.IsFalse(user2);
             Assert.IsFalse(user3);
         }
+
         [TestMethod]
         public void DeleteUserOwnerRelationsTest()
         {

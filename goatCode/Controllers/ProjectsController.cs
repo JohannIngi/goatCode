@@ -95,9 +95,9 @@ namespace goatCode.Controllers
                   
                     return View(model);
                 }
-                // TODO: hvað ef ekki til?
+               
             }
-            // TODO: akveda hvert a að fara annars
+           
             return View("Error");
         }
 
@@ -109,10 +109,14 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult Create(int? ProjectId)
         {
-            var model = new NewFileViewModel { ProjectId = ProjectId.Value };
-            
-            ViewBag.Extensions = new SelectList(_utservice.PopulateDropDownList());
-            return View(model);
+            if(_uservice.IsUserRelatedToProject(User.Identity.GetUserId(), ProjectId.Value))
+            {
+                var model = new NewFileViewModel { ProjectId = ProjectId.Value };
+
+                ViewBag.Extensions = new SelectList(_utservice.PopulateDropDownList());
+                return View(model);
+            }
+            return View("Error");  
         }
 
         /// <summary>
@@ -124,7 +128,7 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult Create(NewFileViewModel model)
         {
-
+            ViewBag.Extensions = new SelectList(_utservice.PopulateDropDownList());
             if (ModelState.IsValid)
             {
                 //StringBuilder projName = new StringBuilder();
@@ -136,7 +140,7 @@ namespace goatCode.Controllers
                 if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
                 {
                     ModelState.AddModelError("name", "File name already exists");
-                    return RedirectToAction("Index", new { projectId = model.ProjectId });
+                    return View(model);
                 }
 
                 //model.name = Encoder.HtmlEncode(model.name, true);
@@ -145,7 +149,11 @@ namespace goatCode.Controllers
             return RedirectToAction("Index", new { ProjectId = model.ProjectId });
         }
 
-        
+        /// <summary>
+        /// Downloads a specific file.
+        /// </summary>
+        /// <param name="fileId">Is used to get value of the parameter fileId</param>
+        /// <returns>The file</returns>
         public FileResult DownloadFile(int fileId)
         {
             
@@ -181,6 +189,12 @@ namespace goatCode.Controllers
 
             return View("Error");
         }
+        /// <summary>
+        /// Gets the new name to update and the file id and project id.
+        /// </summary>
+        /// <param name="fileId">Is used to get value of the parameter fileId</param>
+        /// <param name="projectId">Is used to get value of the parameter projectId</param>
+        /// <returns>A view with the model that was made.</returns>
         [HttpGet]
         public ActionResult UpdateFileName(int? fileId, int? projectId)
         {
@@ -196,18 +210,24 @@ namespace goatCode.Controllers
                     return View(model);
                 }
              
-            return RedirectToAction("Error"); // Vantar custom error fyrir þetta shit Er ekki tengdur project/file
+            return RedirectToAction("Error"); 
         }
+        /// <summary>
+        /// Callse the EditFileName function in the fileservice class.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult UpdateFileName(FileUpdateViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !_fservice.DoesFileNameExistInProject(model.projectId, model.name))
             {
                 _fservice.EditFileName(model);
                 return RedirectToAction("Index", new { projectId = model.projectId });
             }
-            return RedirectToAction("Error");
+            ModelState.AddModelError("name", "File name already exists");
+            return View(model);
         }
     }
 }
