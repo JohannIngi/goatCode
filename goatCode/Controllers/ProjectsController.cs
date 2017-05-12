@@ -198,7 +198,7 @@ namespace goatCode.Controllers
                     return View(model);
                 }
              
-            return RedirectToAction("Error"); // Vantar custom error fyrir þetta shit Er ekki tengdur project/file
+            return RedirectToAction("Error"); 
         }
         [HttpPost]
         [ValidateInput(false)]
