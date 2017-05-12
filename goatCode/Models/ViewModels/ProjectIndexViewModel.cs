@@ -16,6 +16,9 @@ namespace goatCode.Models.ViewModels
         /// Parameter projectId is a part of ProjectIndexViewModel to store data.
         /// </summary>
         public int projectId { get; set; }
+        /// <summary>
+        /// Parameter name is a part of ProjectIndexViewModel to store data.
+        /// </summary>
         public string name { get; set; }
     }
 }

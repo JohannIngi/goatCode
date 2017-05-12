@@ -173,12 +173,19 @@ namespace goatCode.Controllers
             }
             
         }
-
+        /// <summary>
+        /// To get the chat window when a link is pressed.
+        /// </summary>
+        /// <returns>A chat view</returns>
         public ActionResult Chat()
         {
             return View();
         }
-
+        /// <summary>
+        /// Used to download a specific project to a zip file.
+        /// </summary>
+        /// <param name="projectId">Is used to get value of the parameter projectId</param>
+        /// <returns>a zip file</returns>
         public ActionResult DownloadProjectAsZip(int? projectId)
         {
             if (uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value) == false)
@@ -224,7 +231,11 @@ namespace goatCode.Controllers
         }
 
         }
-
+        /// <summary>
+        /// To get a table of users in a specific project.
+        /// </summary>
+        /// <param name="projectId">Is used to get value of the parameter projectId</param>
+        /// <returns>A view with users from project.</returns>
         public ActionResult ProjectUsersList(int? projectId)
         {
             if(uservice.IsUserOwner(User.Identity.GetUserId(), projectId.Value))
@@ -236,7 +247,12 @@ namespace goatCode.Controllers
             }
             return View("Error");
         }
-
+        /// <summary>
+        /// Removes a user connection with a project.
+        /// </summary>
+        /// <param name="userId">Is used to get value of the parameter userId</param>
+        /// <param name="projectId">Is used to get value of the parameter projectId</param>
+        /// <returns>View of updated list of users in project.</returns>
         public ActionResult DeleteUserFromProject(string userId, int? projectId)
         {
             uservice.DeleteSingleUserProjectRelations(userId, projectId.Value);
