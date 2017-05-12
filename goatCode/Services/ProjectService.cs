@@ -198,7 +198,12 @@ namespace goatCode.Services
             }
             return list;
         }
-
+        /// <summary>
+        /// Function that checks if the inserted name of a project already exists in the users account.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="newName"></param>
+        /// <returns></returns>
         public bool DoesProjectNameExist(string userName, string newName)
         {
             var doesItExist =  GetProjectsOwnedByUser(userName).Where(x => x.name == newName).SingleOrDefault();

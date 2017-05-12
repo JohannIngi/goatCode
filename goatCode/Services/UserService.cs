@@ -75,7 +75,10 @@ namespace goatCode.Services
 
             return retValue;
         }
-
+        /// <summary>
+        /// Same function as the one above except that we don't need email information
+        /// </summary>
+        /// <returns></returns>
         public List<ApplicationUser> GetUserz()
         {
             var role = _db.Roles.SingleOrDefault(x => x.Name == "Admin");
@@ -172,7 +175,12 @@ namespace goatCode.Services
         {
             return _db.ProjectOwners.Where(x => x.projectId == projectId).SingleOrDefault().userId;
         }
-
+        /// <summary>
+        /// Returns the users that are associated  with a specific project
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public List<ApplicationUser> GetProjectUsersByProjectId(int projectId, string userId)
         {
             var users = (from userproj in _db.UserProjects

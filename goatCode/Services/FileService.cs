@@ -113,7 +113,10 @@ namespace goatCode.Services
                 _db.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// User removes a file from project
+        /// </summary>
+        /// <param name="fileId"></param>
         public void RemoveFileProjectConnection(int fileId)
         {
             var projectfile = (from pf in _db.ProjectFiles
@@ -125,7 +128,12 @@ namespace goatCode.Services
             }
             _db.SaveChanges();
         }
-
+        /// <summary>
+        /// Going through the database to see if a file with inserted name already exists in project
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public bool DoesFileNameExistInProject(int projectId, string fileName)
         {
             var file = (from p in _db.Projects
@@ -142,7 +150,13 @@ namespace goatCode.Services
             
             return false;
         }
-
+        /// <summary>
+        /// Same function as the one above, but this one checks if the extension type is the same.
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="fileName"></param>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         public bool DoesFileNameExistInProject2(int projectId, string fileName, string extension)
         {
             var file = (from p in _db.Projects
