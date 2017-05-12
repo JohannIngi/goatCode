@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.ComponentModel.DataAnnotations;
 namespace goatCode.Models.Entities
 {
     /// <summary>
@@ -18,6 +18,10 @@ namespace goatCode.Models.Entities
         /// <summary>
         /// Parameter name is a part of File to store data.
         /// </summary>
+        [Display(Name = "File Name")]
+        [RegularExpression(@"^[a-zA-Z0-9]{0,30}$",
+             ErrorMessage = "Invalid name, must be between 1-30 characters and only letters and numbers.")]
+        [Required(ErrorMessage = "Must have a name")]
         public string name { get; set; }
         /// <summary>
         /// Parameter extension is a part of File to store data.

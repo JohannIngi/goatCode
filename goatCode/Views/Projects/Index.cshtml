@@ -84,7 +84,7 @@
                                     @(Html.DisplayFor(modelItem => item.name) + "." + Html.DisplayFor(modelItem => item.extension))
                                 </a>
                             </td>
-                            <td class="col col-xs-3">
+                            <td class="col col-xs-3" align="right">
                                 @Html.ActionLink(" ", "UpdateFileName", new { fileid = item.ID, projectId = Model.projectId }, new { @class = "glyphicon glyphicon-pencil", title = "Rename file" }) |
                                 @Html.ActionLink(" ", "DeleteFile", new { fileid = item.ID, projectId = Model.projectId },
                                 new { onclick = "return confirm('Are you sure you wish to delete this file?');", @class = "glyphicon glyphicon-trash", title = "Delete file" } ) |
@@ -98,10 +98,13 @@
     </div>
 </div>
 
+@if(ViewBag.Owner)
+{
+    <p>
+        @Html.ActionLink("List of users in project", "ProjectUsersList", "User", new { ProjectId = Model.projectId }, new { title = "List of users in project" })
+    </p>
+}
 
-<p>
-    @Html.ActionLink("List of users in project", "ProjectUsersList", "User", new { ProjectId = Model.projectId}, new { title = "List of users in project" })
-</p>
 
 
 <p>
