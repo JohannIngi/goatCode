@@ -125,6 +125,7 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(Project project)
         {
+
             if(ModelState.IsValid && project.name != HttpUtility.HtmlEncode(project.name))
 
             {
@@ -132,7 +133,8 @@ namespace goatCode.Controllers
                 pservice.EditProjectName(project.name, project.ID);
                 return RedirectToAction("Index");
             }
-             return View("ProjectEditError");
+            ModelState.AddModelError("name", "You already own a project with that name");
+            return View(project);
         }
 
         /// <summary>

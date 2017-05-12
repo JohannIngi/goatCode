@@ -95,9 +95,7 @@ namespace goatCode.Controllers
                   
                     return View(model);
                 }
-                // TODO: hvað ef ekki til?
             }
-            // TODO: akveda hvert a að fara annars
             return View("Error");
         }
 
@@ -109,10 +107,14 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult Create(int? ProjectId)
         {
-            var model = new NewFileViewModel { ProjectId = ProjectId.Value };
-            
-            ViewBag.Extensions = new SelectList(_utservice.PopulateDropDownList());
-            return View(model);
+            if(_uservice.IsUserRelatedToProject(User.Identity.GetUserId(), ProjectId.Value))
+            {
+                var model = new NewFileViewModel { ProjectId = ProjectId.Value };
+
+                ViewBag.Extensions = new SelectList(_utservice.PopulateDropDownList());
+                return View(model);
+            }
+            return View("Error");  
         }
 
         /// <summary>
@@ -124,7 +126,7 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult Create(NewFileViewModel model)
         {
-
+            ViewBag.Extensions = new SelectList(_utservice.PopulateDropDownList());
             if (ModelState.IsValid)
             {
                 //StringBuilder projName = new StringBuilder();
@@ -136,7 +138,7 @@ namespace goatCode.Controllers
                 if(_fservice.DoesFileNameExistInProject(model.ProjectId, model.name))
                 {
                     ModelState.AddModelError("name", "File name already exists");
-                    return RedirectToAction("Index", new { projectId = model.ProjectId });
+                    return View(model);
                 }
 
                 //model.name = Encoder.HtmlEncode(model.name, true);
@@ -202,12 +204,13 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult UpdateFileName(FileUpdateViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !_fservice.DoesFileNameExistInProject(model.projectId, model.name))
             {
                 _fservice.EditFileName(model);
                 return RedirectToAction("Index", new { projectId = model.projectId });
             }
-            return View("FileEditError");
+            ModelState.AddModelError("name", "File name already exists");
+            return View(model);
         }
     }
 }
