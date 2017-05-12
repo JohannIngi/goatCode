@@ -17,6 +17,8 @@ namespace goatCode.Models.ViewModels
         /// Parameter name is a part of NewFileViewModel to store data.
         /// </summary>
         [Display(Name = "File Name")]
+        [RegularExpression(@"^[a-zA-Z0-9]{0,30}$",
+            ErrorMessage = "Invalid name, must be between 1-30 characters and only letters and numbers.")]
         [Required (ErrorMessage = "Must have a name")]
         public string name { get; set; }
         /// <summary>
