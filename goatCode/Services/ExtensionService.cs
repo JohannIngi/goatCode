@@ -6,10 +6,19 @@ namespace goatCode.Services
 {
     public class ExtensionService
     {
+        /// <summary>
+        /// Returning a list of all the extensions into a dropdownlist in alphabetical order
+        /// </summary>
+        /// <returns></returns>
         public List<string> PopulateDropDownList()
         {
             return Extensions.OrderBy(x => x).ToList();
         }
+        /// <summary>
+        /// Retreiving the "hello world" content for each file extension in the system
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         public string GetStartContentForExtension(string extension)
         {
             if (StartContent.ContainsKey(extension))
@@ -18,6 +27,11 @@ namespace goatCode.Services
             }
             return "";
         }
+        /// <summary>
+        /// Retreiving the aceEditor extension for each extension we have an option for.
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         public string GetAceSettingsValueForExtension(string extension)
         {
             if (AceMap.ContainsKey(extension))
@@ -26,7 +40,9 @@ namespace goatCode.Services
             }
             return "txt";
         }
-
+        /// <summary>
+        /// Using a hash map to get the appropriate extension from user selection to Ace extension
+        /// </summary>
         private static Dictionary<string, string> AceMap = new Dictionary<string, string>
         {
             ["c"] = "c_cpp",
@@ -48,6 +64,9 @@ namespace goatCode.Services
             ["rb"] = "ruby",
             ["tex"] = "tex"
         };
+        /// <summary>
+        /// Using a hash map to get the appropriate code sample from user selection to Ace editor
+        /// </summary>
         private static Dictionary<string, string> StartContent = new Dictionary<string, string>
         {
             ["c"] = "#include <stdio.h>\n\nint main() {\n\tprintf(\"Hello World\\n\");\n\treturn 0;\n}",
@@ -69,6 +88,9 @@ namespace goatCode.Services
             ["rb"] = "# Hello World Program in Ruby\nputs \"Hello World!\";",
             ["tex"] = "\\documentclass{article}\n\\usepackage{graphicx}\n\n\\begin{document}\n\n\t\\author{Author's Name}\n\n\t\\begin{abstract}\n\t\tThe abstract text goes here.\n\t\\end{abstract}\n\t\\begin{equation}\n\t\t\\label{simple_equation}\n\t\t\\alpha = \\sqrt{ \\beta }\n\t\\end{equation}\n\\end{document}"
         };
+        /// <summary>
+        /// The list of extension as displayed in the dropdownlist
+        /// </summary>
         private static List<string> Extensions = new List<string>()
         {
             "c",

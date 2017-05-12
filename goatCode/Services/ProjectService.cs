@@ -160,7 +160,7 @@ namespace goatCode.Services
         /// <param name="userName"></param>
         /// <returns></returns>
         public List<Project> GetProjectsNotOwnedByUser(string userName)
-        {
+        {   
             var allProjects = GetInUseProjectsByUserName(userName);
             var ownedProjects = GetProjectsOwnedByUser(userName);
 
@@ -197,6 +197,19 @@ namespace goatCode.Services
                 list.Add(model);
             }
             return list;
+        }
+
+        public bool DoesProjectNameExist(string userName, string newName)
+        {
+            var doesItExist =  GetProjectsOwnedByUser(userName).Where(x => x.name == newName).SingleOrDefault();
+            if(doesItExist == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

@@ -142,6 +142,27 @@ namespace goatCode.Services
             
             return false;
         }
+
+        public bool DoesFileNameExistInProject2(int projectId, string fileName, string extension)
+        {
+            var file = (from p in _db.Projects
+                        where p.ID == projectId
+                        join pf in _db.ProjectFiles on p.ID equals pf.projectId
+                        join f in _db.Files on pf.fileId equals f.ID
+                        where f.name == fileName
+                        where extension == f.extension
+                        select f).SingleOrDefault();
+
+            if (file.name == fileName && extension == file.extension)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+
         /// <summary>
         /// Edits the name of a file
         /// </summary>

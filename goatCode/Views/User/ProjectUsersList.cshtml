@@ -23,11 +23,22 @@
         </td>
         <td align="right">
             @Html.ActionLink(" ", "DeleteUserFromProject", new { userId = item.Id, projectId = Model.projectId },
-                new { onclick = "return confirm('Are you sure you wish to delete this file?');",
-                @class = "glyphicon glyphicon-trash", title = "Remove user from project" })
+             new { onclick = "return confirm('Are you sure you wish to delete this file?');",
+                 @class = "glyphicon glyphicon-trash", title = "Remove user from project" })
         </td>
     </tr>
 }
 </table>
-//linkText, actionName, controllerName, routeValues, htmlAttributes
-@Html.ActionLink("Back to list of projects", "Index", "Projects", new { projectId = Model.projectId })
+@Html.ActionLink("Back to project", "Index", "Projects", new { projectId = Model.projectId }, null)
+
+<div id="containers">
+    <p> </p>
+</div>
+
+<style>
+    #containers {
+        width: 100%;
+        height: 300px;
+        overflow-y: auto;
+    }
+</style>
