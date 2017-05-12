@@ -198,5 +198,18 @@ namespace goatCode.Services
             }
             return list;
         }
+
+        public bool DoesProjectNameExist(string userName, string newName)
+        {
+            var doesItExist =  GetProjectsOwnedByUser(userName).Where(x => x.name == newName).SingleOrDefault();
+            if(doesItExist == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

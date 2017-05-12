@@ -49,7 +49,7 @@ namespace goatCode.Controllers
         [ValidateInput(false)]
         public ActionResult Create(Project project)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && pservice.DoesProjectNameExist(User.Identity.Name, project.name) == false)
             {
                 project.name = HttpUtility.HtmlEncode(project.name);
 
@@ -57,7 +57,9 @@ namespace goatCode.Controllers
 
                 return RedirectToAction("Index");
             }
+            ModelState.AddModelError("name", "You already own a project with that name");
             return View(project);
+
         }
 
         /// <summary>
@@ -130,8 +132,6 @@ namespace goatCode.Controllers
                 return RedirectToAction("Index");
             }
              return View("ProjectEditError");
-
-
         }
 
         /// <summary>

@@ -184,28 +184,30 @@ namespace goatCode.Controllers
         [HttpGet]
         public ActionResult UpdateFileName(int? fileId, int? projectId)
         {
-
-            if (fileId.HasValue && projectId.HasValue && _uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
-            {
-                var file = _fservice.GetSingleFileById(fileId.Value);
-                var model = new FileUpdateViewModel()
+                if (fileId.HasValue && projectId.HasValue && _uservice.IsUserRelatedToProject(User.Identity.GetUserId(), projectId.Value))
                 {
-                    ID = file.ID,
-                    name = file.name,
-                    projectId = projectId.Value
-                };
-
-                
-                return View(model);
-            }  
+                    var file = _fservice.GetSingleFileById(fileId.Value);
+                    var model = new FileUpdateViewModel()
+                    {
+                        ID = file.ID,
+                        name = HttpUtility.HtmlEncode(file.name),
+                        projectId = projectId.Value
+                    };
+                    return View(model);
+                }
+             
             return RedirectToAction("Error"); // Vantar custom error fyrir þetta shit Er ekki tengdur project/file
         }
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult UpdateFileName(FileUpdateViewModel model)
         {
-            _fservice.EditFileName(model);
-            return RedirectToAction("Index", new { projectId = model.projectId });
+            if (ModelState.IsValid)
+            {
+                _fservice.EditFileName(model);
+                return RedirectToAction("Index", new { projectId = model.projectId });
+            }
+            return View("FileEditError");
         }
     }
 }
