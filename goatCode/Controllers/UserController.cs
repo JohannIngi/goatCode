@@ -225,8 +225,8 @@ namespace goatCode.Controllers
 
         public ActionResult DeleteUserFromProject(string userId, int? projectId)
         {
-            uservice.DeleteSingleUserProjectRelations(base.User.Identity.GetUserId(), projectId.Value);
-            return RedirectToAction("Index");
+            uservice.DeleteSingleUserProjectRelations(userId, projectId.Value);
+            return View("ProjectUsersList", projectId.Value);
         }
     }
 }

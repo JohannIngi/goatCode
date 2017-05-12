@@ -22,10 +22,12 @@
             @(Html.DisplayFor(asdf => item.Email))
         </td>
         <td align="right">
-            @Html.ActionLink(" ", "DeleteUserFromProject", new { fileid = item.Id, projectId = Model.projectId },
+            @Html.ActionLink(" ", "DeleteUserFromProject", new { userId = item.Id, projectId = Model.projectId },
                 new { onclick = "return confirm('Are you sure you wish to delete this file?');",
                 @class = "glyphicon glyphicon-trash", title = "Delete file" })
         </td>
     </tr>
 }
 </table>
+//linkText, actionName, controllerName, routeValues, htmlAttributes
+@Html.ActionLink("Back to list of projects", "Index", "Projects", new { projectId = Model.projectId })
