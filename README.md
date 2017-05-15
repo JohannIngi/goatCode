@@ -1,5 +1,5 @@
-# goatCode
-Verklegt námskeið II í Tölvunarfræði
+# GoatCode
+The class T-220-VLN2 in University of Reykjavik
 In this project we use the following code (scriptures and stuff) that we got from the web:
 
 | Libary | Used for |
@@ -10,5 +10,5 @@ In this project we use the following code (scriptures and stuff) that we got fro
 | [DotNetZip library](https://dotnetzip.codeplex.com/) | To download projects and files as zip |
 | [Email confirmation](http://stackoverflow.com/questions/23612614/mvc-5-identity-2-0-registration-email-confirmation-issue) | All email confirmation and forgot password function |
 | [Guide](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/account-confirmation-and-password-recovery-with-aspnet-identity) | A guide for forgot password and email confirmation |
-| [Google chart](https://developers.google.com/chart/) | Pie chart in Admin view|
-| [table filtering](https://www.w3schools.com/howto/howto_js_filter_table.asp) | Table filtering for all tables in the project|
+| [Google chart](https://developers.google.com/chart/) | Pie chart in admin view|
+| [Table filtering](https://www.w3schools.com/howto/howto_js_filter_table.asp) | Table filtering for all tables in the project|
