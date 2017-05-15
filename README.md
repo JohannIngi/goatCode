@@ -1,6 +1,6 @@
 # GoatCode
 The class T-220-VLN2 in University of Reykjavik
-In this project we use the following code (scriptures and stuff) that we got from the web:
+In this project we use the following code that we got from the web:
 
 | Libary | Used for |
 | ------ | ------ |
