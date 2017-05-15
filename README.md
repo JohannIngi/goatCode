@@ -1,6 +1,7 @@
 # goatCode
 Verklegt námskeið II í Tölvunarfræði
 In this project we use the following code (scriptures and stuff) that we got from the web:
+
 | Libary | Used for |
 | ------ | ------ |
 | [AceEditor](https://ace.c9.io/) | We used the Ace editor in our project|
