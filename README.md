@@ -1,5 +1,6 @@
 # GoatCode
-The class T-220-VLN2 in University of Reykjavik
+This project is a part of the class T-220-VLN2 in University of Reykjavik
+
 In this project we use the following code that we got from the web:
 
 | Libary | Used for |
